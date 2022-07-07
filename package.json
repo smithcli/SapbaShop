@@ -1,0 +1,37 @@
+{
+  "name": "sapbashop",
+  "version": "2022.1.0",
+  "description": "Inventory management web app",
+  "main": "index.js",
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smithcli/SapbaShop.git"
+  },
+  "author": "Christopher Smith, email: git@smithc.dev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smithcli/SapbaShop/issues"
+  },
+  "homepage": "https://github.com/smithcli/SapbaShop#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint_d": "^12.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
+  }
+}
