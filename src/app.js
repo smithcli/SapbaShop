@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-//const storeRouter = require('./routes/storeRouter')
+const storeRouter = require('./routes/storeRouter')
 //const userRouter = require('./routes/userRouter')
 //const productRouter = require('./routes/productRouter')
 
@@ -14,8 +14,11 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Body Parser, reading data from body into req.body
+app.use(express.json())
+
 // 2) Routes
-//app.use('/api/v1/stores', storeRouter);
+app.use('/api/v1/stores', storeRouter);
 //users, userRouter
 //products, productRouter
 
