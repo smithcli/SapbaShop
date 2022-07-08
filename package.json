@@ -2,11 +2,13 @@
   "name": "sapbashop",
   "version": "2022.1.0",
   "description": "Inventory management web app",
-  "main": "index.js",
+  "main": "src/server.js",
   "engines": {
     "node": ">=8.10.0"
   },
   "scripts": {
+    "start": "NODE_ENV=production node src/server.js",
+    "dev": "NODE_ENV=development nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +33,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
   }

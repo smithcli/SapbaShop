@@ -1,3 +1,7 @@
+# App Specific
+scripts/
+
+# Below provided by Github
 # Logs
 logs
 *.log
