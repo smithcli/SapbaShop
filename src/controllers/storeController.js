@@ -1,26 +1,32 @@
 const Store = require('../models/storeModel');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
-exports.getAllStores = async (req, res, next) => {
+exports.getAllStores = catchAsync(async (req, res, next) => {
   const stores = await Store.find();
   res.status(200).json({
     status: 'success',
     data: {
+      total_results: stores.length,
       stores,
     },
   });
-};
+});
 
-exports.getStore = async (req, res, next) => {
+exports.getStore = catchAsync(async (req, res, next) => {
   const store = await Store.findById(req.params.id);
+  if (!store) {
+    return next(new AppError(404, `No store found with id: ${req.params.id}`));
+  }
   res.status(200).json({
     status: 'success',
     data: {
       store,
     },
   });
-};
+});
 
-exports.createStore = async (req, res, next) => {
+exports.createStore = catchAsync(async (req, res, next) => {
   const newStore = await Store.create(req.body);
   res.status(201).json({
     status: 'success',
@@ -28,22 +34,31 @@ exports.createStore = async (req, res, next) => {
       store: newStore,
     },
   });
-};
+});
 
-exports.updateStore = async (req, res, next) => {
+exports.updateStore = catchAsync(async (req, res, next) => {
   const store = await Store.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
+  if (!store) {
+    return next(new AppError(404, `No store found with id: ${req.params.id}`));
+  }
   res.status(200).json({
     status: 'success',
+    data: {
+      store,
+    },
   });
-};
+});
 
-exports.deleteStore = async (req, res, next) => {
+exports.deleteStore = catchAsync(async (req, res, next) => {
   const store = await Store.findByIdAndDelete(req.params.id);
+  if (!store) {
+    return next(new AppError(404, `No store found with id: ${req.params.id}`));
+  }
   res.status(204).json({
     status: 'success',
     data: null,
   });
-};
+});
