@@ -49,11 +49,6 @@ const storeSchema = new mongoose.Schema({
       trim: true,
     },
   },
-  zip: {
-    type: Number,
-    required: [true, 'A store must have a zip code'],
-    min: [5, 'zip codes are at least five numbers'],
-  },
   country: {
     en: {
       type: String,
@@ -65,6 +60,11 @@ const storeSchema = new mongoose.Schema({
       required: [true, 'A store must have a country in Thai'],
       trim: true,
     },
+  },
+  zip: {
+    type: Number,
+    required: [true, 'A store must have a zip code'],
+    min: [5, 'zip codes are at least five numbers'],
   },
   phone: {
     type: Number,
