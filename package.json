@@ -1,6 +1,6 @@
 {
   "name": "sapbashop",
-  "version": "2022.1.0",
+  "version": "1.0.0",
   "description": "Inventory management web app",
   "main": "src/server.js",
   "engines": {
