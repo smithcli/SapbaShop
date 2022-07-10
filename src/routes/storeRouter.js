@@ -8,6 +8,10 @@ router
   .get(storeController.getAllStores)
   .post(storeController.createStore);
 
-//router.route('/:id').get(storeController.getStore);
+router
+  .route('/:id')
+  .get(storeController.getStore)
+  .patch(storeController.updateStore)
+  .delete(storeController.deleteStore);
 
 module.exports = router;
