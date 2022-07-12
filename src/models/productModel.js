@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
   store: {
-    type: ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: 'store',
     required: [true, 'A product must belong to a store.'],
   },
@@ -26,11 +26,11 @@ const productSchema = new mongoose.Schema({
       required: [true, 'A product must belong to a department in Thai.'],
       enum: {
         values: [
-          'Grocery',
-          'Clothing and Accessories',
-          'Beauty and Personal Care',
-          'Health and Wellness',
-          'Household',
+          'ร้านค้า',
+          'เสื้อผ้าและเครื่องประดับ',
+          'เครื่องสำอางค์และของใช้ส่วนตัว',
+          'สินค้าเพื่อสุขภาพ',
+          'อุปกรณ์และของใช้ในครัวเรือน',
         ],
         message: `A product must belong to one of these departments ${values}`,
       },
@@ -73,7 +73,7 @@ const productSchema = new mongoose.Schema({
     },
     th: {
       type: String,
-      default: 'EA',
+      default: 'ชิ้น',
       required: [true, 'A product requires a unit of measure in Thai.'],
       trim: true,
     },
