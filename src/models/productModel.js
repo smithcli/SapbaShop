@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
   department: {
     en: {
       type: String,
-      required: [true, 'A product must belong to a department'],
+      required: [true, 'A product must belong to a department in English.'],
       enum: {
         values: [
           'Grocery',
@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema({
     },
     th: {
       type: String,
-      required: [true, 'A product must belong to a department'],
+      required: [true, 'A product must belong to a department in Thai.'],
       enum: {
         values: [
           'Grocery',
@@ -44,7 +44,7 @@ const productSchema = new mongoose.Schema({
     },
     th: {
       type: String,
-      required: [true, 'A product name is required.'],
+      required: [true, 'A product name is required in Thai.'],
       trim: true,
     },
   },
@@ -85,3 +85,7 @@ const productSchema = new mongoose.Schema({
     th: { type: [String], trim: true },
   },
 });
+
+const Product = mongoose.model('Product', productSchema);
+
+module.exports = Product;
