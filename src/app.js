@@ -2,8 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const storeRouter = require('./routes/storeRouter')
-//const userRouter = require('./routes/userRouter')
+const storeRouter = require('./routes/storeRouter');
+const userRouter = require('./routes/userRouter');
 //const productRouter = require('./routes/productRouter')
 
 const app = express();
@@ -15,11 +15,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Body Parser, reading data from body into req.body
-app.use(express.json())
+app.use(express.json());
 
 // 2) Routes
 app.use('/api/v1/stores', storeRouter);
-//users, userRouter
+app.use('/api/v1/users', userRouter);
 //products, productRouter
 
 // 3) Error Handling Middlewares
