@@ -4,7 +4,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const storeRouter = require('./routes/storeRouter');
 const userRouter = require('./routes/userRouter');
-//const productRouter = require('./routes/productRouter')
+const productRouter = require('./routes/productRouter');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(express.json());
 // 2) Routes
 app.use('/api/v1/stores', storeRouter);
 app.use('/api/v1/users', userRouter);
-//products, productRouter
+app.use('/api/v1/products', productRouter);
 
 // 3) Error Handling Middlewares
 // Throw new error for any undefined routes

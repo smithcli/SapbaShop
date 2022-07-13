@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
           'Health and Wellness',
           'Household',
         ],
-        message: `A product must belong to one of these departments ${values}`,
+        message: '{VALUE} is not a supported department',
       },
     },
     th: {
@@ -32,7 +32,7 @@ const productSchema = new mongoose.Schema({
           'สินค้าเพื่อสุขภาพ',
           'อุปกรณ์และของใช้ในครัวเรือน',
         ],
-        message: `A product must belong to one of these departments ${values}`,
+        message: '{VALUE} is not a supported department',
       },
     },
   },
