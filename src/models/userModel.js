@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   store: {
@@ -50,12 +50,17 @@ const userSchema = new mongoose.Schema({
 });
 
 // Store password as a hash, if password was modified
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 12)
+  this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
   next();
-})
+});
+
+// Check if password matches the user's hashed password.
+userSchema.methods.checkPassword = async function (attemptPass, userPass) {
+  return await bcrypt.compare(attemptPass, userPass);
+};
 
 const User = mongoose.model('User', userSchema);
 
