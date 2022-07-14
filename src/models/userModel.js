@@ -62,6 +62,15 @@ userSchema.methods.checkPassword = async function (attemptPass, userPass) {
   return await bcrypt.compare(attemptPass, userPass);
 };
 
+// Check if password has changed since jwt timestamp.
+userSchema.methods.changedPasswordAfter = function (jwtTimeStamp) {
+  if (this.passwordChangedAt) {
+    const userPassChanged = this.passwordChangedAt.getTime() / 1000;
+    return userPassChanged > jwtTimeStamp;
+  }
+  return false;
+};
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

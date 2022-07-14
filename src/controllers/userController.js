@@ -37,7 +37,12 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
-  if (req.body.password || req.body.passwordConfirm) {
+  // Modifing directly does not run validators
+  if (
+    req.body.password ||
+    req.body.passwordConfirm ||
+    req.body.passwordChangedAt
+  ) {
     return next(new AppError(400, 'This route is not for password updates.'));
   }
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
