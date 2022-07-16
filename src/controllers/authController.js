@@ -23,15 +23,12 @@ const sendToken = (user, statusCode, res) => {
   };
   if (process.env.NODE_ENV === 'development') cookieOptions.secure = false;
   user.password = undefined;
+  user.active = undefined;
   res.cookie('jwt', token, cookieOptions);
   res.status(statusCode).json({
     status: 'success',
     data: {
-      user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      user
     },
   });
 };
