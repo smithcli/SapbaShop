@@ -4,6 +4,17 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
+router.post('/forgotPassword', authController.forgotPassword);
+router.patch('/resetPassword/:token', authController.resetPassword);
+router.patch(
+  '/updateMyPassword',
+  authController.requireAuth,
+  authController.updatePassword
+);
+router.patch('/updateMe', authController.requireAuth, userController.updateMe);
+
 router
   .route('/')
   .get(
@@ -34,10 +45,5 @@ router
     authController.restrictedTo('admin'),
     userController.deleteUser
   );
-
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
-router.post('/forgotPassword', authController.forgotPassword);
-router.patch('/resetPassword/:token', authController.resetPassword);
 
 module.exports = router;

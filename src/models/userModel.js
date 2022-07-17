@@ -58,6 +58,13 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// Add passwordChangedAt for updated passwords
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+  this.passwordChangedAt = Date.now() - 1000; // 1sec to avoid conflicts with jwt
+  next();
+});
+
 // Check if password matches the user's hashed password.
 userSchema.methods.checkPassword = async function (attemptPass, userPass) {
   return await bcrypt.compare(attemptPass, userPass);
@@ -89,7 +96,6 @@ userSchema.methods.changePassword = function (pass, passConf) {
   this.passwordConfirm = passConf;
   this.passwordResetToken = undefined;
   this.passwordResetExpires = undefined;
-  this.passwordChangedAt = Date.now();
 };
 
 const User = mongoose.model('User', userSchema);

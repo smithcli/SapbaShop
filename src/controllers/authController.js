@@ -167,3 +167,18 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 4) log in the user, send jwt
   sendToken(user, 200, res);
 });
+
+// Update Password for Users that are logged in.
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  // 1) Get user from db
+  const user = await User.findById(req.user._id).select('+password');
+  // 2) Require Current password and verify
+  if (!(await user.checkPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError(401, 'Current password is incorrect.'));
+  }
+  // 3) Update user with new password
+  user.changePassword(req.body.password, req.body.passwordConfirm);
+  await user.save();
+  // 4) Send new jwt
+  sendToken(user, 200, res);
+});
