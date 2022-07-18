@@ -1,54 +1,21 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const User = require('../../src/models/userModel');
-const { api, verifyJWTCookie } = require('./userTestModules');
-const mongoose = require('mongoose');
-
-const userAdmin = {
-  role: 'admin',
-  name: 'admin',
-  email: 'getallusersadmin@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-
-const userManager = {
-  role: 'manager',
-  name: 'manager',
-  email: 'getallusersmanager@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-
-const userEmployee = {
-  role: 'employee',
-  name: 'employee',
-  email: 'getallusersemployee@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-
-const userCustomer = {
-  role: 'customer',
-  name: 'customer',
-  email: 'getalluserscustomer@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-const testUsers = [userAdmin, userManager, userEmployee, userCustomer];
+const utm = require('./userTestModules');
+const db = require('../dbHandler');
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGO_DATABASE_URL);
-  await User.deleteMany({});
-  await User.create(testUsers, { validateBeforeSave: false });
+  await db.dbConnect('getAllUsers');
+  await utm.addUsers();
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
+  await db.dbDisconnect();
 });
 
 describe(`GET /users`, () => {
-  const route = `${api}/users`;
+  const route = `${utm.api}/users`;
+  const loginRoute = `${utm.api}/users/login`;
+
   it('Should NOT allow un-authenticated users access', async () => {
     const res = await request(app).get(route);
     expect(401);
@@ -58,11 +25,11 @@ describe(`GET /users`, () => {
   });
 
   it('Should NOT allow auth Customers access', async () => {
-    const loginRes = await request(app).post(`${api}/users/login`).send({
-      email: userCustomer.email,
-      password: userCustomer.password,
+    const loginRes = await request(app).post(loginRoute).send({
+      email: utm.userCustomer.email,
+      password: utm.userCustomer.password,
     });
-    const jwt = verifyJWTCookie(loginRes);
+    const jwt = utm.verifyJWTCookie(loginRes);
     const getRes = await request(app).get(route).set('cookie', jwt);
     expect(403);
     expect(getRes.body.message).toBe(
@@ -71,32 +38,31 @@ describe(`GET /users`, () => {
   });
 
   it('Should auth Employees access', async () => {
-    const loginRes = await request(app).post(`${api}/users/login`).send({
-      email: userEmployee.email,
-      password: userEmployee.password,
+    const loginRes = await request(app).post(loginRoute).send({
+      email: utm.userEmployee.email,
+      password: utm.userEmployee.password,
     });
-    const jwt = verifyJWTCookie(loginRes);
+    const jwt = utm.verifyJWTCookie(loginRes);
     await request(app).get(route).set('cookie', jwt);
-    console.log(getRes.body);
     expect(200);
   });
 
   it('Should auth Managers access', async () => {
-    const loginRes = await request(app).post(`${api}/users/login`).send({
-      email: userManager.email,
-      password: userManager.password,
+    const loginRes = await request(app).post(loginRoute).send({
+      email: utm.userManager.email,
+      password: utm.userManager.password,
     });
-    const jwt = verifyJWTCookie(loginRes);
+    const jwt = utm.verifyJWTCookie(loginRes);
     await request(app).get(route).set('cookie', jwt);
     expect(200);
   });
 
   it('Should auth Admin access', async () => {
-    const loginRes = await request(app).post(`${api}/users/login`).send({
-      email: userAdmin.email,
-      password: userAdmin.password,
+    const loginRes = await request(app).post(loginRoute).send({
+      email: utm.userAdmin.email,
+      password: utm.userAdmin.password,
     });
-    const jwt = verifyJWTCookie(loginRes);
+    const jwt = utm.verifyJWTCookie(loginRes);
     await request(app).get(route).set('cookie', jwt);
     expect(200);
   });

@@ -1,48 +1,47 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const User = require('../../src/models/userModel');
-const { api, verifyJWTCookie } = require('./userTestModules');
-const mongoose = require('mongoose');
+const db = require('../dbHandler');
+const utm = require('./userTestModules');
 
 const userOne = {
-  name: 'signupuser',
-  email: 'signupuser@sapbashop.com',
+  name: 'new customer',
+  email: 'newcustomer@sapbashop.com',
   password: 'pass1234',
   passwordConfirm: 'pass1234',
 };
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGO_DATABASE_URL);
-  await User.deleteMany({});
+  await db.dbConnect('signup');
+  await utm.addUsers();
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
+  await db.dbDisconnect();
 });
 
 describe(`POST /users/signup Tests`, () => {
-  const route = `${api}/users/signup`;
+  const route = `${utm.api}/users/signup`;
 
   it('Should signup a new user and get JWT Cookie', async () => {
     const response = await request(app).post(route).send(userOne);
     expect(201);
     expect(response.body.data.user).toHaveProperty('name', userOne.name);
     expect(response.body.data.user).toHaveProperty('email', userOne.email);
-    verifyJWTCookie(response);
+    utm.verifyJWTCookie(response);
   });
 
   it('Should not allow user to sign up with existing email', async () => {
     const response = await request(app).post(route).send({
-      name: 'john two',
-      email: userOne.email,
-      password: userOne.password,
-      passwordConfirm: userOne.passwordConfirm,
+      name: 'new customer',
+      email: utm.userCustomer.email,
+      password: 'pass1234',
+      passwordConfirm: 'pass1234',
     });
     expect(400);
     expect(response.body).toHaveProperty('status', 'fail');
     expect(response.body).toHaveProperty(
       'message',
-      `${userOne.email} already exists. Please use another value.`
+      `${utm.userCustomer.email} already exists. Please use another value.`
     );
   });
 });
