@@ -50,6 +50,8 @@ const userSchema = new mongoose.Schema({
   passwordResetExpires: Date,
 });
 
+// TODO: Store ID validation - ensure it matches to a store
+
 // Store password as a hash, if password was modified
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
@@ -62,6 +64,12 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password') || this.isNew) return next();
   this.passwordChangedAt = Date.now() - 1000; // 1sec to avoid conflicts with jwt
+  next();
+});
+
+// Do not allow users with active = false to be queried
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
   next();
 });
 

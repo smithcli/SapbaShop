@@ -23,6 +23,8 @@ const duplicateFieldsHandler = (err) => {
   return new AppError(400, message);
 };
 
+// TODO: Store association error during updateMe (BSONTypeError)
+
 const sendErrorProd = (err, res) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
