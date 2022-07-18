@@ -51,12 +51,10 @@ const productSchema = new mongoose.Schema({
   description: {
     en: {
       type: String,
-      required: [true, 'A product description is required in English.'],
       trim: true,
     },
     th: {
       type: String,
-      required: [true, 'A product description is required in Thai.'],
       trim: true,
     },
   },
@@ -77,6 +75,10 @@ const productSchema = new mongoose.Schema({
       required: [true, 'A product requires a unit of measure in Thai.'],
       trim: true,
     },
+  },
+  size: {
+    type: String,
+    enum: ['XS', 'S', 'M', 'L', 'XL'],
   },
   count: Number,
   images: [String],
