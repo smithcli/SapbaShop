@@ -37,8 +37,12 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
-  // Modifing directly does not run validators
-  if (req.body.password || req.body.passwordConfirm) {
+  // Admin should not change passwords directly. Users can use forgot password function.
+  if (
+    req.body.password ||
+    req.body.passwordConfirm ||
+    req.body.passwordChangedAt
+  ) {
     return next(new AppError(400, 'This route is not for password updates.'));
   }
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -68,6 +72,9 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(new AppError(400, 'This route is not for password updates.'));
+  }
   const user = await User.findByIdAndUpdate(
     req.user._id,
     {
@@ -89,5 +96,13 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     data: {
       user,
     },
+  });
+});
+
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user._id, { active: false });
+  res.status(204).json({
+    status: 'success',
+    data: null,
   });
 });
