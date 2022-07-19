@@ -48,6 +48,9 @@
   "jest": {
     "testEnvironment": "node",
     "globalSetup": "<rootDir>/tests/config/globalSetup.js",
-    "globalTeardown": "<rootDir>/tests/config/globalTeardown.js"
+    "globalTeardown": "<rootDir>/tests/config/globalTeardown.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/dbHandler.js"
+    ]
   }
 }

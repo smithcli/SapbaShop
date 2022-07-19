@@ -1,17 +1,8 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const utm = require('./userTestModules');
-const db = require('../dbHandler');
 
-beforeAll(async () => {
-  // param is the db name = test-action, must be unqiue for Jest concurrency
-  await db.dbConnect('test-getUser');
-  await utm.addUsers();
-});
-
-afterAll(async () => {
-  await db.dbDisconnect();
-});
+process.env.TEST_SUITE = 'test-getUser';
 
 describe(`GET /users/:id (test-getUser)`, () => {
   const id = utm.userCustomerTwo._id;

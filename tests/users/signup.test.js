@@ -1,7 +1,8 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const db = require('../dbHandler');
 const utm = require('./userTestModules');
+
+process.env.TEST_SUITE = 'test-signup';
 
 const userSignup = {
   name: 'signup customer',
@@ -9,16 +10,6 @@ const userSignup = {
   password: 'pass1234',
   passwordConfirm: 'pass1234',
 };
-
-beforeAll(async () => {
-  // param is the db name = test-action, must be unqiue for Jest concurrency
-  await db.dbConnect('test-signup');
-  await utm.addUsers();
-});
-
-afterAll(async () => {
-  await db.dbDisconnect();
-});
 
 describe(`POST /users/signup (test-signup)`, () => {
   const route = `${utm.api}/users/signup`;

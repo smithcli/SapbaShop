@@ -1,16 +1,8 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const utm = require('./userTestModules');
-const db = require('../dbHandler');
 
-beforeAll(async () => {
-  await db.dbConnect('test-login');
-  await utm.addUsers();
-});
-
-afterAll(async () => {
-  await db.dbDisconnect();
-});
+process.env.TEST_SUITE = 'test-login';
 
 describe(`POST /users/login (test-login)`, () => {
   const route = `${utm.api}/users/login`;
