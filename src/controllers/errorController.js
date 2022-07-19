@@ -64,6 +64,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
   if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
+    error.name = err.name;
     error.message = err.message;
     if (error.name === 'CastError') error = castErrorHandler(error);
     if (error.name === 'ValidationError') error = validatorErrorHandler(error);
