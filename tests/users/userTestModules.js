@@ -1,3 +1,5 @@
+const request = require('supertest');
+const app = require('../../src/app');
 const cookieParser = require('cookie-parse');
 const mongoose = require('mongoose');
 const User = require('../../src/models/userModel');
@@ -15,6 +17,26 @@ exports.verifyJWTCookie = (response) => {
   const actualExp = new Date(cookie.Expires).toLocaleDateString();
   expect(actualExp).toEqual(expectedExp.toLocaleDateString());
   return `jwt=${cookie.jwt}`;
+};
+
+exports.getJWT = async (user) => {
+  const loginRoute = `${this.api}/users/login`;
+  const loginRes = await request(app).post(loginRoute).send({
+    email: user.email,
+    password: user.password,
+  });
+  return this.verifyJWTCookie(loginRes);
+};
+
+exports.addUsers = async () => {
+  const testUsers = [
+    this.userAdmin,
+    this.userManager,
+    this.userEmployee,
+    this.userCustomer,
+    this.userCustomerTwo,
+  ];
+  await User.create(testUsers);
 };
 
 exports.userAdmin = {
@@ -53,12 +75,11 @@ exports.userCustomer = {
   passwordConfirm: 'pass1234',
 };
 
-exports.addUsers = async () => {
-  const testUsers = [
-    this.userAdmin,
-    this.userManager,
-    this.userEmployee,
-    this.userCustomer,
-  ];
-  await User.create(testUsers, { validateBeforeSave: false });
+exports.userCustomerTwo = {
+  _id: new mongoose.Types.ObjectId(),
+  role: 'customer',
+  name: 'customertwo',
+  email: 'customertwo@sapbashop.com',
+  password: 'pass1234',
+  passwordConfirm: 'pass1234',
 };
