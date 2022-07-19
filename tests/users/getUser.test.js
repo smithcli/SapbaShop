@@ -25,22 +25,19 @@ describe(`GET /users/:id (test-getUser)`, () => {
 
   it('Should auth Employees access', async () => {
     const jwt = await utm.getJWT(utm.userEmployee);
-    const getRes = await request(app).get(route).set('cookie', jwt);
-    expect(200);
+    const getRes = await request(app).get(route).set('cookie', jwt).expect(200);
     expect(getRes.body.data.user.email).toBe(utm.userCustomerTwo.email);
   });
 
   it('Should auth Managers access', async () => {
     const jwt = await utm.getJWT(utm.userManager);
-    const getRes = await request(app).get(route).set('cookie', jwt);
-    expect(200);
+    const getRes = await request(app).get(route).set('cookie', jwt).expect(200);
     expect(getRes.body.data.user.email).toBe(utm.userCustomerTwo.email);
   });
 
   it('Should auth Admin access', async () => {
     const jwt = await utm.getJWT(utm.userAdmin);
-    const getRes = await request(app).get(route).set('cookie', jwt);
-    expect(200);
+    const getRes = await request(app).get(route).set('cookie', jwt).expect(200);
     expect(getRes.body.data.user.email).toBe(utm.userCustomerTwo.email);
   });
 });

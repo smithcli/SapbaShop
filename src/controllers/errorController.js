@@ -23,6 +23,13 @@ const duplicateFieldsHandler = (err) => {
   return new AppError(400, message);
 };
 
+const immutableFieldHandler = (err) => {
+  const search = 'field';
+  const field = err.message.slice(err.message.lastIndexOf(search));
+  const message = `Invalid input data. You cannot modify ${field}.`;
+  return new AppError(400, message);
+};
+
 // TODO: Store association error during updateMe (BSONTypeError)
 
 const sendErrorProd = (err, res) => {
@@ -61,6 +68,7 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'CastError') error = castErrorHandler(error);
     if (error.name === 'ValidationError') error = validatorErrorHandler(error);
     if (error.code === 11000) error = duplicateFieldsHandler(error);
+    if (error.code === 66) error = immutableFieldHandler(error);
     sendErrorProd(error, res);
   } else if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
