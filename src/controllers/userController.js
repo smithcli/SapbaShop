@@ -28,12 +28,15 @@ exports.getUser = catchAsync(async (req, res, next) => {
 
 exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      user: newUser,
-    },
-  });
+  if (newUser) {
+    const { password, active, ...user } = newUser._doc;
+    res.status(201).json({
+      status: 'success',
+      data: {
+        user: user,
+      },
+    });
+  }
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
