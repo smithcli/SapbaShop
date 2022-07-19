@@ -1,29 +1,22 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const utm = require('./userTestModules');
+const mongoose = require('mongoose');
 const { reqAuth } = require('../shared_tests/reqAuth');
 
-process.env.TEST_SUITE = 'test-createUser';
+process.env.TEST_SUITE = 'test-deleteUser';
 
-const userOne = {
-  role: 'employee',
-  name: 'createUser route',
-  email: 'create_user@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
+describe(`DELETE /users/:id (test-deleteUser)`, () => {
+  const id = utm.userEmployee._id;
+  const route = `${utm.api}/users/${id}`;
 
-describe(`POST /users (test-createUser)`, () => {
-  const route = `${utm.api}/users`;
-
-  reqAuth('post', route, userOne);
+  reqAuth('delete', route);
 
   it('Should NOT allow auth Customers access', async () => {
     const jwt = await utm.getJWT(utm.userCustomer);
     const getRes = await request(app)
-      .post(route)
+      .delete(route)
       .set('cookie', jwt)
-      .send(userOne)
       .expect(403);
     expect(getRes.body.message).toBe(
       'You do not have permission to perform this action.'
@@ -33,9 +26,8 @@ describe(`POST /users (test-createUser)`, () => {
   it('Should NOT allow Employees access', async () => {
     const jwt = await utm.getJWT(utm.userEmployee);
     const getRes = await request(app)
-      .post(route)
+      .delete(route)
       .set('cookie', jwt)
-      .send(userOne)
       .expect(403);
     expect(getRes.body.message).toBe(
       'You do not have permission to perform this action.'
@@ -45,37 +37,29 @@ describe(`POST /users (test-createUser)`, () => {
   it('Should NOT allow Managers access', async () => {
     const jwt = await utm.getJWT(utm.userManager);
     const getRes = await request(app)
-      .post(route)
+      .delete(route)
       .set('cookie', jwt)
-      .send(userOne)
       .expect(403);
     expect(getRes.body.message).toBe(
       'You do not have permission to perform this action.'
     );
   });
 
-  it('Should allow Admin to create user', async () => {
+  it('Should allow Admin to delete user', async () => {
     const jwt = await utm.getJWT(utm.userAdmin);
     const getRes = await request(app)
-      .post(route)
+      .delete(route)
       .set('cookie', jwt)
-      .send(userOne)
-      .expect(201);
-    expect(getRes.body.data.user.email).toBe(userOne.email);
-    expect(getRes.body.data.user.role).toBe(userOne.role);
+      .expect(204);
   });
 
-  it('Should NOT allow user to be created with existing email', async () => {
-    const { _id, ...user } = utm.userEmployee;
+  it('Should throw CastError with invalid Id', async () => {
+    const invalidID = '62cdfe320bb1f4d7cfd9c7c';
     const jwt = await utm.getJWT(utm.userAdmin);
     const getRes = await request(app)
-      .post(route)
+      .delete(`${utm.api}/users/${invalidID}`)
       .set('cookie', jwt)
-      .send(user)
       .expect(400);
-    expect(getRes.body).toHaveProperty(
-      'message',
-      `${utm.userEmployee.email} already exists. Please use another value.`
-    );
+    expect(getRes.body.message).toBe('Invalid _id: 62cdfe320bb1f4d7cfd9c7c');
   });
 });

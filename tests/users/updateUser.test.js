@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require('../../src/app');
 const utm = require('./userTestModules');
 const User = require('../../src/models/userModel');
+const { reqAuth } = require('../shared_tests/reqAuth');
 
 process.env.TEST_SUITE = 'test-updateUser';
 
@@ -23,12 +24,7 @@ describe(`PATCH /users/:id (test-createUser)`, () => {
   const id = utm.userEmployee._id;
   const route = `${utm.api}/users/${id}`;
 
-  it('Should NOT allow un-authenticated users access', async () => {
-    const res = await request(app).patch(route).send(userUpdate).expect(401);
-    expect(res.body.message).toBe(
-      'You are not logged in. Please log in to get access.'
-    );
-  });
+  reqAuth('patch', route, userUpdate);
 
   it('Should NOT allow auth Customers access', async () => {
     const jwt = await utm.getJWT(utm.userCustomer);

@@ -1,18 +1,14 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const utm = require('./userTestModules');
+const { reqAuth } = require('../shared_tests/reqAuth');
 
 process.env.TEST_SUITE = 'test-getAllUsers';
 
 describe(`GET /users (test-getAllUsers)`, () => {
   const route = `${utm.api}/users`;
 
-  it('Should NOT allow un-authenticated users access', async () => {
-    const res = await request(app).get(route).expect(401);
-    expect(res.body.message).toBe(
-      'You are not logged in. Please log in to get access.'
-    );
-  });
+  reqAuth('get', route);
 
   it('Should NOT allow auth Customers access', async () => {
     const jwt = await utm.getJWT(utm.userCustomer);
