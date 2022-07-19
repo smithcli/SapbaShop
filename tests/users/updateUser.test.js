@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const utm = require('./userTestModules');
+const utm = require('../shared_tests/userTestModules');
 const User = require('../../src/models/userModel');
 const { reqAuth } = require('../shared_tests/reqAuth');
 

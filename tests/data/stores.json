@@ -1,0 +1,77 @@
+[
+  {
+    "bnum": {
+      "en": "51",
+      "th": "51"
+    },
+    "street": {
+      "en": "Mae Rim-Samoeng Old Road",
+      "th": "ถ.แม่สาย-แม่ริม"
+    },
+    "district": {
+      "en": "Mae Rim",
+      "th": "แม่ริม"
+    },
+    "province": {
+      "en": "Chiang Mai",
+      "th": "เชียงใหม่"
+    },
+    "country": {
+      "en": "Thailand",
+      "th": "ไทย"
+    },
+    "zip": 50180,
+    "phone": 53892118,
+    "coords": []
+  },
+  {
+    "bnum": {
+      "en": "568 Moo 7",
+      "th": "568 หมู่ 7"
+    },
+    "street": {
+      "en": "Chiang Mai-Hangdong Rd.",
+      "th": "ถ.เชียงใหม่-หางดง"
+    },
+    "district": {
+      "en": "Hang Dong",
+      "th": "หางดง"
+    },
+    "province": {
+      "en": "Chiang Mai",
+      "th": "เชียงใหม่"
+    },
+    "country": {
+      "en": "Thailand",
+      "th": "ไทย"
+    },
+    "zip": 50230,
+    "phone": 53621789,
+    "coords": []
+  },
+  {
+    "bnum": {
+      "en": "6",
+      "th": "6"
+    },
+    "street": {
+      "en": "6 Phrapokklao Rd.",
+      "th": "6 พระปกเกล้า"
+    },
+    "district": {
+      "en": "Prasingh, Muang, Old City",
+      "th": "ต.พระสิงห์ อ.เมือง, เขตเมืองเก่า"
+    },
+    "province": {
+      "en": "Chiang Mai",
+      "th": "เชียงใหม่"
+    },
+    "country": {
+      "en": "Thailand",
+      "th": "ไทย"
+    },
+    "zip": 50200,
+    "phone": 53712387,
+    "coords": []
+  }
+]

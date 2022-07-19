@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
-const utm = require('./users/userTestModules');
+const { addUsers } = require('./shared_tests/userTestModules');
+const { addStores } = require('./shared_tests/storeTestModules');
 
 beforeAll(async () => {
   checkForTEST_SUITE();
   await mongoose.connect(process.env.MONGO_DATABASE_URL, {
     dbName: process.env.TEST_SUITE,
   });
-  await utm.addUsers();
+  await addUsers();
+  await addStores();
 });
 
 afterAll(async () => {

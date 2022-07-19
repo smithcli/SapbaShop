@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const utm = require('./userTestModules');
+const utm = require('../shared_tests/userTestModules');
 
 process.env.TEST_SUITE = 'test-signup';
 

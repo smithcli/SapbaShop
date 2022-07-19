@@ -10,7 +10,8 @@
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development nodemon src/server.js",
     "dev-pro": "NODE_ENV=production nodemon src/server.js",
-    "test": "NODE_ENV=production jest"
+    "test": "NODE_ENV=production jest",
+    "test-watch": "NODE_ENV=production jest --watch"
   },
   "repository": {
     "type": "git",

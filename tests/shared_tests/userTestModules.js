@@ -28,6 +28,22 @@ exports.getJWT = async (user) => {
   return this.verifyJWTCookie(loginRes);
 };
 
+exports.jwtCustomer = async () => {
+  return await this.getJWT(this.userCustomer);
+};
+
+exports.jwtEmployee = async () => {
+  return await this.getJWT(this.userEmployee);
+};
+
+exports.jwtManager = async () => {
+  return await this.getJWT(this.userManager);
+};
+
+exports.jwtAdmin = async () => {
+  return await this.getJWT(this.userAdmin);
+};
+
 exports.addUsers = async () => {
   const testUsers = [
     this.userAdmin,
