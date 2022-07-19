@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const Store = require('./storeModel');
+const AppError = require('../utils/appError');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   store: {
@@ -22,6 +25,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'User email is required'],
     unique: true,
     lowercase: true,
+    validate: [validator.isEmail, 'Please enter a valid email'],
   },
   photo: String,
   active: {
@@ -50,7 +54,13 @@ const userSchema = new mongoose.Schema({
   passwordResetExpires: Date,
 });
 
-// TODO: Store ID validation - ensure it matches to a store
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('store') || !this.store) return next();
+  if (!(await Store.findById(this.store))) {
+    return next(new AppError(404, `${this.store} is not a valid store.`));
+  }
+  next();
+});
 
 // Store password as a hash, if password was modified
 userSchema.pre('save', async function (next) {
