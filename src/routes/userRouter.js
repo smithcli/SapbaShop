@@ -13,9 +13,6 @@ router.patch(
   authController.requireAuth,
   authController.updatePassword
 );
-router.patch('/updateMe', authController.requireAuth, userController.updateMe);
-router.delete('/deleteMe', authController.requireAuth, userController.deleteMe);
-// TODO: GET ME
 
 router
   .route('/')
@@ -29,6 +26,12 @@ router
     authController.restrictedTo('admin'),
     userController.createUser
   );
+
+router
+  .route('/me')
+  .get(authController.requireAuth, userController.getMe)
+  .patch(authController.requireAuth, userController.updateMe)
+  .delete(authController.requireAuth, userController.deleteMe);
 
 router
   .route('/:id')
