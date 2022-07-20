@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Store = require('./storeModel');
+const AppError = require('../utils/appError');
 
 const productSchema = new mongoose.Schema({
   store: {
@@ -18,6 +20,7 @@ const productSchema = new mongoose.Schema({
           'Health and Wellness',
           'Household',
         ],
+        message: '{VALUE} is not a valid department',
       },
     },
     th: {
@@ -31,6 +34,7 @@ const productSchema = new mongoose.Schema({
           'สินค้าเพื่อสุขภาพ',
           'อุปกรณ์และของใช้ในครัวเรือน',
         ],
+        message: '{VALUE} is not a valid department',
       },
     },
   },
@@ -84,6 +88,14 @@ const productSchema = new mongoose.Schema({
     en: { type: [String], trim: true },
     th: { type: [String], trim: true },
   },
+});
+
+productSchema.pre('save', async function (next) {
+  if (!this.isModified('store') || !this.store) return next();
+  if (!(await Store.findById(this.store))) {
+    return next(new AppError(404, `${this.store} is not a valid store.`));
+  }
+  next();
 });
 
 const Product = mongoose.model('Product', productSchema);

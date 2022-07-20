@@ -8,3 +8,9 @@ const allProducts = JSON.parse(
 exports.addProducts = async () => {
   await Product.create(allProducts);
 };
+
+exports.groceryPro = allProducts[0];
+exports.clothPro = allProducts[18];
+exports.personalPro = allProducts[47];
+exports.wellnessPro = allProducts[60];
+exports.housePro = allProducts[70];
