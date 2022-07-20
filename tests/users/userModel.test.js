@@ -1,5 +1,6 @@
 const User = require('../../src/models/userModel');
 const { storeTwo } = require('../shared_tests/storeTestModules');
+const utm = require('../shared_tests/userTestModules');
 
 process.env.TEST_SUITE = 'test-userModel';
 
@@ -19,18 +20,25 @@ beforeEach(async () => {
   }
   userTest = Object.assign({}, userModel);
 });
-
-const checkProperties = (user, testUser) => {
+const checkUserProperties = (user, testUser) => {
+  expect(user).toHaveProperty('store');
   expect(user).toHaveProperty('role', testUser.role);
   expect(user).toHaveProperty('name', testUser.name);
   expect(user).toHaveProperty('email', testUser.email);
+  expect(user).toHaveProperty('photo');
+  expect(user).toHaveProperty('active', true);
+  expect(user).toHaveProperty('password');
+  expect(user.password).toMatch(/^\$2[ayb]\$.{56}$/);
+  expect(user).toHaveProperty('passwordChangedAt');
+  expect(user).toHaveProperty('passwordResetToken', undefined);
+  expect(user).toHaveProperty('passwordChangedAt', undefined);
 };
 
 describe('User Model Test', () => {
   it('Should create a user with the required fields', async () => {
     const user = await User.create(userTest);
     expect(user).toBeInstanceOf(User);
-    checkProperties(user, userTest);
+    checkUserProperties(user, userTest);
   });
 
   it('If role is not given it should default to customer', async () => {
@@ -105,7 +113,7 @@ describe('User Model Test', () => {
   it('A store can be assigned during User creation', async () => {
     userTest.store = storeTwo._id;
     const user = await User.create(userTest);
-    checkProperties(user, userTest);
+    checkUserProperties(user, userTest);
     expect(decodeURI(user.store)).toBe(storeTwo._id);
   });
 

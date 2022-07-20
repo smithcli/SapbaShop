@@ -52,8 +52,19 @@ exports.addUsers = async () => {
   await User.create(allUsers);
 };
 
-exports.userAdmin = allUsers[0]
-exports.userManager = allUsers[1]
-exports.userEmployee = allUsers[2]
-exports.userCustomer = allUsers[3]
-exports.userCustomerTwo = allUsers[4]
+exports.userAdmin = allUsers[0];
+exports.userManager = allUsers[1];
+exports.userEmployee = allUsers[2];
+exports.userCustomer = allUsers[3];
+exports.userCustomerTwo = allUsers[4];
+
+exports.checkUserResponse = (res, userTest) => {
+  expect(res.body.data.user).toHaveProperty('_id');
+  expect(res.body.data.user).toHaveProperty('store', userTest.store);
+  expect(res.body.data.user).toHaveProperty('role', userTest.role);
+  expect(res.body.data.user).toHaveProperty('name', userTest.name);
+  expect(res.body.data.user).toHaveProperty('email', userTest.email);
+  expect(res.body.data.user).not.toHaveProperty('password');
+  expect(res.body.data.user).not.toHaveProperty('passwordConfirm');
+  expect(res.body.data.user).not.toHaveProperty('active');
+};
