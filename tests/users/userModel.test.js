@@ -1,4 +1,5 @@
 const User = require('../../src/models/userModel');
+const { storeTwo } = require('../shared_tests/storeTestModules');
 
 process.env.TEST_SUITE = 'test-userModel';
 
@@ -101,8 +102,12 @@ describe('User Model Test', () => {
     });
   });
 
-  //TODO: add valid store ID
-  it.todo('A store can assigned during User creation');
+  it('A store can be assigned during User creation', async () => {
+    userTest.store = storeTwo._id;
+    const user = await User.create(userTest);
+    checkProperties(user, userTest);
+    expect(decodeURI(user.store)).toBe(storeTwo._id);
+  });
 
   it('User store must be a valid id', async () => {
     userTest.store = '62d5da789de84f9f98a126';
