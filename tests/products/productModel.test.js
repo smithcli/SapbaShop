@@ -13,26 +13,12 @@ beforeEach(async () => {
   productTest = JSON.parse(JSON.stringify(product)); //deep copy needed
 });
 
-const checkProperties = (product, testProduct) => {
-  expect(product).toHaveProperty('_id');
-  expect(decodeURI(product.store)).toBe(testProduct.store);
-  expect(product.department).toMatchObject(testProduct.department);
-  expect(product.name).toMatchObject(testProduct.name);
-  expect(product.description).toMatchObject(testProduct.description);
-  expect(product.price).toBe(testProduct.price);
-  expect(product.unit).toMatchObject(testProduct.unit);
-  expect(product.size).toBe(testProduct.size);
-  expect(product.count).toBe(testProduct.count);
-  expect(product).toHaveProperty('images');
-  expect(product).toHaveProperty('tags');
-};
-
 describe('Product Model Tests', () => {
   // Create a Product
   it('Should create a product', async () => {
     const product = await Product.create(productTest);
     expect(product).toBeInstanceOf(Product);
-    checkProperties(product, productTest);
+    ptm.checkProperties(product, productTest);
   });
 
   // Store - Req
