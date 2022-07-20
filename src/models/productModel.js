@@ -18,7 +18,6 @@ const productSchema = new mongoose.Schema({
           'Health and Wellness',
           'Household',
         ],
-        message: '{VALUE} is not a supported department',
       },
     },
     th: {
@@ -32,7 +31,6 @@ const productSchema = new mongoose.Schema({
           'สินค้าเพื่อสุขภาพ',
           'อุปกรณ์และของใช้ในครัวเรือน',
         ],
-        message: '{VALUE} is not a supported department',
       },
     },
   },
@@ -65,7 +63,7 @@ const productSchema = new mongoose.Schema({
   unit: {
     en: {
       type: String,
-      default: 'EA',
+      default: 'ea',
       required: [true, 'A product requires a unit of measure in English.'],
       trim: true,
     },

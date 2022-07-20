@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { addUsers } = require('./shared_tests/userTestModules');
 const { addStores } = require('./shared_tests/storeTestModules');
+const { addProducts } = require('./shared_tests/productTestModules');
 
 beforeAll(async () => {
   checkForTEST_SUITE();
@@ -9,6 +10,7 @@ beforeAll(async () => {
   });
   await addUsers();
   await addStores();
+  await addProducts();
 });
 
 afterAll(async () => {
