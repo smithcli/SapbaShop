@@ -42,7 +42,7 @@ beforeEach(async () => {
   storeTest = Object.assign({}, storeModel);
 });
 
-describe(`PATCH /stores/:id (test-createStore)`, () => {
+describe(`PATCH /stores/:id (test-updateStore)`, () => {
   const id = stm.storeThree._id;
   const route = `${utm.api}/stores/${id}`;
   const req = 'patch';
@@ -50,6 +50,15 @@ describe(`PATCH /stores/:id (test-createStore)`, () => {
   auth.reqAuth(req, route, storeTest);
   auth.noCustomerAuth(req, route, storeTest);
   auth.noEmployeeAuth(req, route, storeTest);
+
+  it('Should allow Manager to update store', async () => {
+    const getRes = await request(app)
+      .patch(route)
+      .set('cookie', await utm.jwtManager())
+      .send(storeTest)
+      .expect(200);
+    expect(getRes.body.data.store.street).toMatchObject(storeModel.street);
+  });
 
   it('Should allow Admin to update store', async () => {
     const getRes = await request(app)
