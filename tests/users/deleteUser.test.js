@@ -1,49 +1,19 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const utm = require('../shared_tests/userTestModules');
-const mongoose = require('mongoose');
-const { reqAuth } = require('../shared_tests/reqAuth');
+const auth = require('../shared_tests/authTests');
 
 process.env.TEST_SUITE = 'test-deleteUser';
 
 describe(`DELETE /users/:id (test-deleteUser)`, () => {
   const id = utm.userEmployee._id;
   const route = `${utm.api}/users/${id}`;
+  const req = 'delete';
 
-  reqAuth('delete', route);
-
-  it('Should NOT allow auth Customers access', async () => {
-    const jwt = await utm.getJWT(utm.userCustomer);
-    const getRes = await request(app)
-      .delete(route)
-      .set('cookie', jwt)
-      .expect(403);
-    expect(getRes.body.message).toBe(
-      'You do not have permission to perform this action.'
-    );
-  });
-
-  it('Should NOT allow Employees access', async () => {
-    const jwt = await utm.getJWT(utm.userEmployee);
-    const getRes = await request(app)
-      .delete(route)
-      .set('cookie', jwt)
-      .expect(403);
-    expect(getRes.body.message).toBe(
-      'You do not have permission to perform this action.'
-    );
-  });
-
-  it('Should NOT allow Managers access', async () => {
-    const jwt = await utm.getJWT(utm.userManager);
-    const getRes = await request(app)
-      .delete(route)
-      .set('cookie', jwt)
-      .expect(403);
-    expect(getRes.body.message).toBe(
-      'You do not have permission to perform this action.'
-    );
-  });
+  auth.reqAuth(req, route);
+  auth.noCustomerAuth(req, route);
+  auth.noEmployeeAuth(req, route);
+  auth.noManagerAuth(req, route);
 
   it('Should allow Admin to delete user', async () => {
     const jwt = await utm.getJWT(utm.userAdmin);
