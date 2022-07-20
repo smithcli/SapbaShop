@@ -8,8 +8,9 @@ beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_DATABASE_URL, {
     dbName: process.env.TEST_SUITE,
   });
-  await addUsers();
+  // Order Matters for validation 1) Store!
   await addStores();
+  await addUsers();
   await addProducts();
 });
 

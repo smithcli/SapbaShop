@@ -1,0 +1,47 @@
+[
+  {
+    "_id": "62d7e3a12d87f39787295a52",
+    "store": "62d7448a42bc72ecc8a0726c",
+    "role": "admin",
+    "name": "admin",
+    "email": "admin@sapbashop.com",
+    "password": "pass1234",
+    "passwordConfirm": "pass1234"
+  },
+  {
+    "_id": "62d7e3a12d87f39787295a53",
+    "store": "62d7448a42bc72ecc8a0726c",
+    "role": "manager",
+    "name": "manager",
+    "email": "manager@sapbashop.com",
+    "password": "pass1234",
+    "passwordConfirm": "pass1234"
+  },
+  {
+    "_id": "62d7e3a12d87f39787295a54",
+    "store": "62d7448a42bc72ecc8a0726c",
+    "role": "employee",
+    "name": "employee",
+    "email": "employee@sapbashop.com",
+    "password": "pass1234",
+    "passwordConfirm": "pass1234"
+  },
+  {
+    "_id": "62d7e3a12d87f39787295a55",
+    "store": "62d7448a42bc72ecc8a0726c",
+    "role": "customer",
+    "name": "customer",
+    "email": "customer@sapbashop.com",
+    "password": "pass1234",
+    "passwordConfirm": "pass1234"
+  },
+  {
+    "_id": "62d7e3a12d87f39787295a56",
+    "store": "62d7448a42bc72ecc8a0726c",
+    "role": "customer",
+    "name": "customertwo",
+    "email": "customertwo@sapbashop.com",
+    "password": "pass1234",
+    "passwordConfirm": "pass1234"
+  }
+]

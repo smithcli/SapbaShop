@@ -1,7 +1,7 @@
+const fs = require('fs');
 const request = require('supertest');
 const app = require('../../src/app');
 const cookieParser = require('cookie-parse');
-const mongoose = require('mongoose');
 const User = require('../../src/models/userModel');
 
 exports.api = process.env.API_VERSION;
@@ -44,58 +44,16 @@ exports.jwtAdmin = async () => {
   return await this.getJWT(this.userAdmin);
 };
 
+const allUsers = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/tests/data/users.json`, 'utf8')
+);
+
 exports.addUsers = async () => {
-  const testUsers = [
-    this.userAdmin,
-    this.userManager,
-    this.userEmployee,
-    this.userCustomer,
-    this.userCustomerTwo,
-  ];
-  await User.create(testUsers);
+  await User.create(allUsers);
 };
 
-exports.userAdmin = {
-  _id: new mongoose.Types.ObjectId(),
-  role: 'admin',
-  name: 'admin',
-  email: 'admin@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-
-exports.userManager = {
-  _id: new mongoose.Types.ObjectId(),
-  role: 'manager',
-  name: 'manager',
-  email: 'manager@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-
-exports.userEmployee = {
-  _id: new mongoose.Types.ObjectId(),
-  role: 'employee',
-  name: 'employee',
-  email: 'employee@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-
-exports.userCustomer = {
-  _id: new mongoose.Types.ObjectId(),
-  role: 'customer',
-  name: 'customer',
-  email: 'customer@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
-
-exports.userCustomerTwo = {
-  _id: new mongoose.Types.ObjectId(),
-  role: 'customer',
-  name: 'customertwo',
-  email: 'customertwo@sapbashop.com',
-  password: 'pass1234',
-  passwordConfirm: 'pass1234',
-};
+exports.userAdmin = allUsers[0]
+exports.userManager = allUsers[1]
+exports.userEmployee = allUsers[2]
+exports.userCustomer = allUsers[3]
+exports.userCustomerTwo = allUsers[4]
