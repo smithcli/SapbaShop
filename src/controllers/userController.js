@@ -75,7 +75,6 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = catchAsync(async (req, res, next) => {
-  console.log(req.user);
   const user = await User.findById(req.user._id);
   res.status(200).json({
     status: 'success',
