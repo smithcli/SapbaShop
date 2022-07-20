@@ -16,19 +16,17 @@ describe(`DELETE /users/:id (test-deleteUser)`, () => {
   auth.noManagerAuth(req, route);
 
   it('Should allow Admin to delete user', async () => {
-    const jwt = await utm.getJWT(utm.userAdmin);
-    const getRes = await request(app)
+    await request(app)
       .delete(route)
-      .set('cookie', jwt)
+      .set('cookie', await utm.jwtAdmin())
       .expect(204);
   });
 
   it('Should throw CastError with invalid Id', async () => {
     const invalidID = '62cdfe320bb1f4d7cfd9c7c';
-    const jwt = await utm.getJWT(utm.userAdmin);
     const getRes = await request(app)
       .delete(`${utm.api}/users/${invalidID}`)
-      .set('cookie', jwt)
+      .set('cookie', await utm.jwtAdmin())
       .expect(400);
     expect(getRes.body.message).toBe('Invalid _id: 62cdfe320bb1f4d7cfd9c7c');
   });
