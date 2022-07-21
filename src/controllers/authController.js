@@ -126,7 +126,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     'host'
   )}/api/v1/users/resetPassword/${resetToken}`;
   //TODO: Change message after front-end developed to allow html
-  const message = `Forgot your Password?\n<PATCH with pass & pass confirm> at: ${resetURL}\nIf you didnt, please ignore this email.`;
+  const message = `Forgot your Password?\n<PATCH with pass & pass confirm> at:\n${resetURL}\nIf you didnt, please ignore this email.`;
   try {
     await sendmail({
       to: user.email,
