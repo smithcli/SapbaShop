@@ -49,9 +49,18 @@ const userSchema = new mongoose.Schema({
       message: 'Password confirmation does not match',
     },
   },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
+  passwordChangedAt: {
+    type: Date,
+    select: false,
+  },
+  passwordResetToken: {
+    type: String,
+    select: false,
+  },
+  passwordResetExpires: {
+    type: Date,
+    select: false,
+  },
 });
 
 userSchema.pre('save', async function (next) {
