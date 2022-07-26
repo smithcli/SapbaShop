@@ -1,4 +1,5 @@
 import { apiFetch } from './modules/apiFetch';
+import { showAlert } from './modules/alerts';
 
 const login = async (email, password) => {
   try {
@@ -7,7 +8,7 @@ const login = async (email, password) => {
       location.assign('/dashboard');
     }
   } catch (err) {
-    alert(err.message);
+    showAlert('fail', err.message);
   }
 };
 

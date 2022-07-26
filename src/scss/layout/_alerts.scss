@@ -1,0 +1,24 @@
+.alert {
+  position: fixed;
+  top: 10vh;
+  left: 50vw;
+  z-index: 9999;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: #eee;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  padding: 3rem 10rem;
+  border-radius: $border-radius;
+  @include box-shadow;
+
+  &-pass {
+    background-color: $color-alert-pass;
+  }
+
+  &-fail {
+    background-color: $color-alert-fail;
+  }
+}
