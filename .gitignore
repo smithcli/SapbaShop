@@ -1,5 +1,7 @@
 # App Specific
 scripts/
+src/**/*.map
+.parcel-cache
 
 # Below provided by Github
 # Logs

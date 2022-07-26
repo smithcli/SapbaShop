@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Inventory management web app",
   "main": "src/server.js",
+  "targets": {
+    "main": false
+  },
   "engines": {
     "node": ">=8.10.0"
   },
@@ -10,10 +13,11 @@
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development nodemon src/server.js",
     "dev-pro": "NODE_ENV=production nodemon src/server.js",
-    "dev-ui":"npm run dev & npm run scss",
+    "dev-ui": "npm run dev & npm run scss",
     "scss": "sass --watch src/scss/main.scss src/public/css/style.css",
     "test": "NODE_ENV=production jest",
-    "test-watch": "NODE_ENV=production jest --watch"
+    "test-watch": "NODE_ENV=production jest --watch",
+    "parcel-build": "parcel build src/public/js/login.js --dist-dir src/public/js/bundled"
   },
   "repository": {
     "type": "git",
@@ -48,6 +52,7 @@
     "morgan": "^1.10.0",
     "nodemailer-mock": "^1.5.12",
     "nodemon": "^2.0.19",
+    "parcel": "^2.6.2",
     "prettier": "^2.7.1",
     "sass": "^1.54.0",
     "supertest": "^6.2.4"

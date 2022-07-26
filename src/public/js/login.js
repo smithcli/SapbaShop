@@ -1,23 +1,13 @@
+import { apiFetch } from './modules/apiFetch';
+
 const login = async (email, password) => {
   try {
-    const res = await fetch('http://localhost:8000/api/v1/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    }).then((response) => response.json());
-    console.log(res)
+    const res = await apiFetch('/users/login', 'POST', { email, password });
     if (res.status === 'success') {
       location.assign('/dashboard');
-    } else {
-      throw new Error(res.message)
     }
   } catch (err) {
-    alert(err.message)
+    alert(err.message);
   }
 };
 
