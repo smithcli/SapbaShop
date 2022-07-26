@@ -1,0 +1,6 @@
+.main-dashboard {
+  @media (min-width: 1000px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Store = require('./storeModel');
 const AppError = require('../utils/appError');
+const slugify = require('slugify');
 
 const productSchema = new mongoose.Schema({
   store: {
@@ -88,9 +89,17 @@ const productSchema = new mongoose.Schema({
     en: { type: [String], trim: true },
     th: { type: [String], trim: true },
   },
+  slug: String,
 });
 
 //// MIDDLEWARE ////
+
+// Create slug for english name, to keep international
+productSchema.pre('save', function (next) {
+  this.slug = slugify(this.name.en, { lower: true });
+  next();
+});
+
 productSchema.pre('save', async function (next) {
   if (!this.isModified('store') || !this.store) return next();
   if (!(await Store.findById(this.store))) {

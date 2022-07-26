@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const storeSchema = new mongoose.Schema({
   bnum: {
     en: {
       type: String,
-      required: [true, 'A store must have a building number / village in English'],
+      required: [
+        true,
+        'A store must have a building number / village in English',
+      ],
       trim: true,
     },
     th: {
@@ -28,12 +32,18 @@ const storeSchema = new mongoose.Schema({
   district: {
     en: {
       type: String,
-      required: [true, 'A store must have a subdistrict, district or city in English'],
+      required: [
+        true,
+        'A store must have a subdistrict, district or city in English',
+      ],
       trim: true,
     },
     th: {
       type: String,
-      required: [true, 'A store must have a subdistrict, district or city in Thai'],
+      required: [
+        true,
+        'A store must have a subdistrict, district or city in Thai',
+      ],
       trim: true,
     },
   },
@@ -71,6 +81,15 @@ const storeSchema = new mongoose.Schema({
     required: [true, 'A store must have a phone number'],
   },
   coords: [Number],
+  slug: String,
+});
+
+//// MIDDLEWARE ////
+
+// Create slug for english name, to keep international
+storeSchema.pre('save', function (next) {
+  this.slug = slugify(`${this.bnum.en}, ${this.street.en}`, { lower: true });
+  next();
 });
 
 const Store = mongoose.model('Store', storeSchema);

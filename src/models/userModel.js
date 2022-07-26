@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const Store = require('./storeModel');
 const AppError = require('../utils/appError');
 const validator = require('validator');
+const slugify = require('slugify');
 
 const userSchema = new mongoose.Schema({
   store: {
@@ -61,6 +62,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     select: false,
   },
+  slug: String,
 });
 
 ////  METHODS ////
@@ -99,6 +101,12 @@ userSchema.methods.changePassword = function (pass, passConf) {
 };
 
 ////  MIDDLEWARE ////
+
+// Create slug - thai characters may not work
+userSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
 
 // Store id validator
 userSchema.pre('save', async function (next) {

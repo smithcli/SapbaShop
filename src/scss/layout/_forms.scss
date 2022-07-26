@@ -38,6 +38,7 @@
 
 .form__input {
   display: block;
+  -webkit-appearance: none; // needed for safari
   font-size: 1.5rem;
   padding: 1.25rem 1.75rem;
   border: none;
@@ -56,6 +57,7 @@
     outline: none;
     transform: scale(1.05);
     border-bottom: 3px solid $color-form-input-valid;
+    @include focus-shadow;
 
     &:invalid {
       border-bottom: 3px solid $color-form-input-invalid;
