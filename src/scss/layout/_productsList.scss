@@ -1,0 +1,47 @@
+// productsList layout styles
+.products-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  padding: 1rem;
+  border: thin solid $color-section-border;
+}
+
+.products-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  //&__left { }
+
+  //&__center { }
+
+  //&__right { }
+}
+
+.products-list-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  align-items: center;
+}
+
+.products-list-table {
+  display: grid;
+  text-align: center;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 1rem;
+    border-bottom: 0.1rem solid $color-table-borders;
+    overflow: hidden;
+  }
+  tr:nth-child(even) {
+    background-color: $color-table-rows;
+  }
+  tr:not(:first-child):hover {
+    background-color: $color-select-highlight;
+  }
+}

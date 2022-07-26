@@ -1,0 +1,14 @@
+mixin storeListItem(store)
+  .stores-list-item
+    span= `${store.bnum.en}, ${store.street.en}, ${store.district.en}`
+    span= `${store.province.en}, ${store.country.en} ${store.zip}`
+    span= store.phone
+
+.stores-list
+  .stores-list-header
+    .stores-list-header__left Store
+    .stores-list-header__center All Stores
+    .stores-list-header__right Search bar
+  .stores-list-content 
+    each store in stores
+      +storeListItem(store)

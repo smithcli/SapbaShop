@@ -1,0 +1,23 @@
+// Base Header layout style
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  background: $color-primary;
+
+  &__menu,
+  &__account {
+    width: 8rem;
+  }
+
+  &__title {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+  }
+}

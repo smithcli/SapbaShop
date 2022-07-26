@@ -10,6 +10,8 @@
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development nodemon src/server.js",
     "dev-pro": "NODE_ENV=production nodemon src/server.js",
+    "dev-ui":"npm run dev & npm run scss",
+    "scss": "sass --watch src/scss/main.scss src/public/css/style.css",
     "test": "NODE_ENV=production jest",
     "test-watch": "NODE_ENV=production jest --watch"
   },
@@ -30,6 +32,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.3",
     "nodemailer": "^6.7.7",
+    "pug": "^3.0.2",
     "validator": "^13.7.0"
   },
   "devDependencies": {
@@ -46,6 +49,7 @@
     "nodemailer-mock": "^1.5.12",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
+    "sass": "^1.54.0",
     "supertest": "^6.2.4"
   },
   "jest": {

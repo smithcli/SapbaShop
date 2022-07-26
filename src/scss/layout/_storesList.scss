@@ -1,0 +1,51 @@
+// storesList layout styles
+.stores-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+  margin: 0.5rem;
+  padding: 1rem;
+  border: thin solid $color-section-border;
+}
+
+.stores-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  &__left {
+    visibility: hidden;
+  }
+
+  //&__center { }
+
+  &__right {
+    visibility: hidden;
+  }
+}
+
+.stores-list-content {
+  display: grid;
+  gap: 1rem;
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.stores-list-item {
+  display: flex;
+  flex-direction: column;
+  border: thin solid $color-grid-borders;
+  border-radius: 2rem;
+  padding: .5rem;
+  padding-left: 1rem;
+  max-width: 40rem;
+
+  &:hover {
+    background-color: $color-select-highlight;
+  }
+}

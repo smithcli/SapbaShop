@@ -1,0 +1,23 @@
+mixin productListItem(product)
+  tr
+    td= product.name.en
+    td= product.department.en
+    td= product.count
+    td= product.price
+    td= `${product.store.bnum.en}, ${product.store.street.en}`
+
+.products-list
+  .products-list-header
+    .products-list-header__left All Stores
+    .products-list-header__center Products
+    .products-list-header__right search bar
+  .products-list-content 
+    table.products-list-table
+      tr
+        th NAME
+        th DEP
+        th QTY
+        th (&#3647)
+        th STORE
+      each product in products
+        +productListItem(product)
