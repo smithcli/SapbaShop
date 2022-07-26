@@ -5,7 +5,7 @@ const AppError = require('../utils/appError');
 const productSchema = new mongoose.Schema({
   store: {
     type: mongoose.Types.ObjectId,
-    ref: 'store',
+    ref: 'Store',
     required: [true, 'A product must belong to a store.'],
   },
   department: {
@@ -90,6 +90,7 @@ const productSchema = new mongoose.Schema({
   },
 });
 
+//// MIDDLEWARE ////
 productSchema.pre('save', async function (next) {
   if (!this.isModified('store') || !this.store) return next();
   if (!(await Store.findById(this.store))) {

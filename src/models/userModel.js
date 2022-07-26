@@ -8,7 +8,7 @@ const validator = require('validator');
 const userSchema = new mongoose.Schema({
   store: {
     type: mongoose.Types.ObjectId,
-    ref: 'store',
+    ref: 'Store',
   },
   role: {
     type: String,
@@ -63,34 +63,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('store') || !this.store) return next();
-  if (!(await Store.findById(this.store))) {
-    return next(new AppError(404, `${this.store} is not a valid store.`));
-  }
-  next();
-});
-
-// Store password as a hash, if password was modified
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = undefined;
-  next();
-});
-
-// Add passwordChangedAt for updated passwords
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password') || this.isNew) return next();
-  this.passwordChangedAt = Date.now() - 1000; // 1sec to avoid conflicts with jwt
-  next();
-});
-
-// Do not allow users with active = false to be queried
-userSchema.pre(/^find/, function (next) {
-  this.find({ active: { $ne: false } });
-  next();
-});
+////  METHODS ////
 
 // Check if password matches the user's hashed password.
 userSchema.methods.checkPassword = async function (attemptPass, userPass) {
@@ -124,6 +97,38 @@ userSchema.methods.changePassword = function (pass, passConf) {
   this.passwordResetToken = undefined;
   this.passwordResetExpires = undefined;
 };
+
+////  MIDDLEWARE ////
+
+// Store id validator
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('store') || !this.store) return next();
+  if (!(await Store.findById(this.store))) {
+    return next(new AppError(404, `${this.store} is not a valid store.`));
+  }
+  next();
+});
+
+// Store password as a hash, if password was modified
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  this.passwordConfirm = undefined;
+  next();
+});
+
+// Add passwordChangedAt for updated passwords
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+  this.passwordChangedAt = Date.now() - 1000; // 1sec to avoid conflicts with jwt
+  next();
+});
+
+// Do not allow users with active = false to be queried
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
 
 const User = mongoose.model('User', userSchema);
 
