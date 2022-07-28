@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const morgan = require('morgan');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const storeRouter = require('./routes/storeRouter');
@@ -16,6 +15,8 @@ app.set('views', path.join(__dirname, 'views'));
 // 1) Global Middlewares
 // Development Logging Middleware
 if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line global-require
+  const morgan = require('morgan');
   app.use(morgan('dev'));
 }
 

@@ -1,7 +1,6 @@
 const Product = require('../models/productModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const Store = require('../models/storeModel');
 const APIFeatures = require('../utils/apiFeatures');
 
 // Added APIFeatures to allow searches, paginate default is 1 of 100
@@ -27,7 +26,7 @@ exports.getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
     return next(
-      new AppError(404, `No product found with id: ${req.params.id}`)
+      new AppError(404, `No product found with id: ${req.params.id}`),
     );
   }
   res.status(200).json({
@@ -55,7 +54,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
   });
   if (!product) {
     return next(
-      new AppError(404, `No product found with id: ${req.params.id}`)
+      new AppError(404, `No product found with id: ${req.params.id}`),
     );
   }
   res.status(200).json({
@@ -70,7 +69,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
   if (!product) {
     return next(
-      new AppError(404, `No product found with id: ${req.params.id}`)
+      new AppError(404, `No product found with id: ${req.params.id}`),
     );
   }
   res.status(204).json({

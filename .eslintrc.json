@@ -1,24 +1,27 @@
 {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "airbnb-base",
-        "plugin:prettier/recommended",
-        "plugin:node/recommended"
-    ],
-    "plugins": [
-      "prettier",
-      "node"
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest"
-    },
-    "rules": {
-      "prettier/prettier": "error",
-      "no-console": "warn"
-    }
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "node": true
+  },
+  "settings": {
+    "import/extensions": [".mjs", ".js"],
+    "import/resolver": { "node": { "extensions": [".js", ".mjs"] } }
+  },
+  "extends": ["airbnb-base", "plugin:node/recommended"],
+  "plugins": ["node"],
+  "parserOptions": { "ecmaVersion": "2021" },
+  "ignorePatterns": ["**/bundled/*.js"],
+  "rules": {
+    "node/no-missing-import": ["error", {
+      "allowModules": [],
+      "tryExtensions": [".js", ".json", ".mjs"]
+    }],
+    "no-console": "warn",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+    "arrow-body-style": ["error", "as-needed"],
+    "consistent-return": "off"
+  }
 }

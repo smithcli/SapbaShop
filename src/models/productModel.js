@@ -1,7 +1,8 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 const Store = require('./storeModel');
 const AppError = require('../utils/appError');
-const slugify = require('slugify');
 
 const productSchema = new mongoose.Schema({
   store: {
@@ -92,7 +93,7 @@ const productSchema = new mongoose.Schema({
   slug: String,
 });
 
-//// MIDDLEWARE ////
+/// MIDDLEWARE ///
 
 // Create slug for english name, to keep international
 productSchema.pre('save', function (next) {

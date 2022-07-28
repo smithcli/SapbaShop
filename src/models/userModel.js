@@ -1,10 +1,12 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const Store = require('./storeModel');
-const AppError = require('../utils/appError');
 const validator = require('validator');
 const slugify = require('slugify');
+const Store = require('./storeModel');
+const AppError = require('../utils/appError');
 
 const userSchema = new mongoose.Schema({
   store: {
@@ -65,10 +67,11 @@ const userSchema = new mongoose.Schema({
   slug: String,
 });
 
-////  METHODS ////
+///  METHODS ///
 
 // Check if password matches the user's hashed password.
 userSchema.methods.checkPassword = async function (attemptPass, userPass) {
+  // eslint-disable-next-line no-return-await
   return await bcrypt.compare(attemptPass, userPass);
 };
 
@@ -100,7 +103,7 @@ userSchema.methods.changePassword = function (pass, passConf) {
   this.passwordResetExpires = undefined;
 };
 
-////  MIDDLEWARE ////
+///  MIDDLEWARE ///
 
 // Create slug - thai characters may not work
 userSchema.pre('save', function (next) {

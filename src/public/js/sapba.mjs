@@ -1,4 +1,4 @@
-import populateCharts from './modules/charts';
+import { populateCharts } from './modules/charts';
 
 // DOM ELEMENTS
 const currentReports = document.getElementsByClassName('chart-current-report');

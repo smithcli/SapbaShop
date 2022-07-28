@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
@@ -84,7 +85,7 @@ const storeSchema = new mongoose.Schema({
   slug: String,
 });
 
-//// MIDDLEWARE ////
+/// MIDDLEWARE ///
 
 // Create slug for english name, to keep international
 storeSchema.pre('save', function (next) {

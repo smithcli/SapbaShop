@@ -1,9 +1,11 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-param-reassign */
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const { promisify } = require('util');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const { promisify } = require('util');
 const sendmail = require('../utils/email');
 
 // JWT to Authenticate logged in users
@@ -17,7 +19,7 @@ const sendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     // HTTPS only
     secure: true,
@@ -37,6 +39,7 @@ const sendToken = (user, statusCode, res) => {
 };
 
 // Create hashed token for reset password
+// eslint-disable-next-line arrow-body-style
 const hashedToken = (token) => {
   return crypto.createHash('sha256').update(token).digest('hex');
 };
@@ -77,10 +80,11 @@ exports.requireAuth = catchAsync(async (req, res, next) => {
   // 1) get token
   let token;
   if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
+    // eslint-disable-next-line prefer-destructuring
     token = req.headers.cookie.split('=')[1];
   } else {
     return next(
-      new AppError(401, 'You are not logged in. Please log in to get access.')
+      new AppError(401, 'You are not logged in. Please log in to get access.'),
     );
   }
   // 2) verify token and expiration
@@ -100,15 +104,13 @@ exports.requireAuth = catchAsync(async (req, res, next) => {
 });
 
 // Users are required to be specified roles to access routes with this middleware
-exports.restrictedTo = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return next(
-        new AppError(403, 'You do not have permission to perform this action.')
-      );
-    }
-    next();
-  };
+exports.restrictedTo = (...roles) => (req, res, next) => {
+  if (!roles.includes(req.user.role)) {
+    return next(
+      new AppError(403, 'You do not have permission to perform this action.'),
+    );
+  }
+  next();
 };
 
 // Users forgot password, sends email with token
@@ -123,9 +125,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
   // 3) Send email to user
   const resetURL = `${req.protocol}://${req.get(
-    'host'
+    'host',
   )}/api/v1/users/resetPassword/${resetToken}`;
-  //TODO: Change message after front-end developed to allow html
+  // TODO: Change message after front-end developed to allow html
   const message = `Forgot your Password?\n<PATCH with pass & pass confirm> at:\n${resetURL}\nIf you didnt, please ignore this email.`;
   try {
     await sendmail({
@@ -144,8 +146,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         500,
-        'There was an error sending the email. Please try again later.'
-      )
+        'There was an error sending the email. Please try again later.',
+      ),
     );
   }
 });

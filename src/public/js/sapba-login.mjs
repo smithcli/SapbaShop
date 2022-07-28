@@ -1,10 +1,11 @@
 import apiFetch from './modules/apiFetch';
 import { showAlert } from './modules/alerts';
 
-const login = async (email, password) => {
+const login = (email, password) => {
   try {
-    const res = await apiFetch('/users/login', 'POST', { email, password });
+    const res = apiFetch('/users/login', 'POST', { email, password });
     if (res.status === 'success') {
+      // eslint-disable-next-line no-restricted-globals
       location.assign('/dashboard');
     }
   } catch (err) {

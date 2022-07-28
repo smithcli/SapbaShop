@@ -29,11 +29,12 @@ exports.getUser = catchAsync(async (req, res, next) => {
 exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
   if (newUser) {
+    // eslint-disable-next-line no-unused-vars
     const { password, active, ...user } = newUser._doc;
     res.status(201).json({
       status: 'success',
       data: {
-        user: user,
+        user,
       },
     });
   }
@@ -42,9 +43,9 @@ exports.createUser = catchAsync(async (req, res, next) => {
 exports.updateUser = catchAsync(async (req, res, next) => {
   // Admin should not change passwords directly. Users can use forgot password function.
   if (
-    req.body.password ||
-    req.body.passwordConfirm ||
-    req.body.passwordChangedAt
+    req.body.password
+    || req.body.passwordConfirm
+    || req.body.passwordChangedAt
   ) {
     return next(new AppError(400, 'This route is not for password updates.'));
   }
@@ -99,7 +100,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   );
   if (!user) {
     return next(new AppError(404, 'Could not find that User.'));

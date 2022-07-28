@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable arrow-body-style */
 const AppError = require('../utils/appError');
 
 // Error when using a bad _id

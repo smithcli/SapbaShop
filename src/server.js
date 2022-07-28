@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-process-exit */
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
@@ -7,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
     console.error(
       'There was an uncaught error! Shutting down...\n',
       err.name,
-      err.message
+      err.message,
     );
     process.exit(1);
   });
@@ -37,7 +39,7 @@ mongoose
       console.error(
         'Unable to connect to MongoDB server! Shutting down...\n',
         err.name,
-        err.message
+        err.message,
       );
       process.exit(1);
     } else {
@@ -47,6 +49,7 @@ mongoose
 
 // Process App with global middleware and start server
 const app = require('./app');
+
 const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
@@ -58,7 +61,7 @@ if (process.env.NODE_ENV === 'production') {
     console.error(
       'Unhandled Rejection! Shutting down...\n',
       err.name,
-      err.message
+      err.message,
     );
     server.close(() => {
       process.exit(1);

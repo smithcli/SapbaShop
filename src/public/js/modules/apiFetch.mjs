@@ -1,4 +1,4 @@
-export const apiFetch = async (endpoint, reqType, dataObj) => {
+const apiFetch = async (endpoint, reqType, dataObj) => {
   const res = await fetch(`http://localhost:8000/api/v1${endpoint}`, {
     method: reqType,
     headers: {
@@ -11,3 +11,5 @@ export const apiFetch = async (endpoint, reqType, dataObj) => {
   }
   throw new Error(res.message);
 };
+
+export default apiFetch;

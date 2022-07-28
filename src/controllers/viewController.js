@@ -1,6 +1,5 @@
 const Product = require('../models/productModel');
 const Store = require('../models/storeModel');
-const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -43,6 +42,5 @@ exports.getStores = catchAsync(async (req, res, next) => {
     stores,
   });
 });
-
 
 // TODO: Place to Add, Modify, Delete all users.
