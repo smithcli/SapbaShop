@@ -1,9 +1,4 @@
-mixin storeListItem(store)
-  a.btn.stores-list-item(href=`/stores/${store.slug}`)
-    span= `${store.bnum.en}, ${store.street.en}, ${store.district.en}`
-    span= `${store.province.en}, ${store.country.en} ${store.zip}`
-    span= store.phone
-
+include ../mixin/store-mixins
 .stores-list
   .stores-list-header
     .stores-list-header__left Store

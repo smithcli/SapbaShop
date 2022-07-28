@@ -29,19 +29,20 @@
 
 .products-list-table {
   display: grid;
+  gap: 1rem;
   text-align: center;
   border-collapse: collapse;
 
-  th,
-  td {
-    padding: 1rem;
-    border-bottom: 0.1rem solid $color-table-borders;
-    overflow: hidden;
-  }
-  tr:nth-child(even) {
-    background-color: $color-table-rows;
-  }
-  tr:not(:first-child):hover {
-    background-color: $color-select-highlight;
-  }
+//  th,
+//  td {
+//    padding: 1rem;
+//    border-bottom: 0.1rem solid $color-table-borders;
+//    overflow: hidden;
+//  }
+//  tr:nth-child(even) {
+//    background-color: $color-table-rows;
+//  }
+//  tr:not(:first-child):hover {
+//    background-color: $color-select-highlight;
+//  }
 }

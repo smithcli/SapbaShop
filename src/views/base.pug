@@ -1,16 +1,20 @@
 doctype html
 html
   head
-    meta(charset='UTF-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    title SapbaShop | Management
-    link(rel='stylesheet' href='css/style.css')
-    //-link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+    block head
+      meta(charset='UTF-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1.0')
+      link(rel='stylesheet' href='css/style.css')
+      //-link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+      title SapbaShop | Management
   body
-    // HEADER
-    block header
-    // CONTENT
-    block content
-      h1 This is a placeholder
-    // FOOTER
-    block footer
+    block body
+      // HEADER
+      include layout/_header
+      // CONTENT
+      block content
+        h1 This is a placeholder
+      // FOOTER
+      include layout/_footer
+
+      script(type='module', src='/js/bundled/sapba.js')

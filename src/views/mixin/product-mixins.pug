@@ -1,0 +1,10 @@
+mixin productListItem(product)
+  a.btn.product-list-item(href=`/products/${product.slug}`)
+    if product.size
+      span= `${product.name.en} ${product.size}`
+    else
+      span= product.name.en
+    span= product.department.en
+    span= product.count
+    span= product.price
+    span= `${product.store.bnum.en}, ${product.store.street.en}`

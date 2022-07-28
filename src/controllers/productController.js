@@ -1,12 +1,22 @@
 const Product = require('../models/productModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const Store = require('../models/storeModel');
+const APIFeatures = require('../utils/apiFeatures');
 
+// Added APIFeatures to allow searches, paginate default is 1 of 100
 exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const products = await Product.find();
+  const features = new APIFeatures(Product.find(), req.query)
+    .filter()
+    .sort()
+    .selectFields()
+    .paginate();
+  const products = await features.query;
   res.status(200).json({
     status: 'success',
     data: {
+      page: req.query.page || '0',
+      limit_per_page: features.query.options.limit,
       total_results: products.length,
       products,
     },
@@ -66,5 +76,21 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
     data: null,
+  });
+});
+
+// No pagination for possible expensive call for management.
+exports.getAllProductsMangement = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(Product.find(), req.query)
+    .filter()
+    .sort()
+    .selectFields();
+  const products = await features.query;
+  res.status(200).json({
+    status: 'success',
+    data: {
+      total_results: products.length,
+      products,
+    },
   });
 });

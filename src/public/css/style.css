@@ -204,20 +204,9 @@ body {
 
 .products-list-table {
   display: grid;
+  gap: 1rem;
   text-align: center;
   border-collapse: collapse;
-}
-.products-list-table th,
-.products-list-table td {
-  padding: 1rem;
-  border-bottom: 0.1rem solid #000000;
-  overflow: hidden;
-}
-.products-list-table tr:nth-child(even) {
-  background-color: #97c3a5;
-}
-.products-list-table tr:not(:first-child):hover {
-  background-color: #599b67;
 }
 
 .stores-list {
@@ -265,6 +254,7 @@ body {
   padding: 0.5rem;
   padding-left: 1rem;
   max-width: 40rem;
+  gap: 0.5rem;
 }
 .stores-list-item:hover {
   background-color: #599b67;

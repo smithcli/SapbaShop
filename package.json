@@ -13,11 +13,12 @@
     "start": "NODE_ENV=production node src/server.js",
     "dev": "NODE_ENV=development nodemon src/server.js",
     "dev-pro": "NODE_ENV=production nodemon src/server.js",
-    "dev-ui": "npm run dev & npm run scss & npm run parcel",
+    "dev-ui": "npm run scss & npm run parcel & npm run dev ",
     "scss": "sass --watch src/scss/main.scss src/public/css/style.css",
     "test": "NODE_ENV=production jest",
     "test-watch": "NODE_ENV=production jest --watch",
-    "parcel": "parcel watch src/public/js/sapba-login.js --dist-dir src/public/js/bundled --no-hmr"
+    "parcel": "parcel watch src/public/js/sapba-login.js src/public/js/sapba.js --dist-dir src/public/js/bundled --no-hmr",
+    "parcel-build": "parcel build src/public/js/sapba-login.js src/public/js/sapba.js --dist-dir src/public/js/bundled"
   },
   "repository": {
     "type": "git",

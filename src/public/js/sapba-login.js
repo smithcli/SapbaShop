@@ -1,4 +1,4 @@
-import { apiFetch } from './modules/apiFetch';
+import apiFetch from './modules/apiFetch';
 import { showAlert } from './modules/alerts';
 
 const login = async (email, password) => {
