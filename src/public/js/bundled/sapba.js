@@ -142,30 +142,129 @@
       this[globalName] = mainExports;
     }
   }
-})({"5PQF4":[function(require,module,exports) {
+})({"i9E3I":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _apiFetch = require("./modules/apiFetch");
+var _charts = require("./modules/charts");
+var _chartsDefault = parcelHelpers.interopDefault(_charts);
+// DOM ELEMENTS
+const currentReports = document.getElementsByClassName("chart-current-report");
+// DELEGATION
+// TODO: Develop client side storage or better version for this expensive call / operation
+if (currentReports.length !== 0) (0, _chartsDefault.default)(currentReports);
+
+},{"./modules/charts":"jF86l","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"jF86l":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "genStoreCurrentReport", ()=>genStoreCurrentReport);
+parcelHelpers.export(exports, "populateCharts", ()=>populateCharts);
+var _apiFetch = require("./apiFetch");
 var _apiFetchDefault = parcelHelpers.interopDefault(_apiFetch);
-var _alerts = require("./modules/alerts");
-const login = async (email, password)=>{
-    try {
-        const res = await (0, _apiFetchDefault.default)("/users/login", "POST", {
-            email,
-            password
-        });
-        if (res.status === "success") location.assign("/dashboard");
-    } catch (err) {
-        (0, _alerts.showAlert)("fail", err.message);
+// TODO: Add support for thai language
+// Departments are Fields for Current Report
+const departments = [
+    "Grocery",
+    "Clothing and Accessories",
+    "Beauty and Personal Care",
+    "Health and Wellness",
+    "Household", 
+];
+// Helper function // To set data point to appropriate Department
+const setDepDatapoint = (product)=>{
+    const dataArray = [];
+    for (const dep of departments)if (product.department.en === dep) dataArray.push(product.count);
+    else dataArray.push(null);
+    return dataArray;
+};
+const rand = (min, max)=>{
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+const randShadeHSLA = (hue, alpha)=>{
+    // hue 0 - 360, sat 50-100%, light 30-60%, a 0.0-1.0
+    return `hsla(${hue}, ${rand(50, 100)}%, ${rand(30, 60)}%,${alpha})`;
+};
+const randShadeByDepartment = (dep)=>{
+    switch(dep){
+        case departments[0]:
+            return randShadeHSLA(120, 0.75);
+        case departments[1]:
+            return randShadeHSLA(30, 0.75);
+        case departments[2]:
+            return randShadeHSLA(210, 0.75);
+        case departments[3]:
+            return randShadeHSLA(360, 0.75);
+        case departments[4]:
+            return randShadeHSLA(270, 0.75);
+        default:
+            break;
     }
 };
-document.querySelector(".form-login").addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    login(email, password);
-});
+const genStoreCurrentReport = async (storeID)=>{
+    const data = {
+        avgCount: 0,
+        labels: departments,
+        datasets: []
+    };
+    try {
+        // Sorted by name for quick ID between stores.
+        const res = await (0, _apiFetchDefault.default)(`/products/mgt?store=${storeID}&sort=product.name.en`, "GET");
+        for (const product of res.data.products){
+            let prodName = product.name.en;
+            if (product.size) prodName += ` ${product.size}`;
+            const prodData = {
+                label: prodName,
+                data: setDepDatapoint(product),
+                backgroundColor: [
+                    randShadeByDepartment(product.department.en)
+                ],
+                borderWidth: 0.5
+            };
+            data.avgCount += product.count;
+            data.datasets.push(prodData);
+        }
+        data.avgCount = data.avgCount / res.data.products.length;
+        return data;
+    } catch (err) {
+        // TODO: Implement better error handle
+        console.log(err);
+    }
+};
+const populateCharts = async (htmlCollection)=>{
+    const charts = [];
+    let chartAvgs = 0;
+    try {
+        for (const div of htmlCollection){
+            const { avgCount , ...data } = await genStoreCurrentReport(div.children[0].id);
+            chartAvgs += avgCount;
+            const chart = new Chart(div.children[0], {
+                type: "bar",
+                data,
+                options: {
+                    datasets: {
+                        bar: {
+                            skipNull: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            charts.push(chart);
+        }
+        chartAvgs = Math.round(chartAvgs / htmlCollection.length);
+        for (const chart of charts){
+            chart.options.scales.y.max = chartAvgs * 2; // puts most halfway
+            chart.update();
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+exports.default = populateCharts;
 
-},{"./modules/apiFetch":"fPB6p","./modules/alerts":"6LXhu","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"fPB6p":[function(require,module,exports) {
+},{"./apiFetch":"fPB6p","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"fPB6p":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 const apiFetch = async (endpoint, reqType, dataObj)=>{
@@ -211,23 +310,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"6LXhu":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "showAlert", ()=>showAlert);
-parcelHelpers.export(exports, "hideAlert", ()=>hideAlert);
-const showAlert = (type, msg, location)=>{
-    hideAlert();
-    if (!location) location = "body";
-    const alert = `<div class="alert alert-${type}">${msg}</div>`;
-    document.querySelector(location).insertAdjacentHTML("afterbegin", alert);
-    window.setTimeout(hideAlert, 5000);
-};
-const hideAlert = ()=>{
-    const alert = document.querySelector(".alert");
-    if (alert) alert.parentElement.removeChild(alert);
-};
+},{}]},["i9E3I"], "i9E3I", "parcelRequiree437")
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}]},["5PQF4"], "5PQF4", "parcelRequiree437")
-
-//# sourceMappingURL=sapba-login.js.map
+//# sourceMappingURL=sapba.js.map
