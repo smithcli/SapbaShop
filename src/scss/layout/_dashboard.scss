@@ -1,6 +1,31 @@
 .main-dashboard {
+  margin-top: 0.5rem;
+  min-height: 90vh;
+  display: grid;
+  grid-auto-rows: minmax(min-content, max-content);
+  gap: 0.5rem;
+
   @media (min-width: 1000px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 4fr);
+  }
+}
+
+.chart-current-report {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-primary-light;
+  height: fit-content;
+  @include border;
+
+  @media (min-width: 1000px) {
+    grid-column: span 2;
+    &:last-of-type {
+      grid-column: 2 / span 2;
+    }
+  }
+
+  canvas {
+    background-color: $color-light;
+    margin: 0.5rem;
   }
 }

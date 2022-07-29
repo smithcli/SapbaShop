@@ -97,7 +97,10 @@ const productSchema = new mongoose.Schema({
 
 // Create slug for english name, to keep international
 productSchema.pre('save', function (next) {
-  this.slug = slugify(this.name.en, { lower: true });
+  this.slug = slugify(this.name.en, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g,
+  });
   next();
 });
 

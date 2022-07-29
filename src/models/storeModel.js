@@ -89,7 +89,10 @@ const storeSchema = new mongoose.Schema({
 
 // Create slug for english name, to keep international
 storeSchema.pre('save', function (next) {
-  this.slug = slugify(`${this.bnum.en}, ${this.street.en}`, { lower: true });
+  this.slug = slugify(`${this.bnum.en}, ${this.street.en}`, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g,
+  });
   next();
 });
 

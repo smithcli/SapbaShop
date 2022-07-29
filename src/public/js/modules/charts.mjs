@@ -86,12 +86,12 @@ export const populateCharts = async (htmlCollection) => {
     const charts = [];
     let chartAvgs = 0;
     // eslint-disable-next-line no-restricted-syntax
-    for (const div of htmlCollection) {
+    for (const el of htmlCollection) {
       // eslint-disable-next-line no-await-in-loop
-      const { avgCount, ...data } = await genStoreCurrentReport(div.children[0].id);
+      const { avgCount, ...data } = await genStoreCurrentReport(el.children[1].id);
       chartAvgs += avgCount;
       // eslint-disable-next-line no-undef
-      const chart = new Chart(div.children[0], {
+      const chart = new Chart(el.children[1], {
         type: 'bar',
         data,
         options: {

@@ -1,4 +1,5 @@
 extends ../base
+include ../mixin/store-mixins
 
 block append head
   script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.js')
@@ -7,5 +8,4 @@ block content
   .main.main-dashboard
     block main
       each store in stores
-        .chart-current-report= `${store.bnum.en}, ${store.street.en}`
-          canvas(id=`${store._id}`)
+        +chartCurrentReport(store)

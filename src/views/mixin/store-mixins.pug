@@ -3,3 +3,8 @@ mixin storeListItem(store)
     span= `${store.bnum.en}, ${store.street.en}, ${store.district.en}`
     span= `${store.province.en}, ${store.country.en} ${store.zip}`
     span= store.phone
+
+mixin chartCurrentReport(store)
+  .chart-current-report
+    a.btn--title(href=`/stores/${store.slug}`)= `${store.bnum.en}, ${store.street.en}`
+    canvas(id=`${store._id}`)

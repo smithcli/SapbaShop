@@ -4,15 +4,15 @@
   -webkit-appearance: none;
   text-decoration: none;
   text-transform: uppercase;
+  text-align: center;
   color: $color-btn-text;
   font-size: 1.5rem;
   padding: 1rem 2rem;
-  border: solid $color-primary-dark;
-  border-radius: $border-radius;
   cursor: pointer;
   font-weight: 550;
   background-color: $color-btn;
   transition: all 0.3s;
+  @include border;
 
   &:hover,
   &:focus {
@@ -35,5 +35,18 @@
   // Safari only currently 07/2022
   &:has(.btn:only-child) {
     justify-content: center;
+  }
+}
+
+.btn--title {
+  @extend .btn;
+  border: none;
+  background-color: $color-primary-light;
+
+  &:hover,
+  &:focus {
+    transform: none;
+    background-color: $color-primary-light;
+    outline: .2rem solid $color-highlight;
   }
 }

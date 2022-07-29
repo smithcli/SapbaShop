@@ -107,7 +107,10 @@ userSchema.methods.changePassword = function (pass, passConf) {
 
 // Create slug - thai characters may not work
 userSchema.pre('save', function (next) {
-  this.slug = slugify(this.name, { lower: true });
+  this.slug = slugify(`${this.email} ${this.role}`, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g,
+  });
   next();
 });
 

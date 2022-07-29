@@ -131,23 +131,24 @@ body {
   background-color: #ed4337;
 }
 
-.btn,
+.btn, .btn--title,
 .btn:link,
 .btn:visited {
   -webkit-appearance: none;
   text-decoration: none;
   text-transform: uppercase;
+  text-align: center;
   color: black;
   font-size: 1.5rem;
   padding: 1rem 2rem;
-  border: solid #599b67;
-  border-radius: 1.5rem;
   cursor: pointer;
   font-weight: 550;
   background-color: #fff;
   transition: all 0.3s;
+  border: solid #599b67;
+  border-radius: 1.5rem;
 }
-.btn:hover, .btn:focus,
+.btn:hover, .btn--title:hover, .btn:focus, .btn--title:focus,
 .btn:link:hover,
 .btn:link:focus,
 .btn:visited:hover,
@@ -158,7 +159,7 @@ body {
   box-shadow: 0rem -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
   outline: none;
 }
-.btn:active,
+.btn:active, .btn--title:active,
 .btn:link:active,
 .btn:visited:active {
   transform: translateY(3px);
@@ -169,15 +170,52 @@ body {
   display: flex;
   justify-content: flex-end;
 }
-.btn-bar:has(.btn:only-child) {
+.btn-bar:has(.btn:only-child, .btn--title:only-child) {
   justify-content: center;
 }
 
+.btn--title {
+  border: none;
+  background-color: #97c3a5;
+}
+.btn--title:hover, .btn--title:focus {
+  transform: none;
+  background-color: #97c3a5;
+  outline: 0.2rem solid #ff7730;
+}
+
+.main-dashboard {
+  margin-top: 0.5rem;
+  min-height: 90vh;
+  display: grid;
+  grid-auto-rows: minmax(min-content, max-content);
+  gap: 0.5rem;
+}
 @media (min-width: 1000px) {
   .main-dashboard {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 4fr);
   }
+}
+
+.chart-current-report {
+  display: flex;
+  flex-direction: column;
+  background-color: #97c3a5;
+  height: fit-content;
+  border: solid #599b67;
+  border-radius: 1.5rem;
+}
+@media (min-width: 1000px) {
+  .chart-current-report {
+    grid-column: span 2;
+  }
+  .chart-current-report:last-of-type {
+    grid-column: 2/span 2;
+  }
+}
+.chart-current-report canvas {
+  background-color: #fff;
+  margin: 0.5rem;
 }
 
 .products-list {
