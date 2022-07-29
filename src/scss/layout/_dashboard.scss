@@ -6,7 +6,7 @@
   gap: 0.5rem;
 
   @media (min-width: 1000px) {
-    grid-template-columns: repeat(4, 4fr);
+    grid-template-columns: repeat(8, 8fr);
   }
 }
 
@@ -18,9 +18,12 @@
   @include border;
 
   @media (min-width: 1000px) {
-    grid-column: span 2;
+    grid-column: span 4;
     &:last-of-type {
-      grid-column: 2 / span 2;
+      grid-column: 3 / span 4;
+    }
+    &:only-of-type {
+      grid-column: 2 / span 6;
     }
   }
 
