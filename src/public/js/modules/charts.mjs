@@ -51,29 +51,27 @@ const randShadeByDepartment = (dep) => {
 // Generate a chart data for a store return array of data
 // Not sure why this is linting
 // eslint-disable-next-line consistent-return
-export const genStoreCurrentReport = (storeID) => {
+export const genStoreCurrentReport = async (storeID) => {
   try {
-    const data = {
-      avgCount: 0,
-      labels: departments,
-      datasets: [],
-    };
-    // Sorted by name for quick ID between stores.
-    const res = apiFetch(
+    const res = await apiFetch(
       `/products/mgt?store=${storeID}&sort=product.name.en`,
       'GET',
     );
-    res.data.products.forEach((product) => {
+    const data = {
+      avgCount: 0,
+      labels: departments,
+    };
+    // Sorted by name for quick ID between stores.
+    data.datasets = res.data.products.map((product) => {
+      data.avgCount += product.count;
       let prodName = product.name.en;
       if (product.size) prodName += ` ${product.size}`;
-      const prodData = {
+      return {
         label: prodName,
         data: setDepDatapoint(product),
         backgroundColor: [randShadeByDepartment(product.department.en)],
         borderWidth: 0.5,
       };
-      data.avgCount += product.count;
-      data.datasets.push(prodData);
     });
     data.avgCount /= res.data.products.length;
     return data;
@@ -83,12 +81,14 @@ export const genStoreCurrentReport = (storeID) => {
   }
 };
 
-export const populateCharts = (htmlCollection) => {
+export const populateCharts = async (htmlCollection) => {
   try {
     const charts = [];
     let chartAvgs = 0;
-    htmlCollection.forEach((div) => {
-      const { avgCount, ...data } = genStoreCurrentReport(div.children[0].id);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const div of htmlCollection) {
+      // eslint-disable-next-line no-await-in-loop
+      const { avgCount, ...data } = await genStoreCurrentReport(div.children[0].id);
       chartAvgs += avgCount;
       // eslint-disable-next-line no-undef
       const chart = new Chart(div.children[0], {
@@ -100,7 +100,7 @@ export const populateCharts = (htmlCollection) => {
         },
       });
       charts.push(chart);
-    });
+    }
     chartAvgs = Math.round(chartAvgs / htmlCollection.length);
     charts.forEach((chart) => {
       // eslint-disable-next-line no-param-reassign

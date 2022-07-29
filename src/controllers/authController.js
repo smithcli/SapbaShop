@@ -14,6 +14,7 @@ const signToken = (id) =>
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
+// TODO: Add more secuirty features for CSRF, is SameSite enough? doubt it.
 // Send JWT as httpOnly cookie
 const sendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
@@ -25,6 +26,8 @@ const sendToken = (user, statusCode, res) => {
     secure: true,
     // Mitigate XSS attacks
     httpOnly: true,
+    // Small CSRF Mitigation
+    sameSite: 'Strict',
   };
   if (process.env.NODE_ENV === 'development') cookieOptions.secure = false;
   user.password = undefined;

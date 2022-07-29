@@ -142,17 +142,15 @@
       this[globalName] = mainExports;
     }
   }
-})({"i9E3I":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+})({"e5jiL":[function(require,module,exports) {
 var _charts = require("./modules/charts");
-var _chartsDefault = parcelHelpers.interopDefault(_charts);
 // DOM ELEMENTS
 const currentReports = document.getElementsByClassName("chart-current-report");
 // DELEGATION
 // TODO: Develop client side storage or better version for this expensive call / operation
-if (currentReports.length !== 0) (0, _chartsDefault.default)(currentReports);
+if (currentReports.length !== 0) (0, _charts.populateCharts)(currentReports);
 
-},{"./modules/charts":"jF86l","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"jF86l":[function(require,module,exports) {
+},{"./modules/charts":"7xgLb"}],"7xgLb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "genStoreCurrentReport", ()=>genStoreCurrentReport);
@@ -171,13 +169,14 @@ const departments = [
 // Helper function // To set data point to appropriate Department
 const setDepDatapoint = (product)=>{
     const dataArray = [];
-    for (const dep of departments)if (product.department.en === dep) dataArray.push(product.count);
-    else dataArray.push(null);
+    departments.forEach((dep)=>{
+        if (product.department.en === dep) dataArray.push(product.count);
+        else dataArray.push(null);
+    });
     return dataArray;
 };
-const rand = (min, max)=>{
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+const rand = (min, max)=>Math.floor(Math.random() * (max - min + 1)) + min;
+// eslint-disable-next-line arrow-body-style
 const randShadeHSLA = (hue, alpha)=>{
     // hue 0 - 360, sat 50-100%, light 30-60%, a 0.0-1.0
     return `hsla(${hue}, ${rand(50, 100)}%, ${rand(30, 60)}%,${alpha})`;
@@ -195,22 +194,22 @@ const randShadeByDepartment = (dep)=>{
         case departments[4]:
             return randShadeHSLA(270, 0.75);
         default:
-            break;
+            throw new Error("Not a valid department");
     }
 };
 const genStoreCurrentReport = async (storeID)=>{
-    const data = {
-        avgCount: 0,
-        labels: departments,
-        datasets: []
-    };
     try {
-        // Sorted by name for quick ID between stores.
         const res = await (0, _apiFetchDefault.default)(`/products/mgt?store=${storeID}&sort=product.name.en`, "GET");
-        for (const product of res.data.products){
+        const data = {
+            avgCount: 0,
+            labels: departments
+        };
+        // Sorted by name for quick ID between stores.
+        data.datasets = res.data.products.map((product)=>{
+            data.avgCount += product.count;
             let prodName = product.name.en;
             if (product.size) prodName += ` ${product.size}`;
-            const prodData = {
+            return {
                 label: prodName,
                 data: setDepDatapoint(product),
                 backgroundColor: [
@@ -218,10 +217,8 @@ const genStoreCurrentReport = async (storeID)=>{
                 ],
                 borderWidth: 0.5
             };
-            data.avgCount += product.count;
-            data.datasets.push(prodData);
-        }
-        data.avgCount = data.avgCount / res.data.products.length;
+        });
+        data.avgCount /= res.data.products.length;
         return data;
     } catch (err) {
         // TODO: Implement better error handle
@@ -229,12 +226,15 @@ const genStoreCurrentReport = async (storeID)=>{
     }
 };
 const populateCharts = async (htmlCollection)=>{
-    const charts = [];
-    let chartAvgs = 0;
     try {
+        const charts = [];
+        let chartAvgs = 0;
+        // eslint-disable-next-line no-restricted-syntax
         for (const div of htmlCollection){
+            // eslint-disable-next-line no-await-in-loop
             const { avgCount , ...data } = await genStoreCurrentReport(div.children[0].id);
             chartAvgs += avgCount;
+            // eslint-disable-next-line no-undef
             const chart = new Chart(div.children[0], {
                 type: "bar",
                 data,
@@ -254,21 +254,23 @@ const populateCharts = async (htmlCollection)=>{
             charts.push(chart);
         }
         chartAvgs = Math.round(chartAvgs / htmlCollection.length);
-        for (const chart of charts){
+        charts.forEach((chart)=>{
+            // eslint-disable-next-line no-param-reassign
             chart.options.scales.y.max = chartAvgs * 2; // puts most halfway
             chart.update();
-        }
+        });
     } catch (err) {
         console.log(err);
     }
 };
 exports.default = populateCharts;
 
-},{"./apiFetch":"fPB6p","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"fPB6p":[function(require,module,exports) {
+},{"./apiFetch":"3QNti","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"3QNti":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 const apiFetch = async (endpoint, reqType, dataObj)=>{
-    const res = await fetch(`http://192.168.0.3:8000/api/v1${endpoint}`, {
+    // TODO: Remove hardcoded URL, figure out how to get parcel to work with dotenv
+    const res = await fetch(`http://localhost:8000/api/v1${endpoint}`, {
         method: reqType,
         headers: {
             "Content-type": "application/json"
@@ -310,6 +312,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["i9E3I"], "i9E3I", "parcelRequiree437")
+},{}]},["e5jiL"], "e5jiL", "parcelRequiree437")
 
 //# sourceMappingURL=sapba.js.map

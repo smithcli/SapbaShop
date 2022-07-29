@@ -1,4 +1,5 @@
 const apiFetch = async (endpoint, reqType, dataObj) => {
+  // TODO: Remove hardcoded URL, figure out how to get parcel to work with dotenv
   const res = await fetch(`http://localhost:8000/api/v1${endpoint}`, {
     method: reqType,
     headers: {

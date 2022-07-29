@@ -17,8 +17,8 @@
     "scss": "sass --watch src/scss/main.scss src/public/css/style.css",
     "test": "NODE_ENV=production jest",
     "test-watch": "NODE_ENV=production jest --watch",
-    "parcel": "parcel watch src/public/js/sapba-login.js src/public/js/sapba.js --dist-dir src/public/js/bundled --no-hmr",
-    "parcel-build": "parcel build src/public/js/sapba-login.js src/public/js/sapba.js --dist-dir src/public/js/bundled"
+    "parcel": "parcel watch src/public/js/sapba-login.mjs src/public/js/sapba.mjs --dist-dir src/public/js/bundled --no-hmr",
+    "parcel-build": "parcel build src/public/js/sapba-login.mjs src/public/js/sapba.mjs --dist-dir src/public/js/bundled"
   },
   "repository": {
     "type": "git",

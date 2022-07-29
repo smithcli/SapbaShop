@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"5PQF4":[function(require,module,exports) {
+})({"hF8zR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _apiFetch = require("./modules/apiFetch");
 var _apiFetchDefault = parcelHelpers.interopDefault(_apiFetch);
@@ -153,7 +153,8 @@ const login = async (email, password)=>{
             email,
             password
         });
-        if (res.status === "success") location.assign("/dashboard");
+        if (res.status === "success") // eslint-disable-next-line no-restricted-globals
+        location.assign("/dashboard");
     } catch (err) {
         (0, _alerts.showAlert)("fail", err.message);
     }
@@ -165,11 +166,12 @@ document.querySelector(".form-login").addEventListener("submit", (e)=>{
     login(email, password);
 });
 
-},{"./modules/apiFetch":"fPB6p","./modules/alerts":"6LXhu","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"fPB6p":[function(require,module,exports) {
+},{"./modules/apiFetch":"3QNti","./modules/alerts":"9Eacu","@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"3QNti":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 const apiFetch = async (endpoint, reqType, dataObj)=>{
-    const res = await fetch(`http://192.168.0.3:8000/api/v1${endpoint}`, {
+    // TODO: Remove hardcoded URL, figure out how to get parcel to work with dotenv
+    const res = await fetch(`http://localhost:8000/api/v1${endpoint}`, {
         method: reqType,
         headers: {
             "Content-type": "application/json"
@@ -211,23 +213,24 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"6LXhu":[function(require,module,exports) {
+},{}],"9Eacu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "showAlert", ()=>showAlert);
 parcelHelpers.export(exports, "hideAlert", ()=>hideAlert);
-const showAlert = (type, msg, location)=>{
-    hideAlert();
-    if (!location) location = "body";
-    const alert = `<div class="alert alert-${type}">${msg}</div>`;
-    document.querySelector(location).insertAdjacentHTML("afterbegin", alert);
-    window.setTimeout(hideAlert, 5000);
-};
+parcelHelpers.export(exports, "showAlert", ()=>showAlert);
 const hideAlert = ()=>{
     const alert = document.querySelector(".alert");
     if (alert) alert.parentElement.removeChild(alert);
 };
+const showAlert = (type, msg, location)=>{
+    // eslint-disable-next-line no-param-reassign
+    if (!location) location = "body";
+    hideAlert();
+    const alert = `<div class="alert alert-${type}">${msg}</div>`;
+    document.querySelector(location).insertAdjacentHTML("afterbegin", alert);
+    window.setTimeout(hideAlert, 5000);
+};
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}]},["5PQF4"], "5PQF4", "parcelRequiree437")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}]},["hF8zR"], "hF8zR", "parcelRequiree437")
 
 //# sourceMappingURL=sapba-login.js.map
