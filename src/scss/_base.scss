@@ -18,8 +18,16 @@ body {
   min-width: 35rem;
 }
 
-//.main {}
+.main {
+  min-height: $main-height;
+}
 
+// Text until img supplied
+// login page and sideNav
 .logo {
+  display: block;
+  text-align: center;
   margin: 2rem;
+  font-weight: 700;
+  font-size: 3.5rem;
 }

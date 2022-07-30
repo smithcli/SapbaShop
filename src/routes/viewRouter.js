@@ -1,5 +1,6 @@
 const express = require('express');
 const viewController = require('../controllers/viewController');
+
 const router = express.Router();
 
 // To later implement a customer facing page.
@@ -13,4 +14,5 @@ router.get('/manager', viewController.getManager);
 
 router.get('/products', viewController.getProducts);
 router.get('/stores', viewController.getStores);
+router.get('/users', viewController.getUsers);
 module.exports = router;

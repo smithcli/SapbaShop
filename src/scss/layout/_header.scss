@@ -5,12 +5,11 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  gap: 1rem;
   background: $color-primary;
 
   &__menu,
   &__account {
-    width: 8rem;
+    width: 15rem;
   }
 
   &__title {
@@ -19,5 +18,6 @@
     justify-content: center;
     align-items: center;
     font-size: 2rem;
+    overflow-wrap: normal;
   }
 }

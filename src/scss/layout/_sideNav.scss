@@ -1,0 +1,46 @@
+.side-nav {
+  height: 100%;
+  width: 0%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background-color: $color-primary-dark;
+  overflow-x: hidden;
+  transition: all 0.5s;
+
+  .logo {
+    margin: 7rem .5rem;
+  }
+}
+
+.side-nav__item,
+.side-nav__item:link,
+.side-nav__item:visited {
+  -webkit-appearance: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  color: $color-btn-text;
+  font-weight: 550;
+  display: block;
+  padding: 2rem;
+  margin: 1rem .5rem;
+  border: .4rem outset $color-primary;
+  cursor: pointer;
+  background-color: $color-light;
+
+  &:hover,
+  &:focus {
+    outline: .2rem solid $color-highlight;
+  }
+}
+
+#closeMenu {
+  background-color: transparent;
+  margin: .5rem;
+  position: absolute;
+  border: none;
+  top: 0;
+  right: .1em;
+}

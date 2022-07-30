@@ -4,11 +4,29 @@
 }
 
 @mixin focus-shadow {
-  -webkit-box-shadow: 0 -.5rem 1rem .2rem $color-focus-shadow;
-  box-shadow: 0rem -.5rem 1rem .2rem $color-focus-shadow
+  -webkit-box-shadow: 0 -0.5rem 1rem 0.2rem $color-focus-shadow;
+  box-shadow: 0rem -0.5rem 1rem 0.2rem $color-focus-shadow;
 }
 
 @mixin border {
   border: solid $color-primary-dark;
   border-radius: $border-radius;
+}
+
+@mixin listLayout {
+  min-height: $main-height;
+  max-width: 150rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  padding: 1rem;
+  @include border;
+}
+
+@mixin listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  align-content: center;
 }

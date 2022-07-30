@@ -18,8 +18,16 @@ body {
   min-width: 35rem;
 }
 
+.main {
+  min-height: 90vh;
+}
+
 .logo {
+  display: block;
+  text-align: center;
   margin: 2rem;
+  font-weight: 700;
+  font-size: 3.5rem;
 }
 
 .nav {
@@ -28,11 +36,10 @@ body {
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  gap: 1rem;
   background: #88bb92;
 }
 .nav__menu, .nav__account {
-  width: 8rem;
+  width: 15rem;
 }
 .nav__title {
   display: flex;
@@ -40,6 +47,55 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  overflow-wrap: normal;
+}
+
+.side-nav {
+  height: 100%;
+  width: 0%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background-color: #599b67;
+  overflow-x: hidden;
+  transition: all 0.5s;
+}
+.side-nav .logo {
+  margin: 7rem 0.5rem;
+}
+
+.side-nav__item,
+.side-nav__item:link,
+.side-nav__item:visited {
+  -webkit-appearance: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  color: black;
+  font-weight: 550;
+  display: block;
+  padding: 2rem;
+  margin: 1rem 0.5rem;
+  border: 0.4rem outset #88bb92;
+  cursor: pointer;
+  background-color: #fff;
+}
+.side-nav__item:hover, .side-nav__item:focus,
+.side-nav__item:link:hover,
+.side-nav__item:link:focus,
+.side-nav__item:visited:hover,
+.side-nav__item:visited:focus {
+  outline: 0.2rem solid #ff7730;
+}
+
+#closeMenu {
+  background-color: transparent;
+  margin: 0.5rem;
+  position: absolute;
+  border: none;
+  top: 0;
+  right: 0.1em;
 }
 
 .login-form {
@@ -176,17 +232,17 @@ body {
 
 .btn--title {
   border: none;
-  background-color: #97c3a5;
+  background-color: #88bb92;
+  min-width: fit-content;
 }
 .btn--title:hover, .btn--title:focus {
   transform: none;
-  background-color: #97c3a5;
+  background-color: #88bb92;
   outline: 0.2rem solid #ff7730;
 }
 
 .main-dashboard {
   margin-top: 0.5rem;
-  min-height: 90vh;
   display: grid;
   grid-auto-rows: minmax(min-content, max-content);
   gap: 0.5rem;
@@ -200,7 +256,7 @@ body {
 .chart-current-report {
   display: flex;
   flex-direction: column;
-  background-color: #97c3a5;
+  background-color: #88bb92;
   height: fit-content;
   border: solid #599b67;
   border-radius: 1.5rem;
@@ -219,14 +275,18 @@ body {
 .chart-current-report canvas {
   background-color: #fff;
   margin: 0.5rem;
+  border-radius: 0 0 1.5rem 1.5rem;
 }
 
 .products-list {
+  min-height: 90vh;
+  max-width: 150rem;
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
   padding: 1rem;
-  border: thin solid #000000;
+  border: solid #599b67;
+  border-radius: 1.5rem;
 }
 
 .products-list-header {
@@ -234,6 +294,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  align-content: center;
 }
 
 .products-list-content {
@@ -251,12 +312,14 @@ body {
 }
 
 .stores-list {
+  min-height: 90vh;
+  max-width: 150rem;
   display: flex;
   flex-direction: column;
-  min-height: 90vh;
   margin: 0.5rem;
   padding: 1rem;
-  border: thin solid #000000;
+  border: solid #599b67;
+  border-radius: 1.5rem;
 }
 
 .stores-list-header {
@@ -264,6 +327,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  align-content: center;
 }
 .stores-list-header__left {
   visibility: hidden;
@@ -276,14 +340,14 @@ body {
   display: grid;
   gap: 1rem;
 }
-@media (min-width: 800px) {
+@media (min-width: 600px) {
   .stores-list-content {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 @media (min-width: 1200px) {
   .stores-list-content {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
@@ -294,11 +358,29 @@ body {
   border-radius: 2rem;
   padding: 0.5rem;
   padding-left: 1rem;
-  max-width: 40rem;
   gap: 0.5rem;
 }
 .stores-list-item:hover {
   background-color: #599b67;
+}
+@media (min-width: 600px) {
+  .stores-list-item {
+    grid-column: span 2;
+  }
+  .stores-list-item:last-of-type {
+    grid-column: 2/span 2;
+  }
+  .stores-list-item:only-of-type {
+    grid-column: 2/span 2;
+  }
+}
+@media (min-width: 1200px) {
+  .stores-list-item:last-of-type {
+    grid-column: span 2;
+  }
+  .stores-list-item:only-of-type {
+    grid-column: 3/span 2;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

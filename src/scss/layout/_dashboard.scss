@@ -1,6 +1,5 @@
 .main-dashboard {
   margin-top: 0.5rem;
-  min-height: 90vh;
   display: grid;
   grid-auto-rows: minmax(min-content, max-content);
   gap: 0.5rem;
@@ -13,7 +12,7 @@
 .chart-current-report {
   display: flex;
   flex-direction: column;
-  background-color: $color-primary-light;
+  background-color: $color-primary;
   height: fit-content;
   @include border;
 
@@ -30,5 +29,6 @@
   canvas {
     background-color: $color-light;
     margin: 0.5rem;
+    border-radius: 0 0 $border-radius $border-radius;
   }
 }

@@ -1,17 +1,10 @@
 // productsList layout styles
 .products-list {
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem;
-  padding: 1rem;
-  border: thin solid $color-section-border;
+  @include listLayout;
 }
 
 .products-list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
+  @include listHeader;
 
   //&__left { }
 

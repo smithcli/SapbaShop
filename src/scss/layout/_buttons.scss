@@ -41,12 +41,13 @@
 .btn--title {
   @extend .btn;
   border: none;
-  background-color: $color-primary-light;
+  background-color: $color-primary;
+  min-width: fit-content;
 
   &:hover,
   &:focus {
     transform: none;
-    background-color: $color-primary-light;
+    background-color: $color-primary;
     outline: .2rem solid $color-highlight;
   }
 }

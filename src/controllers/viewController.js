@@ -1,5 +1,6 @@
 const Product = require('../models/productModel');
 const Store = require('../models/storeModel');
+const Users = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -43,4 +44,10 @@ exports.getStores = catchAsync(async (req, res, next) => {
   });
 });
 
-// TODO: Place to Add, Modify, Delete all users.
+exports.getUsers = catchAsync(async (req, res, next) => {
+  const users = await Users.find();
+  res.status(200).render('page/users', {
+    title: 'SapbaShop Users',
+    users,
+  });
+});
