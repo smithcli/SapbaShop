@@ -60,6 +60,14 @@ exports.getStores = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getStore = catchAsync(async (req, res, next) => {
+  const store = await Store.findOne({ slug: req.params.slug });
+  res.status(200).render('page/stores', {
+    title: 'SapbaShop Stores',
+    store,
+  });
+});
+
 exports.getUsers = catchAsync(async (req, res, next) => {
   const users = await Users.find().lean();
   res.status(200).render('page/users', {

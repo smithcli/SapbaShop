@@ -76,8 +76,7 @@ body {
   font-weight: 550;
   display: block;
   padding: 2rem;
-  margin: 1rem 0.5rem;
-  border: 0.4rem outset #88bb92;
+  margin: 1.5rem 1rem;
   cursor: pointer;
   background-color: #fff;
 }
