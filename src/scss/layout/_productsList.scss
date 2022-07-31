@@ -1,21 +1,21 @@
 // productsList layout styles
 .products-list {
-  @include listLayout;
-}
+  @include sectionLayout;
 
-.products-list-header {
-  @include listHeader;
+  &-header {
+    @include sectionHeader;
 
-  &__left {
-    visibility: hidden;
+    &__left {
+      visibility: hidden;
+    }
+    //&__center { }
+    //&__right { }
   }
-  //&__center { }
-  //&__right { }
 }
 
 .products-list-content {
   display: grid;
-  gap: .5rem;
+  gap: 0.5rem;
 
   @media (min-width: 500px) {
     grid-template-columns: repeat(2, 1fr);

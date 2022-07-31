@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const storeRouter = require('./routes/storeRouter');
@@ -18,6 +19,7 @@ if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line global-require
   const morgan = require('morgan');
   app.use(morgan('dev'));
+  app.use(cors());
 }
 
 // Body Parser, reading data from body into req.body

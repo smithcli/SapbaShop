@@ -1,0 +1,13 @@
+// storeDetails layout styles
+.store-details {
+  @include sectionLayout;
+
+  &-header {
+  @include sectionHeader;
+  }
+}
+
+.store-details-content {
+  display: flex;
+  justify-content: center;
+}

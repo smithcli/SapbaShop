@@ -13,7 +13,7 @@
   border-radius: $border-radius;
 }
 
-@mixin listLayout {
+@mixin sectionLayout {
   min-height: $main-height;
   max-width: 150rem;
   display: flex;
@@ -23,10 +23,12 @@
   @include border;
 }
 
-@mixin listHeader {
-  display: flex;
-  justify-content: space-between;
+@mixin sectionHeader {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  justify-items: center;
   align-items: center;
-  padding: 1rem;
-  align-content: center;
+  margin-bottom: 1rem;
+  font-weight: 550;
+  text-align: center;
 }

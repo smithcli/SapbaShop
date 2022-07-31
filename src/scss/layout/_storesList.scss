@@ -1,17 +1,15 @@
 // storesList layout styles
 .stores-list {
-  @include listLayout;
-}
-
-.stores-list-header {
-  @include listHeader;
-
-  &__left {
-    visibility: hidden;
-  }
-  //&__center { }
-  &__right {
-    visibility: hidden;
+  @include sectionLayout;
+  &-header {
+    @include sectionHeader;
+    &__left {
+      visibility: hidden;
+    }
+    //&__center { }
+    &__right {
+      visibility: hidden;
+    }
   }
 }
 

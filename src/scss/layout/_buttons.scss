@@ -28,13 +28,23 @@
 }
 
 .btn-bar {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
 
-  // Safari only currently 07/2022
-  &:has(.btn:only-child) {
-    justify-content: center;
+  .btn {
+    width: 11rem;
+    &:only-of-type {
+      grid-column: 2;
+      justify-self: center;
+    }
+    &--delete{
+      justify-self: start;
+    }
+    &--save {
+      grid-column: 3;
+      justify-self: end;
+    }
   }
 }
 
@@ -50,4 +60,8 @@
     background-color: $color-primary;
     outline: .2rem solid $color-highlight;
   }
+}
+
+.btn--hidden {
+  visibility: hidden;
 }

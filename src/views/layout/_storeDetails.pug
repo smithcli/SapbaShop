@@ -1,6 +1,58 @@
 section.store-details
+
   .store-details-header
     .store-details-header__left
     .store-details-header__center= `${store.bnum.en}, ${store.street.en}`
-    .store-details-header__right
+    .store-details-header__right.btn.btn--edit Edit
+
   .store-details-content
+    form.form.form-store
+
+      fieldset.form__group(disabled)
+        .form__set-title Building Number / Village
+        label.form__label(for='bnum-en') En 
+          input.form__input#bnum-en(type='text', value=store.bnum.en, required)
+        label.form__label(for='bnum-th') Th 
+          input.form__input#bnum-th(type='text', value=store.bnum.th, required)
+
+      fieldset.form__group(disabled)
+        .form__set-title Street
+        label.form__label(for='street-en') En
+          input.form__input#street-en(type='text', value=store.street.en, required)
+        label.form__label(for='street-th') Th
+          input.form__input#street-th(type='text', value=store.street.th, required)
+
+      fieldset.form__group(disabled)
+        .form__set-title District
+        label.form__label(for='district-en') En
+          input.form__input#district-en(type='text', value=store.district.en, required)
+        label.form__label(for='district-th') Th
+          input.form__input#district-th(type='text', value=store.district.th, required)
+
+      fieldset.form__group(disabled)
+        .form__set-title Province
+        label.form__label(for='province-en') En
+          input.form__input#province-en(type='text', value=store.province.en, required)
+        label.form__label(for='province-th') Th
+          input.form__input#province-th(type='text', value=store.province.th, required)
+
+      fieldset.form__group(disabled)
+        .form__set-title Country
+        label.form__label(for='country-en') En
+          input.form__input#country-en(type='text', value=store.country.en, required)
+        label.form__label(for='country-th') Th
+          input.form__input#country-th(type='text', value=store.country.th, required)
+
+      fieldset.form__group(disabled)
+        .form__set-title Postal Code
+        label.form__label(for='zip')
+          input.form__input#zip(type='text', value=store.zip, pattern="[0-9]{5}", title="Five digit zip code", required)
+
+      fieldset.form__group(disabled)
+        .form__set-title Phone Number
+        label.form__label(for='phone')
+          input.form__input#phone(type='tel', value=`0${store.phone}`, required)
+
+  .btn-bar.btn--hidden
+    button.btn.btn--delete Delete
+    button.btn.btn--save Save
