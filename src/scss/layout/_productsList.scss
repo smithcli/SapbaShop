@@ -6,36 +6,34 @@
 .products-list-header {
   @include listHeader;
 
-  //&__left { }
-
+  &__left {
+    visibility: hidden;
+  }
   //&__center { }
-
   //&__right { }
 }
 
 .products-list-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-  align-items: center;
+  display: grid;
+  gap: .5rem;
+
+  @media (min-width: 500px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1000px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.products-list-table {
-  display: grid;
-  gap: 1rem;
-  text-align: center;
-  border-collapse: collapse;
+.products-list-item {
+  display: flex;
+  flex-direction: row;
 
-//  th,
-//  td {
-//    padding: 1rem;
-//    border-bottom: 0.1rem solid $color-table-borders;
-//    overflow: hidden;
-//  }
-//  tr:nth-child(even) {
-//    background-color: $color-table-rows;
-//  }
-//  tr:not(:first-child):hover {
-//    background-color: $color-select-highlight;
-//  }
+  &__image {
+    margin: 0 1em;
+  }
+
+  &__name {
+    flex: 1 1 auto;
+  }
 }

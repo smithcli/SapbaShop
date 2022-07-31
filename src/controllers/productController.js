@@ -5,7 +5,7 @@ const APIFeatures = require('../utils/apiFeatures');
 
 // Added APIFeatures to allow searches, paginate default is 1 of 100
 exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Product.find(), req.query)
+  const features = new APIFeatures(Product.find().lean(), req.query)
     .filter()
     .sort()
     .selectFields()
@@ -23,7 +23,7 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 });
 
 exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).lean();
   if (!product) {
     return next(
       new AppError(404, `No product found with id: ${req.params.id}`),
@@ -80,7 +80,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
 
 // No pagination for possible expensive call for management.
 exports.getAllProductsMangement = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Product.find(), req.query)
+  const features = new APIFeatures(Product.find().lean(), req.query)
     .filter()
     .sort()
     .selectFields();

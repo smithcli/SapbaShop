@@ -2,15 +2,8 @@ include ../mixin/product-mixins
 .products-list
   .products-list-header
     .products-list-header__left All Stores
-    .products-list-header__center Products
+    .products-list-header__center All Products
     .products-list-header__right search bar
   .products-list-content 
-    .products-list-table
-      div
-        span NAME
-        span DEP
-        span QTY
-        span (&#3647)
-        span STORE
-      each product in products
-        +productListItem(product)
+    each product in products
+      +productsListItem(product)
