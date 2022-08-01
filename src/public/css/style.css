@@ -16,6 +16,7 @@ body {
   color: black;
   min-height: 100vh;
   min-width: 35rem;
+  background-color: #fff;
 }
 
 .main {
@@ -72,7 +73,7 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   text-align: center;
-  color: black;
+  color: #000;
   font-weight: 550;
   display: block;
   padding: 2rem;
@@ -126,6 +127,7 @@ fieldset {
   background-color: #fff;
   border-radius: 0.8rem;
   padding: 2rem 5rem;
+  row-gap: 1rem;
   display: grid;
   align-items: center;
 }
@@ -159,7 +161,10 @@ fieldset {
   box-shadow: none;
 }
 .form__group:disabled .form__input:disabled {
+  -webkit-text-fill-color: black;
+  opacity: 1;
   color: black;
+  background-color: #eee;
 }
 
 .form__label {
@@ -230,15 +235,15 @@ fieldset {
   text-decoration: none;
   text-transform: uppercase;
   text-align: center;
-  color: black;
+  color: #000;
   font-size: 1.5rem;
   padding: 1rem 2rem;
   cursor: pointer;
   font-weight: 550;
   background-color: #fff;
   transition: all 0.3s;
-  border: solid #599b67;
   border-radius: 1.5rem;
+  border: solid #97c3a5;
 }
 .btn:hover, .btn--title:hover, .btn:focus, .btn--title:focus,
 .btn:link:hover,
@@ -292,6 +297,16 @@ fieldset {
   visibility: hidden;
 }
 
+.btn--delete {
+  border: none;
+  background-color: #ed4337;
+}
+
+.btn--save {
+  border: none;
+  background-color: #55c57a;
+}
+
 .main-dashboard {
   margin-top: 0.5rem;
   display: grid;
@@ -307,10 +322,10 @@ fieldset {
 .chart-current-report {
   display: flex;
   flex-direction: column;
-  background-color: #88bb92;
   height: fit-content;
-  border: solid #599b67;
   border-radius: 1.5rem;
+  background-color: #88bb92;
+  border: solid #88bb92;
 }
 @media (min-width: 1000px) {
   .chart-current-report {
@@ -324,9 +339,9 @@ fieldset {
   }
 }
 .chart-current-report canvas {
-  background-color: #fff;
   margin: 0.5rem;
   border-radius: 0 0 1.5rem 1.5rem;
+  background-color: #fff;
 }
 
 .products-list {
@@ -422,14 +437,7 @@ fieldset {
 .stores-list-item {
   display: flex;
   flex-direction: column;
-  border: thin solid #000000;
-  border-radius: 2rem;
-  padding: 0.5rem;
-  padding-left: 1rem;
-  gap: 0.5rem;
-}
-.stores-list-item:hover {
-  background-color: #599b67;
+  gap: 1rem;
 }
 @media (min-width: 600px) {
   .stores-list-item {
@@ -474,6 +482,10 @@ fieldset {
 .store-details-content {
   display: flex;
   justify-content: center;
+  margin-bottom: 5rem;
+}
+.store-details-content .form__group {
+  background-color: #88bb92;
 }
 
 /*# sourceMappingURL=style.css.map */

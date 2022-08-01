@@ -12,9 +12,10 @@
 .chart-current-report {
   display: flex;
   flex-direction: column;
-  background-color: $color-primary;
   height: fit-content;
-  @include border;
+  border-radius: $border-radius;
+  background-color: $color-chart-bg;
+  border: solid $color-chart-border;
 
   @media (min-width: 1000px) {
     grid-column: span 4;
@@ -27,8 +28,8 @@
   }
 
   canvas {
-    background-color: $color-light;
     margin: 0.5rem;
     border-radius: 0 0 $border-radius $border-radius;
+    background-color: $color-canvas-bg;
   }
 }

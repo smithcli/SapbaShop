@@ -8,11 +8,6 @@
   box-shadow: 0rem -0.5rem 1rem 0.2rem $color-focus-shadow;
 }
 
-@mixin border {
-  border: solid $color-primary-dark;
-  border-radius: $border-radius;
-}
-
 @mixin sectionLayout {
   min-height: $main-height;
   max-width: 150rem;
@@ -20,7 +15,8 @@
   flex-direction: column;
   margin: 0.5rem;
   padding: 1rem;
-  @include border;
+  border: solid $color-section-border;
+  border-radius: $border-radius;
 }
 
 @mixin sectionHeader {

@@ -1,3 +1,4 @@
+// All buttons
 .btn,
 .btn:link,
 .btn:visited {
@@ -12,7 +13,8 @@
   font-weight: 550;
   background-color: $color-btn;
   transition: all 0.3s;
-  @include border;
+  border-radius: $border-radius;
+  border: solid $color-btn-border;
 
   &:hover,
   &:focus {
@@ -27,6 +29,7 @@
   }
 }
 
+// Bar at the bottom of forms
 .btn-bar {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
@@ -48,20 +51,31 @@
   }
 }
 
+// Selectable titles (have a slug)
 .btn--title {
   @extend .btn;
   border: none;
-  background-color: $color-primary;
+  background-color: $color-btn--title;
   min-width: fit-content;
 
   &:hover,
   &:focus {
     transform: none;
-    background-color: $color-primary;
+    background-color: $color-btn--title-bg;
     outline: .2rem solid $color-highlight;
   }
 }
-
+// Hide a button or btn-bar
 .btn--hidden {
   visibility: hidden;
+}
+// Deletes documents
+.btn--delete {
+  border: none;
+  background-color: $color-btn--delete-bg;
+}
+// Saves documents
+.btn--save {
+  border: none;
+  background-color: $color-btn--save-bg;
 }

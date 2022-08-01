@@ -95,6 +95,7 @@ storeSchema.pre('save', function (next) {
   });
   next();
 });
+// TODO: post update for slug if fields change. All Models!!!.
 
 const Store = mongoose.model('Store', storeSchema);
 
