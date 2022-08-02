@@ -86,6 +86,9 @@ exports.requireAuth = catchAsync(async (req, res, next) => {
     // eslint-disable-next-line prefer-destructuring
     token = req.headers.cookie.split('=')[1];
   } else {
+    // if user is on SSR pages and not logged in, redirect to login page.
+    if (!req.originalUrl.startsWith('/api')) return (res.redirect('/login'));
+    // else they are using the RESTapi, send error
     return next(
       new AppError(401, 'You are not logged in. Please log in to get access.'),
     );
@@ -103,6 +106,7 @@ exports.requireAuth = catchAsync(async (req, res, next) => {
   }
   // 5) Grant access and attach user to req for further middleware
   req.user = user;
+  if (!req.originalUrl.startsWith('/api')) res.locals.user = user;
   next();
 });
 
