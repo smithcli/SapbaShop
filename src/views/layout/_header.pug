@@ -1,5 +1,8 @@
 header.header
-  nav.nav.nav--dashboard
-    a.nav__menu.btn--title#menu Menu
-    a.nav__title= title
-    a.nav__account.btn--title(href='') My Account
+  .nav.nav--dashboard
+    .nav__menu.btn--title#menu Menu
+    .nav__title= title
+    .nav__account.btn--title.dropdown My Account
+      .dropdown-content
+        a(href='/me') Edit Account
+        a(href='/login') Logout
