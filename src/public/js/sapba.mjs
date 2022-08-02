@@ -47,3 +47,10 @@ if (saveForm) {
     submitForm(endpoint, reqType, formData);
   });
 }
+
+if (deleteForm) {
+  deleteForm.addEventListener('click', (e) => {
+    const { endpoint } = buildFetchValues();
+    submitForm(endpoint, 'DELETE');
+  });
+}

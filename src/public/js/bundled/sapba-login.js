@@ -156,7 +156,7 @@ const login = async (email, password)=>{
         if (res.status === "success") // eslint-disable-next-line no-restricted-globals
         location.assign("/dashboard");
     } catch (err) {
-        (0, _alerts.showAlert)("fail", err.message);
+        (0, _alerts.showAlert)("fail", err);
     }
 };
 document.querySelector(".form-login").addEventListener("submit", (e)=>{
@@ -177,9 +177,20 @@ const apiFetch = async (endpoint, reqType, dataObj)=>{
             "Content-type": "application/json"
         },
         body: JSON.stringify(dataObj)
-    }).then((response)=>response.json());
-    if (res.status === "success") return res;
-    throw new Error(res.message);
+    }).then(async (response)=>{
+        var ref;
+        // Determine if the response has a body
+        const isJson = (ref = response.headers.get("Content-type")) === null || ref === void 0 ? void 0 : ref.includes("application/json");
+        // If no body return just the response obj
+        const data = isJson ? await response.json() : response;
+        // For errors returned in the response body reject with message
+        if (!response.ok) {
+            const error = data && data.message || response.status;
+            return Promise.reject(error);
+        }
+        return data;
+    });
+    return res;
 };
 exports.default = apiFetch;
 

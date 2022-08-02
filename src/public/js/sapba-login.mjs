@@ -9,7 +9,7 @@ const login = async (email, password) => {
       location.assign('/dashboard');
     }
   } catch (err) {
-    showAlert('fail', err.message);
+    showAlert('fail', err);
   }
 };
 

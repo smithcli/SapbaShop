@@ -144,13 +144,40 @@
   }
 })({"e5jiL":[function(require,module,exports) {
 var _charts = require("./modules/charts");
-// DOM ELEMENTS
+var _sideNav = require("./modules/sideNav");
+var _forms = require("./modules/forms");
+/// DOM ELEMENTS ///
+const menuBtn = document.getElementById("menu");
+const closeMenu = document.getElementById("closeMenu");
+const sideNav = document.getElementById("side-nav");
 const currentReports = document.getElementsByClassName("chart-current-report");
-// DELEGATION
-// TODO: Develop client side storage or better version for this expensive call / operation
-if (currentReports.length !== 0) (0, _charts.populateCharts)(currentReports);
+const editForm = document.querySelector(".btn--edit");
+const saveForm = document.querySelector(".btn--save");
+const deleteForm = document.querySelector(".btn--delete");
+/// DELEGATION ///
+if (currentReports.length !== 0) // TODO: Develop client side storage or better version for this expensive call / operation
+(0, _charts.populateCharts)(currentReports);
+// Side Navigation
+if (menuBtn && sideNav) menuBtn.addEventListener("click", (e)=>{
+    (0, _sideNav.openNav)(sideNav);
+});
+if (closeMenu && sideNav) closeMenu.addEventListener("click", (e)=>{
+    (0, _sideNav.closeNav)(sideNav);
+});
+if (editForm) editForm.addEventListener("click", (e)=>{
+    (0, _forms.enableForm)(editForm);
+});
+if (saveForm) saveForm.addEventListener("click", (e)=>{
+    const formData = (0, _forms.getFormValues)();
+    const { endpoint , reqType  } = (0, _forms.buildFetchValues)();
+    (0, _forms.submitForm)(endpoint, reqType, formData);
+});
+if (deleteForm) deleteForm.addEventListener("click", (e)=>{
+    const { endpoint  } = (0, _forms.buildFetchValues)();
+    (0, _forms.submitForm)(endpoint, "DELETE");
+});
 
-},{"./modules/charts":"7xgLb"}],"7xgLb":[function(require,module,exports) {
+},{"./modules/charts":"7xgLb","./modules/sideNav":"g9ixY","./modules/forms":"ccThb"}],"7xgLb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "genStoreCurrentReport", ()=>genStoreCurrentReport);
@@ -230,12 +257,12 @@ const populateCharts = async (htmlCollection)=>{
         const charts = [];
         let chartAvgs = 0;
         // eslint-disable-next-line no-restricted-syntax
-        for (const div of htmlCollection){
+        for (const el of htmlCollection){
             // eslint-disable-next-line no-await-in-loop
-            const { avgCount , ...data } = await genStoreCurrentReport(div.children[0].id);
+            const { avgCount , ...data } = await genStoreCurrentReport(el.children[1].id);
             chartAvgs += avgCount;
             // eslint-disable-next-line no-undef
-            const chart = new Chart(div.children[0], {
+            const chart = new Chart(el.children[1], {
                 type: "bar",
                 data,
                 options: {
@@ -276,9 +303,20 @@ const apiFetch = async (endpoint, reqType, dataObj)=>{
             "Content-type": "application/json"
         },
         body: JSON.stringify(dataObj)
-    }).then((response)=>response.json());
-    if (res.status === "success") return res;
-    throw new Error(res.message);
+    }).then(async (response)=>{
+        var ref;
+        // Determine if the response has a body
+        const isJson = (ref = response.headers.get("Content-type")) === null || ref === void 0 ? void 0 : ref.includes("application/json");
+        // If no body return just the response obj
+        const data = isJson ? await response.json() : response;
+        // For errors returned in the response body reject with message
+        if (!response.ok) {
+            const error = data && data.message || response.status;
+            return Promise.reject(error);
+        }
+        return data;
+    });
+    return res;
 };
 exports.default = apiFetch;
 
@@ -312,6 +350,111 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["e5jiL"], "e5jiL", "parcelRequiree437")
+},{}],"g9ixY":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "openNav", ()=>openNav);
+parcelHelpers.export(exports, "closeNav", ()=>closeNav);
+const openNav = (nav)=>{
+    nav.style.width = "250px";
+};
+const closeNav = (nav)=>{
+    nav.style.width = "0";
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}],"ccThb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "disableForm", ()=>disableForm);
+parcelHelpers.export(exports, "enableForm", ()=>enableForm);
+parcelHelpers.export(exports, "getFormValues", ()=>getFormValues);
+parcelHelpers.export(exports, "buildFetchValues", ()=>buildFetchValues);
+parcelHelpers.export(exports, "submitForm", ()=>submitForm);
+/* eslint-disable no-param-reassign */ /* eslint-disable no-restricted-syntax */ var _apiFetch = require("./apiFetch");
+var _apiFetchDefault = parcelHelpers.interopDefault(_apiFetch);
+var _alerts = require("./alerts");
+/// DOM ELEMENTS ///
+// Global elements
+const fields = document.getElementsByClassName("form__group");
+const form = document.getElementsByClassName("form")[0];
+const formBtns = document.querySelector(".btn-bar");
+// Store elements
+const zip = document.getElementById("zip");
+const phone = document.getElementById("phone");
+/// FORM FUNCTIONS //
+// Model specific form functions
+// Store Form preparation to submit
+const prepareStoreForm = ()=>{
+    zip.value = parseInt(zip.value, 10);
+    phone.value = parseInt(phone.value.split("-").join(""), 10);
+};
+const disableForm = (editBtn)=>{
+    form.reset();
+    for (const el of fields)el.setAttribute("disabled", null);
+    editBtn.innerHTML = "Edit";
+    formBtns.classList.add("btn--hidden");
+};
+const enableForm = (editBtn)=>{
+    if (editBtn.innerHTML === "Edit") {
+        for (const el of fields)el.removeAttribute("disabled");
+        editBtn.innerHTML = "Cancel";
+        formBtns.classList.remove("btn--hidden");
+    } else disableForm(editBtn);
+};
+const getFormValues = ()=>{
+    const obj = {};
+    prepareStoreForm();
+    const formData = new FormData(form);
+    for (const [key, value] of formData)if (key.includes(".")) {
+        const [key1, key2] = key.split(".");
+        if (!obj[key1]) obj[key1] = {};
+        obj[key1][key2] = value;
+    } else obj[key] = value;
+    return obj;
+};
+const buildFetchValues = ()=>{
+    // In HTML Form the form must have data attributes
+    // model = endpoint, and the id of object to modify if PATCH
+    const { id , model  } = form.dataset;
+    const reqType = form.dataset.id ? "PATCH" : "POST";
+    return {
+        endpoint: `/${model}/${id}`,
+        reqType
+    };
+};
+const submitForm = async (endpoint, req, obj)=>{
+    try {
+        const res = await (0, _apiFetchDefault.default)(endpoint, req, obj);
+        if (res.status === "success" || res.status === 204) {
+            const action = req === "DELETE" ? "Deleted" : "Saved";
+            (0, _alerts.showAlert)("pass", `${action} successfully!`);
+            window.setTimeout(()=>{
+                window.location = document.referrer;
+            }, 1500);
+        }
+    } catch (err) {
+        (0, _alerts.showAlert)("fail", err);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx","./apiFetch":"3QNti","./alerts":"9Eacu"}],"9Eacu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "hideAlert", ()=>hideAlert);
+parcelHelpers.export(exports, "showAlert", ()=>showAlert);
+const hideAlert = ()=>{
+    const alert = document.querySelector(".alert");
+    if (alert) alert.parentElement.removeChild(alert);
+};
+const showAlert = (type, msg, location)=>{
+    // eslint-disable-next-line no-param-reassign
+    if (!location) location = "body";
+    hideAlert();
+    const alert = `<div class="alert alert-${type}">${msg}</div>`;
+    document.querySelector(location).insertAdjacentHTML("afterbegin", alert);
+    window.setTimeout(hideAlert, 5000);
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"b3Cpx"}]},["e5jiL"], "e5jiL", "parcelRequiree437")
 
 //# sourceMappingURL=sapba.js.map

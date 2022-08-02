@@ -344,7 +344,7 @@ fieldset {
   .chart-current-report {
     grid-column: span 4;
   }
-  .chart-current-report:last-of-type(odd) {
+  .chart-current-report:last-of-type:nth-of-type(odd) {
     grid-column: 3/span 4;
   }
   .chart-current-report:only-of-type {

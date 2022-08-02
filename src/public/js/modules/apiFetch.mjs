@@ -6,11 +6,21 @@ const apiFetch = async (endpoint, reqType, dataObj) => {
       'Content-type': 'application/json',
     },
     body: JSON.stringify(dataObj),
-  }).then((response) => response.json());
-  if (res.status === 'success') {
-    return res;
-  }
-  throw new Error(res.message);
+  }).then(async (response) => {
+    // Determine if the response has a body
+    const isJson = response.headers
+      .get('Content-type')
+      ?.includes('application/json');
+    // If no body return just the response obj
+    const data = isJson ? await response.json() : response;
+    // For errors returned in the response body reject with message
+    if (!response.ok) {
+      const error = (data && data.message) || response.status;
+      return Promise.reject(error);
+    }
+    return data;
+  });
+  return res;
 };
 
 export default apiFetch;

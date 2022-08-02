@@ -30,7 +30,7 @@
 
   @media (min-width: 1000px) {
     grid-column: span 4;
-    &:last-of-type(odd) {
+    &:last-of-type:nth-of-type(odd) {
       grid-column: 3 / span 4;
     }
     &:only-of-type {

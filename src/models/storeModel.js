@@ -95,6 +95,7 @@ storeSchema.pre('save', function (next) {
   });
   next();
 });
+// TODO: Validators for phone and zip, (min is not working) update only?
 // TODO: post update for slug if fields change. All Models!!!.
 
 const Store = mongoose.model('Store', storeSchema);

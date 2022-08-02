@@ -9,6 +9,7 @@ const fields = document.getElementsByClassName('form__group');
 const form = document.getElementsByClassName('form')[0];
 const formBtns = document.querySelector('.btn-bar');
 // Store elements
+const zip = document.getElementById('zip');
 const phone = document.getElementById('phone');
 
 /// FORM FUNCTIONS //
@@ -17,6 +18,7 @@ const phone = document.getElementById('phone');
 
 // Store Form preparation to submit
 const prepareStoreForm = () => {
+  zip.value = parseInt(zip.value, 10);
   phone.value = parseInt(phone.value.split('-').join(''), 10);
 };
 
@@ -79,8 +81,14 @@ export const buildFetchValues = () => {
 export const submitForm = async (endpoint, req, obj) => {
   try {
     const res = await apiFetch(endpoint, req, obj);
-    if (res.status === 'success') showAlert('pass', 'Saved successfully!');
+    if (res.status === 'success' || res.status === 204) {
+      const action = req === 'DELETE' ? 'Deleted' : 'Saved';
+      showAlert('pass', `${action} successfully!`);
+      window.setTimeout(() => {
+        window.location = document.referrer;
+      }, 1500);
+    }
   } catch (err) {
-    showAlert('fail', err.message);
+    showAlert('fail', err);
   }
 };
