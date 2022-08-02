@@ -1,11 +1,26 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
-import { apiFetch } from './apiFetch';
+import apiFetch from './apiFetch';
+import { showAlert } from './alerts';
 
 /// DOM ELEMENTS ///
+// Global elements
 const fields = document.getElementsByClassName('form__group');
-const form = document.querySelector('form');
+const form = document.getElementsByClassName('form')[0];
 const formBtns = document.querySelector('.btn-bar');
+// Store elements
+const phone = document.getElementById('phone');
+
+/// FORM FUNCTIONS //
+
+// Model specific form functions
+
+// Store Form preparation to submit
+const prepareStoreForm = () => {
+  phone.value = parseInt(phone.value.split('-').join(''), 10);
+};
+
+// Global form Functions //
 
 // Cancels editing a form
 export const disableForm = (editBtn) => {
@@ -30,6 +45,42 @@ export const enableForm = (editBtn) => {
   }
 };
 
-//export const getFormValues = (eleArray) => {
-//  document.getElementsByClassName('form__label')
-//}
+// Build object from form
+export const getFormValues = () => {
+  const obj = {};
+  prepareStoreForm();
+  const formData = new FormData(form);
+  for (const [key, value] of formData) {
+    if (key.includes('.')) {
+      const [key1, key2] = key.split('.');
+      if (!obj[key1]) obj[key1] = {};
+      obj[key1][key2] = value;
+    } else {
+      obj[key] = value;
+    }
+  }
+  return obj;
+};
+
+// Dynamically build fetch req return as object
+// Buttons will determine if 'DELETE' req type
+export const buildFetchValues = () => {
+  // In HTML Form the form must have data attributes
+  // model = endpoint, and the id of object to modify if PATCH
+  const { id, model } = form.dataset;
+  const reqType = form.dataset.id ? 'PATCH' : 'POST';
+  return {
+    endpoint: `/${model}/${id}`,
+    reqType,
+  };
+};
+
+// Submit Form data
+export const submitForm = async (endpoint, req, obj) => {
+  try {
+    const res = await apiFetch(endpoint, req, obj);
+    if (res.status === 'success') showAlert('pass', 'Saved successfully!');
+  } catch (err) {
+    showAlert('fail', err.message);
+  }
+};

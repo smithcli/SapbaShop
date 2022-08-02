@@ -1,57 +1,72 @@
 section.store-details
-
   .store-details-header
     .store-details-header__left
     .store-details-header__center= `${store.bnum.en}, ${store.street.en}`
     .store-details-header__right.btn.btn--edit Edit
 
   .store-details-content
-    form.form.form-store
+    form.form.form-store(data-model='stores', data-id=store._id)
 
       fieldset.form__group(disabled)
         .form__set-title Building Number / Village
         label.form__label(for='bnum-en') En 
-          input.form__input#bnum-en(type='text', value=store.bnum.en, required)
+          input.form__input#bnum-en(type='text', name='bnum.en', value=store.bnum.en, required)
         label.form__label(for='bnum-th') Th 
-          input.form__input#bnum-th(type='text', value=store.bnum.th, required)
+          input.form__input#bnum-th(type='text', name='bnum.th', value=store.bnum.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title Street
         label.form__label(for='street-en') En
-          input.form__input#street-en(type='text', value=store.street.en, required)
+          input.form__input#street-en(type='text', name='street.en', value=store.street.en, required)
         label.form__label(for='street-th') Th
-          input.form__input#street-th(type='text', value=store.street.th, required)
+          input.form__input#street-th(type='text', name='street.th', value=store.street.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title District
         label.form__label(for='district-en') En
-          input.form__input#district-en(type='text', value=store.district.en, required)
+          input.form__input#district-en(type='text', name='district.en', value=store.district.en, required)
         label.form__label(for='district-th') Th
-          input.form__input#district-th(type='text', value=store.district.th, required)
+          input.form__input#district-th(type='text', name='district.th' value=store.district.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title Province
         label.form__label(for='province-en') En
-          input.form__input#province-en(type='text', value=store.province.en, required)
+          input.form__input#province-en(type='text', name='province.en', value=store.province.en, required)
         label.form__label(for='province-th') Th
-          input.form__input#province-th(type='text', value=store.province.th, required)
+          input.form__input#province-th(type='text', name='province.th', value=store.province.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title Country
         label.form__label(for='country-en') En
-          input.form__input#country-en(type='text', value=store.country.en, required)
+          input.form__input#country-en(type='text', name='country.en' value=store.country.en, required)
         label.form__label(for='country-th') Th
-          input.form__input#country-th(type='text', value=store.country.th, required)
+          input.form__input#country-th(type='text', name='country.th' value=store.country.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title Postal Code
         label.form__label(for='zip')
-          input.form__input#zip(type='text', value=store.zip, pattern="[0-9]{5}", title="Five digit zip code", required)
+          input.form__input#zip(type='text', name='zip' value=store.zip, pattern="[0-9]{5}", title="Five digit zip code", required)
 
       fieldset.form__group(disabled)
         .form__set-title Phone Number
-        label.form__label(for='phone')
-          input.form__input#phone(type='tel', value=`0${store.phone}`, required)
+        - const phone = store.phone.toString();
+        if phone.startsWith('2')
+          - let lastfour = phone.slice(-4);
+          - let middle = phone.slice(-7, -4);
+          - let start = phone.slice(0, -7);
+        else
+          - let lastfour = phone.slice(-3);
+          - let middle = phone.slice(-6, -3);
+          - let start = phone.slice(0, -6);
+          label.form__label(for='phone')
+            input.form__input#phone(
+              type='tel',
+              name='phone',
+              value=`0${start}-${middle}-${lastfour}`,
+              pattern='0[0-9]{1,2}-?[0-9]{3}-?[0-9]{3,4}',
+              title='Please use local format 012-345-678',
+              required
+            )
 
   .btn-bar.btn--hidden
     button.btn.btn--delete Delete
