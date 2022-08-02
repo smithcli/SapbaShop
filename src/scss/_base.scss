@@ -21,6 +21,9 @@ body {
 
 .main {
   min-height: $main-height;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 // Text until img supplied

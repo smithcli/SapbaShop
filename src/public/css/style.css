@@ -21,6 +21,9 @@ body {
 
 .main {
   min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo {
@@ -251,7 +254,6 @@ fieldset {
 .btn:visited:hover,
 .btn:visited:focus {
   transform: scale(1.08);
-  background-color: #fff;
   -webkit-box-shadow: 0 -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
   box-shadow: 0rem -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
   outline: none;
@@ -307,14 +309,25 @@ fieldset {
   background-color: #55c57a;
 }
 
-.main-dashboard {
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.reports {
   margin-top: 0.5rem;
+  width: 100%;
+  max-width: 150rem;
+  padding: 0.5rem;
   display: grid;
   grid-auto-rows: minmax(min-content, max-content);
   gap: 0.5rem;
+  flex: 1 0 auto;
 }
 @media (min-width: 1000px) {
-  .main-dashboard {
+  .reports {
     grid-template-columns: repeat(8, 8fr);
   }
 }
@@ -331,7 +344,7 @@ fieldset {
   .chart-current-report {
     grid-column: span 4;
   }
-  .chart-current-report:last-of-type {
+  .chart-current-report:last-of-type(odd) {
     grid-column: 3/span 4;
   }
   .chart-current-report:only-of-type {
@@ -347,6 +360,7 @@ fieldset {
 .products-list {
   min-height: 90vh;
   max-width: 150rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
@@ -396,6 +410,7 @@ fieldset {
 .stores-list {
   min-height: 90vh;
   max-width: 150rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
@@ -462,6 +477,7 @@ fieldset {
 .store-details {
   min-height: 90vh;
   max-width: 150rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0.5rem;

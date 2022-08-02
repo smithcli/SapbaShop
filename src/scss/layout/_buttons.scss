@@ -19,7 +19,7 @@
   &:hover,
   &:focus {
     transform: scale(1.08);
-    background-color: $color-btn-focus-bg;
+    //background-color: $color-btn-focus-bg;
     @include focus-shadow;
     outline: none;
   }

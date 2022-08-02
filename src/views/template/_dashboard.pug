@@ -5,7 +5,10 @@ block append head
   script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.js')
 
 block content
-  .main.main-dashboard
+  main.main
     block main
-      each store in stores
-        +chartCurrentReport(store)
+      .dashboard
+        block dashboard
+          .reports
+            each store in stores
+              +chartCurrentReport(store)

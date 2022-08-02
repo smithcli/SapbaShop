@@ -1,8 +1,19 @@
-.main-dashboard {
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.reports {
   margin-top: 0.5rem;
+  width: 100%;
+  max-width: 150rem;
+  padding: 0.5rem;
   display: grid;
   grid-auto-rows: minmax(min-content, max-content);
   gap: 0.5rem;
+  flex: 1 0 auto;
 
   @media (min-width: 1000px) {
     grid-template-columns: repeat(8, 8fr);
@@ -19,7 +30,7 @@
 
   @media (min-width: 1000px) {
     grid-column: span 4;
-    &:last-of-type {
+    &:last-of-type(odd) {
       grid-column: 3 / span 4;
     }
     &:only-of-type {
