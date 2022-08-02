@@ -1,5 +1,6 @@
 const express = require('express');
 const viewController = require('../controllers/viewController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -7,11 +8,11 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.redirect('/login');
 });
-
 router.get('/login', viewController.login);
-router.get('/dashboard', viewController.getDashboard);
-router.get('/manager', viewController.getManager);
 
+// Require Authentication beyond this point
+router.get('/*', authController.requireAuth);
+router.get('/dashboard', viewController.getDashboard);
 router.get('/products', viewController.getProducts);
 router.get('/stores', viewController.getStores);
 router.get('/stores/:slug', viewController.getStore);

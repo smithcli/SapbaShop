@@ -78,6 +78,21 @@ exports.login = catchAsync(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
+// Replace jwt cookie with empty one to logout
+exports.logout = catchAsync(async (req, res, next) => {
+  // Replace the jwt with empty string, not required to be secure (no token)
+  // Express notes on how browsers are particular on clearCookie helped make this decision.
+  res.cookie('jwt', '', {
+    expires: new Date(Date.now() + 5 * 1000), // 5 sec
+    httpOnly: true,
+    sameSite: 'Strict',
+  });
+  res.status(200).json({
+    status: 'success',
+    message: 'Hope to see you again soon!',
+  });
+});
+
 // Users are required to be logged in to access routes with this middleware
 exports.requireAuth = catchAsync(async (req, res, next) => {
   // 1) get token
@@ -86,8 +101,10 @@ exports.requireAuth = catchAsync(async (req, res, next) => {
     // eslint-disable-next-line prefer-destructuring
     token = req.headers.cookie.split('=')[1];
   } else {
+    // TODO: Disabled redirect, confusing if password is correct,
+    // might be better implemented client side.
     // if user is on SSR pages and not logged in, redirect to login page.
-    if (!req.originalUrl.startsWith('/api')) return (res.redirect('/login'));
+    // if (!req.originalUrl.startsWith('/api')) return res.redirect('/login');
     // else they are using the RESTapi, send error
     return next(
       new AppError(401, 'You are not logged in. Please log in to get access.'),

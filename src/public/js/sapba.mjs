@@ -1,5 +1,6 @@
-import { populateCharts } from './modules/charts';
 import { openNav, closeNav } from './modules/sideNav';
+import { logout } from './modules/auth';
+import { populateCharts } from './modules/charts';
 import {
   enableForm,
   getFormValues,
@@ -15,12 +16,9 @@ const currentReports = document.getElementsByClassName('chart-current-report');
 const editForm = document.querySelector('.btn--edit');
 const saveForm = document.querySelector('.btn--save');
 const deleteForm = document.querySelector('.btn--delete');
+const logoutBtn = document.getElementById('logout');
 
 /// DELEGATION ///
-if (currentReports.length !== 0) {
-  // TODO: Develop client side storage or better version for this expensive call / operation
-  populateCharts(currentReports);
-}
 
 // Side Navigation
 if (menuBtn && sideNav) {
@@ -34,11 +32,15 @@ if (closeMenu && sideNav) {
   });
 }
 
-if (editForm) {
-  editForm.addEventListener('click', (e) => {
-    enableForm(editForm);
-  });
-}
+// Account Actions
+if (logoutBtn) logoutBtn.addEventListener('click', (e) => logout());
+
+// Dashboard
+// TODO: Develop client side storage or better version for this expensive call / operation
+if (currentReports.length !== 0) populateCharts(currentReports);
+
+// Form Actions
+if (editForm) editForm.addEventListener('click', (e) => enableForm(editForm));
 
 if (saveForm) {
   saveForm.addEventListener('click', (e) => {
