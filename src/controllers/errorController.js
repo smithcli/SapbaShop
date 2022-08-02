@@ -34,31 +34,45 @@ const immutableFieldHandler = (err) => {
 
 // TODO: Store association error during updateMe (BSONTypeError)
 
-const sendErrorProd = (err, res) => {
+const sendErrorProd = (err, req, res) => {
   // Operational, trusted error: send message to client
-  if (err.isOperational) {
+  if (req.originalUrl.startsWith('/api') && err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
     });
     // Programming or other unknown error: don't leak error details
-  } else {
+  } else if (req.originalUrl.startsWith('/api')) {
     // eslint-disable-next-line no-console
     console.error('Error', err);
     res.status(500).json({
-      status: 'error',
-      message: 'Somthing went very wrong!',
+      status: err.status,
+      message: 'Unexpected Error, please contact support',
+    });
+  } else {
+    res.status(err.statusCode).render('page/error', {
+      title: 'Error',
+      statusCode: err.statusCode,
+      message: err.message,
     });
   }
 };
 
-const sendErrorDev = (err, res) => {
-  res.status(err.statusCode).json({
-    error: err,
-    status: err.status,
-    message: err.message,
-    stack: err.stack,
-  });
+const sendErrorDev = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
+    res.status(err.statusCode).json({
+      error: err,
+      status: err.status,
+      message: err.message,
+      stack: err.stack,
+    });
+  } else {
+    res.status(err.statusCode).render('page/error', {
+      title: 'Error',
+      statusCode: err.statusCode,
+      message: err.message,
+    });
+  }
 };
 
 module.exports = (err, req, res, next) => {
@@ -72,8 +86,8 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'ValidationError') error = validatorErrorHandler(error);
     if (error.code === 11000) error = duplicateFieldsHandler(error);
     if (error.code === 66) error = immutableFieldHandler(error);
-    sendErrorProd(error, res);
+    sendErrorProd(error, req, res);
   } else if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
   }
 };

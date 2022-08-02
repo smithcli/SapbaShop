@@ -1,0 +1,8 @@
+extends ../base
+
+block body
+  main.main
+    .error
+      .logo SapbaShop
+      h1.error-title= `${title} - ${statusCode}`
+      h2.error-message= message
