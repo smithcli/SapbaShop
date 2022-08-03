@@ -67,6 +67,12 @@ exports.getStore = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.addStore = (req, res) => {
+  res.status(200).render('page/stores', {
+    title: 'SapbaShop Stores',
+  });
+};
+
 exports.getUsers = catchAsync(async (req, res, next) => {
   const users = await Users.find().lean();
   res.status(200).render('page/users', {

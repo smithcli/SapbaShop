@@ -41,7 +41,7 @@
       grid-column: 2;
       justify-self: center;
     }
-    &--delete{
+    &--delete {
       justify-self: start;
     }
     &--save {
@@ -62,12 +62,13 @@
   &:focus {
     transform: none;
     background-color: $color-btn--title-bg;
-    outline: .2rem solid $color-highlight;
+    outline: 0.2rem solid $color-highlight;
   }
 }
 // Hide a button or btn-bar
 .btn--hidden {
   visibility: hidden;
+  display: none;
 }
 // Deletes documents
 .btn--delete {
@@ -78,4 +79,8 @@
 .btn--save {
   border: none;
   background-color: $color-btn--save-bg;
+}
+// Cancels documents
+.btn--cancel {
+  border: none;
 }

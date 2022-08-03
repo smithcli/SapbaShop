@@ -1,0 +1,64 @@
+section.store-details
+  .store-details-header
+    a.store-details-header__left.btn.btn--cancel(href='/stores') &#10006;
+    .store-details-header__center New Store Form
+    .store-details-header__right
+
+  .store-details-content
+    form.form.form-store(data-model='stores')
+
+      fieldset.form__group
+        .form__set-title Building Number / Village
+        label.form__label(for='bnum-en') En 
+          input.form__input#bnum-en(type='text', name='bnum.en', placeholder='123 Moo 10', required)
+        label.form__label(for='bnum-th') Th 
+          input.form__input#bnum-th(type='text', name='bnum.th', placeholder='123 หมู่ 10', required)
+
+      fieldset.form__group
+        .form__set-title Street
+        label.form__label(for='street-en') En
+          input.form__input#street-en(type='text', name='street.en', placeholder='Chiang Mai-Hangdong Rd', required)
+        label.form__label(for='street-th') Th
+          input.form__input#street-th(type='text', name='street.th', placeholder='ถ.เชียงใหม่-หางดง', required)
+
+      fieldset.form__group
+        .form__set-title District
+        label.form__label(for='district-en') En
+          input.form__input#district-en(type='text', name='district.en', placeholder='Hang Dong', required)
+        label.form__label(for='district-th') Th
+          input.form__input#district-th(type='text', name='district.th' placeholder='หางดง', required)
+
+      fieldset.form__group
+        .form__set-title Province
+        label.form__label(for='province-en') En
+          input.form__input#province-en(type='text', name='province.en', placeholder='Chiang Mai', required)
+        label.form__label(for='province-th') Th
+          input.form__input#province-th(type='text', name='province.th', placeholder='เชียงใหม่', required)
+
+      fieldset.form__group
+        .form__set-title Country
+        label.form__label(for='country-en') En
+          input.form__input#country-en(type='text', name='country.en' placeholder='Thailand', required)
+        label.form__label(for='country-th') Th
+          input.form__input#country-th(type='text', name='country.th' placeholder='ไทย', required)
+
+      fieldset.form__group
+        .form__set-title Postal Code
+        label.form__label(for='zip')
+          input.form__input#zip(type='text', name='zip' placeholder='51234', pattern="[0-9]{5}", title="Five digit zip code", required)
+
+      fieldset.form__group
+        .form__set-title Phone Number
+        label.form__label(for='phone')
+          input.form__input#phone(
+            type='tel',
+            name='phone',
+            placeholder='053-123-456'
+            pattern='0[0-9]{1,2}-?[0-9]{3}-?[0-9]{3,4}',
+            title='Please use local format 012-345-678',
+            required
+          )
+
+  .btn-bar
+    button.btn--hidden
+    button.btn.btn--save Save

@@ -345,6 +345,7 @@ fieldset {
 
 .btn--hidden {
   visibility: hidden;
+  display: none;
 }
 
 .btn--delete {
@@ -355,6 +356,10 @@ fieldset {
 .btn--save {
   border: none;
   background-color: #55c57a;
+}
+
+.btn--cancel {
+  border: none;
 }
 
 .dashboard {
@@ -476,9 +481,6 @@ fieldset {
   text-align: center;
 }
 .stores-list-header__left {
-  visibility: hidden;
-}
-.stores-list-header__right {
   visibility: hidden;
 }
 

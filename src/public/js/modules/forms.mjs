@@ -71,8 +71,9 @@ export const buildFetchValues = () => {
   // model = endpoint, and the id of object to modify if PATCH
   const { id, model } = form.dataset;
   const reqType = form.dataset.id ? 'PATCH' : 'POST';
+  const endpoint = id ? `/${model}/${id}` : `/${model}`;
   return {
-    endpoint: `/${model}/${id}`,
+    endpoint,
     reqType,
   };
 };

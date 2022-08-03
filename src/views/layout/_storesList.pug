@@ -1,9 +1,9 @@
 include ../mixin/store-mixins
 section.stores-list
   .stores-list-header
-    .stores-list-header__left All Stores
+    .stores-list-header__left Search
     .stores-list-header__center All Stores
-    .stores-list-header__right Search bar
+    a.stores-list-header__right.btn.btn--add(href='/stores/addStore') Add
   .stores-list-content 
     each store in stores
       +storeListItem(store)

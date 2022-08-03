@@ -15,6 +15,7 @@ router.get('/*', authController.requireAuth);
 router.get('/dashboard', viewController.getDashboard);
 router.get('/products', viewController.getProducts);
 router.get('/stores', viewController.getStores);
+router.get('/stores/addStore', viewController.addStore);
 router.get('/stores/:slug', viewController.getStore);
 router.get('/users', viewController.getUsers);
 module.exports = router;
