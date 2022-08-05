@@ -4,12 +4,6 @@
 
   &-header {
     @include sectionHeader;
-
-    &__left {
-      visibility: hidden;
-    }
-    //&__center { }
-    //&__right { }
   }
 }
 

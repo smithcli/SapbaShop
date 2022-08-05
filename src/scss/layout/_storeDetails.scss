@@ -3,7 +3,7 @@
   @include sectionLayout;
 
   &-header {
-  @include sectionHeader;
+    @include sectionHeader;
   }
 }
 
@@ -12,7 +12,19 @@
   justify-content: center;
   margin-bottom: 5rem;
 
+  // set titles to the left for larger screens
   .form__group {
-    background-color: $color-form__group-bg;
+    align-items: center;
+    @media (min-width: 600px) {
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem 0;
+      .form__set-title {
+        grid-row: span 2;
+        justify-self: end;
+      }
+      .form__label:only-of-type {
+        grid-row: span 2;
+      }
+    }
   }
 }

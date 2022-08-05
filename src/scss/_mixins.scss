@@ -29,3 +29,15 @@
   font-weight: 550;
   text-align: center;
 }
+
+@mixin button-icon {
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover,
+  &:focus {
+    transform: scale(1.2);
+  }
+  &:active {
+    transform: translateY(3px);
+  }
+}

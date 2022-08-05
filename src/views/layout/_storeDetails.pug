@@ -1,45 +1,46 @@
 section.store-details
   .store-details-header
-    .store-details-header__left
+    a.store-details-header__left(href='/stores')
     .store-details-header__center= `${store.bnum.en}, ${store.street.en}`
-    .store-details-header__right.btn.btn--edit Edit
+    .store-details-header__right.btn--edit
+      img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
 
   .store-details-content
     form.form.form-store(data-model='stores', data-id=store._id)
 
       fieldset.form__group(disabled)
         .form__set-title Building Number / Village
-        label.form__label(for='bnum-en') En 
+        label.form__label(for='bnum-en') English
           input.form__input#bnum-en(type='text', name='bnum.en', value=store.bnum.en, required)
-        label.form__label(for='bnum-th') Th 
+        label.form__label(for='bnum-th') Thai 
           input.form__input#bnum-th(type='text', name='bnum.th', value=store.bnum.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title Street
-        label.form__label(for='street-en') En
+        label.form__label(for='street-en') English
           input.form__input#street-en(type='text', name='street.en', value=store.street.en, required)
-        label.form__label(for='street-th') Th
+        label.form__label(for='street-th') Thai
           input.form__input#street-th(type='text', name='street.th', value=store.street.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title District
-        label.form__label(for='district-en') En
+        label.form__label(for='district-en') English
           input.form__input#district-en(type='text', name='district.en', value=store.district.en, required)
-        label.form__label(for='district-th') Th
+        label.form__label(for='district-th') Thai
           input.form__input#district-th(type='text', name='district.th' value=store.district.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title Province
-        label.form__label(for='province-en') En
+        label.form__label(for='province-en') English
           input.form__input#province-en(type='text', name='province.en', value=store.province.en, required)
-        label.form__label(for='province-th') Th
+        label.form__label(for='province-th') Thai
           input.form__input#province-th(type='text', name='province.th', value=store.province.th, required)
 
       fieldset.form__group(disabled)
         .form__set-title Country
-        label.form__label(for='country-en') En
+        label.form__label(for='country-en') English
           input.form__input#country-en(type='text', name='country.en' value=store.country.en, required)
-        label.form__label(for='country-th') Th
+        label.form__label(for='country-th') Thai
           input.form__input#country-th(type='text', name='country.th' value=store.country.th, required)
 
       fieldset.form__group(disabled)
@@ -68,6 +69,6 @@ section.store-details
               required
             )
 
-  .btn-bar.btn--hidden
-    button.btn.btn--delete Delete
-    button.btn.btn--save Save
+  .btn-bar.hidden.grid
+    button.btn--delete Delete
+    button.btn--save Save

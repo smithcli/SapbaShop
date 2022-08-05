@@ -1,14 +1,10 @@
 import { openNav, closeNav } from './modules/sideNav';
 import { logout } from './modules/auth';
 import { populateCharts } from './modules/charts';
-import {
-  enableForm,
-  getFormValues,
-  buildFetchValues,
-  submitForm,
-} from './modules/forms';
+import * as forms from './modules/forms';
 
 /// DOM ELEMENTS ///
+// Global elements
 const menuBtn = document.getElementById('menu');
 const closeMenu = document.getElementById('closeMenu');
 const sideNav = document.getElementById('side-nav');
@@ -17,7 +13,9 @@ const editForm = document.querySelector('.btn--edit');
 const saveForm = document.querySelector('.btn--save');
 const deleteForm = document.querySelector('.btn--delete');
 const logoutBtn = document.getElementById('logout');
-
+// Product elements
+const addRow = document.getElementById('add-row');
+const removeRow = document.querySelectorAll('.btn--delete-icon');
 /// DELEGATION ///
 
 // Side Navigation
@@ -39,20 +37,34 @@ if (logoutBtn) logoutBtn.addEventListener('click', (e) => logout());
 // TODO: Develop client side storage or better version for this expensive call / operation
 if (currentReports.length !== 0) populateCharts(currentReports);
 
-// Form Actions
-if (editForm) editForm.addEventListener('click', (e) => enableForm(editForm));
-
+// Global Form Actions
+if (editForm) {
+  editForm.addEventListener('click', (e) => forms.enableForm(editForm));
+}
 if (saveForm) {
   saveForm.addEventListener('click', (e) => {
-    const formData = getFormValues();
-    const { endpoint, reqType } = buildFetchValues();
-    submitForm(endpoint, reqType, formData);
+    const formData = forms.getFormValues();
+    const { endpoint, reqType } = forms.buildFetchValues();
+    forms.submitForm(endpoint, reqType, formData);
+  });
+}
+if (deleteForm) {
+  deleteForm.addEventListener('click', (e) => {
+    const { endpoint } = forms.buildFetchValues();
+    forms.submitForm(endpoint, 'DELETE');
   });
 }
 
-if (deleteForm) {
-  deleteForm.addEventListener('click', (e) => {
-    const { endpoint } = buildFetchValues();
-    submitForm(endpoint, 'DELETE');
+// Product Form Actions
+if (addRow) {
+  addRow.addEventListener('click', (e) => {
+    forms.addStoreRow();
+  });
+}
+if (removeRow) {
+  removeRow.forEach((row) => {
+    row.addEventListener('click', (e) => {
+      forms.removeStoreRow(e);
+    });
   });
 }

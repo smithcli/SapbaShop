@@ -4,12 +4,17 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 0 1rem;
   background: $color-header-bg;
 
-  &__menu,
-  &__account {
-    width: 15rem;
+  &__menu-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  &__account-img {
+    width: 50px;
+    height: 50px;
   }
 
   &__title {

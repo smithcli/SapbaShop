@@ -53,10 +53,11 @@
 
 // Selectable titles (have a slug)
 .btn--title {
-  @extend .btn;
+  @include button-icon;
   border: none;
   background-color: $color-btn--title;
   min-width: fit-content;
+  padding: 0.2rem 3rem;
 
   &:hover,
   &:focus {
@@ -65,22 +66,26 @@
     outline: 0.2rem solid $color-highlight;
   }
 }
-// Hide a button or btn-bar
-.btn--hidden {
-  visibility: hidden;
-  display: none;
-}
 // Deletes documents
 .btn--delete {
+  @extend .btn;
   border: none;
   background-color: $color-btn--delete-bg;
 }
 // Saves documents
 .btn--save {
+  @extend .btn;
   border: none;
   background-color: $color-btn--save-bg;
 }
 // Cancels documents
 .btn--cancel {
+  @extend .btn;
   border: none;
+}
+.btn--add-icon,
+.btn--delete-icon,
+.btn--edit,
+.btn--close {
+  @include button-icon;
 }

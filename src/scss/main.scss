@@ -2,6 +2,7 @@
 @import 'base';
 @import 'mixins';
 @import 'layout/header';
+@import 'layout/footer';
 @import 'layout/sideNav';
 @import 'layout/dropdowns';
 @import 'layout/forms';
@@ -10,5 +11,6 @@
 @import 'layout/buttons';
 @import 'layout/dashboard';
 @import 'layout/productsList';
+@import 'layout/productDetails';
 @import 'layout/storesList';
 @import 'layout/storeDetails';

@@ -17,6 +17,12 @@ body {
   min-height: 100vh;
   min-width: 35rem;
   background-color: $color-body-bg;
+
+  // Hide something to view with JS
+  .hidden {
+    visibility: hidden;
+    display: none;
+  }
 }
 
 .main {

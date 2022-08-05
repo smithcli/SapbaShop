@@ -1,6 +1,6 @@
 .dropdown {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: flex-start;
   align-items: center;
 
@@ -16,7 +16,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  margin-top: 2.8rem;
+  top: 70px;
   z-index: 1;
   background-color: $color-dropdown-content-bg;
   width: 15rem;

@@ -1,6 +1,7 @@
 section.store-details
   .store-details-header
-    a.store-details-header__left.btn.btn--cancel(href='/stores') &#10006;
+    a.store-details-header__left.btn--close(href='/stores')
+      img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
     .store-details-header__center New Store Form
     .store-details-header__right
 
@@ -9,37 +10,37 @@ section.store-details
 
       fieldset.form__group
         .form__set-title Building Number / Village
-        label.form__label(for='bnum-en') En 
+        label.form__label(for='bnum-en') English 
           input.form__input#bnum-en(type='text', name='bnum.en', placeholder='123 Moo 10', required)
-        label.form__label(for='bnum-th') Th 
+        label.form__label(for='bnum-th') Thai 
           input.form__input#bnum-th(type='text', name='bnum.th', placeholder='123 หมู่ 10', required)
 
       fieldset.form__group
         .form__set-title Street
-        label.form__label(for='street-en') En
+        label.form__label(for='street-en') English
           input.form__input#street-en(type='text', name='street.en', placeholder='Chiang Mai-Hangdong Rd', required)
-        label.form__label(for='street-th') Th
+        label.form__label(for='street-th') Thai
           input.form__input#street-th(type='text', name='street.th', placeholder='ถ.เชียงใหม่-หางดง', required)
 
       fieldset.form__group
         .form__set-title District
-        label.form__label(for='district-en') En
+        label.form__label(for='district-en') English
           input.form__input#district-en(type='text', name='district.en', placeholder='Hang Dong', required)
-        label.form__label(for='district-th') Th
+        label.form__label(for='district-th') Thai
           input.form__input#district-th(type='text', name='district.th' placeholder='หางดง', required)
 
       fieldset.form__group
         .form__set-title Province
-        label.form__label(for='province-en') En
+        label.form__label(for='province-en') English
           input.form__input#province-en(type='text', name='province.en', placeholder='Chiang Mai', required)
-        label.form__label(for='province-th') Th
+        label.form__label(for='province-th') Thai
           input.form__input#province-th(type='text', name='province.th', placeholder='เชียงใหม่', required)
 
       fieldset.form__group
         .form__set-title Country
-        label.form__label(for='country-en') En
+        label.form__label(for='country-en') English
           input.form__input#country-en(type='text', name='country.en' placeholder='Thailand', required)
-        label.form__label(for='country-th') Th
+        label.form__label(for='country-th') Thai
           input.form__input#country-th(type='text', name='country.th' placeholder='ไทย', required)
 
       fieldset.form__group
@@ -60,5 +61,5 @@ section.store-details
           )
 
   .btn-bar
-    button.btn--hidden
-    button.btn.btn--save Save
+    button.hidden
+    button.btn--save Save

@@ -2,9 +2,9 @@ extends ../base
 
 block content
   main.main
-    if store
-      include ../layout/_storeDetails
-    else if stores
+    if stores
       include ../layout/_storesList
+    else if store
+      include ../layout/_storeDetails
     else
       include ../layout/_storeAddForm
