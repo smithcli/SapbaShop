@@ -86,10 +86,6 @@ const productSchema = new mongoose.Schema({
   },
   count: Number,
   images: [String],
-  tags: {
-    en: { type: [String], trim: true },
-    th: { type: [String], trim: true },
-  },
   slug: String,
 });
 
