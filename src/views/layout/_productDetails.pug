@@ -1,7 +1,8 @@
 section.product-details
   .product-details-header
     a.product-details-header__left(href='/products')
-    .product-details-header__center= product[0].name.en
+      img(src='/img/icons/icons8-previous-48.png', alt='Previous screen button')
+    .product-details-header__center= product[0].name.en.toUpperCase()
     .product-details-header__right.btn--edit
       img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
 
@@ -72,7 +73,11 @@ section.product-details
           select(id='store'+i, name='store', required, data-id=el._id)
             each store in stores
               option(value=store._id, selected=`${store._id}`===`${el.store}`)= `${store.bnum.en}, ${store.street.en}`
-          input.form__input.product-size(type='text',id='size'+i, name='size', value=el.size)
+          //input.form__input.product-size(type='text',id='size'+i, name='size', value=el.size)
+          select(id='size'+i, name='size')
+            option(value= undefined, selected= product[0].size===undefined) NA
+            each size in sizes
+              option(selected= el.size===size)= size
           input.form__input(type='text', inputmode='numeric', id='price'+i, name='price', value=el.price, required)
           input.form__input(type='text', inputmode='numeric', id='count'+i, name='count', value=el.count, required)
           img.btn--delete-icon.hidden.display(id=i, src='/img/icons/icons8-clear-symbol-48.png')
@@ -82,7 +87,11 @@ section.product-details
         select.hidden(id='store', name='store', required)
           each store in stores
             option(value=store._id)= `${store.bnum.en}, ${store.street.en}`
-        input.form__input.product-size.hidden(type='text',id='size', name='size')
+        select(id='size'+i, name='size')
+          option(value= undefined) NA
+          each size in sizes
+            option= size
+        //input.form__input.product-size.hidden(type='text',id='size', name='size')
         input.form__input.hidden(type='text', inputmode='numeric', id='price', name='price', required)
         input.form__input.hidden(type='text', inputmode='numeric', id='count', name='count', required)
         img.btn--delete-icon.hidden(src='/img/icons/icons8-clear-symbol-48.png')
