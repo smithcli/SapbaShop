@@ -7,6 +7,7 @@ $color-light: #fff;
 $color-sandy: #c9b8a6;
 $color-royalBlue: #4169e1;
 $color-gray: #bbb;
+$color-icon-orange: #E67E22;
 
 // App Globals
 $color-highlight: #ff7730;
@@ -50,6 +51,9 @@ $color-form-input-valid: #55c57a;
 $color-form-input-invalid: #ed4337;
 $color-form-input-placeholder: $color-gray;
 $color-form__group-bg: $color-primary;
+$color-toggle-sliderblock: $color-light;
+$color-toggle-unchecked: $color-gray;
+$color-toggle-checked: $color-icon-orange;
 
 // Buttons
 $color-btn: #fff;

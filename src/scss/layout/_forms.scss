@@ -39,7 +39,9 @@ select {
   border: none;
   outline: 0;
   // custom props
-  background: url("../img/icons/icons8-down-48.png") no-repeat right 0.5em center/ 1rem, $color-form-input-bg;
+  background: url('../img/icons/icons8-down-48.png') no-repeat right 0.5em
+      center/ 1rem,
+    $color-form-input-bg;
   cursor: pointer;
   padding-right: 2rem;
   text-align: center;
@@ -49,6 +51,47 @@ select {
   color: $color-font;
   border-radius: $border-radius;
 }
+// checkbox / toggle
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    &:checked + .slider {
+      background-color: $color-toggle-checked;
+    }
+    &:focus + .slider {
+      box-shadow: 0 0 1px #2196f3;
+    }
+    &:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  }
+}
+// checkbox / toggle slider
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: $color-toggle-unchecked;
+  transition: 0.4s;
+  border-radius: 0.8rem;
+  &:before {
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    content: '';
+    inset: 4px 4px 0 4px;
+    background-color: $color-toggle-sliderblock;
+    transition: 0.4s;
+    border-radius: 0.5rem;
+  }
+}
+
 /// Typical form title, fields, labels, and inputs  ///
 // Fieldset title
 .form__set-title {
@@ -84,7 +127,8 @@ select {
       }
       //&:disabled { }
     }
-    .select, select {
+    .select,
+    select {
       -webkit-text-fill-color: $color-font;
       opacity: 1; // iOS required
       color: $color-font;

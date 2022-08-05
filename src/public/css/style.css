@@ -194,6 +194,46 @@ select {
   border-radius: 1.5rem;
 }
 
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle input:checked + .slider {
+  background-color: #E67E22;
+}
+.toggle input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+.toggle input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #bbb;
+  transition: 0.4s;
+  border-radius: 0.8rem;
+}
+.slider:before {
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  content: "";
+  inset: 4px 4px 0 4px;
+  background-color: #fff;
+  transition: 0.4s;
+  border-radius: 0.5rem;
+}
+
 .form__set-title {
   font-weight: 700;
 }
@@ -224,7 +264,8 @@ select {
   border-bottom: 3px solid transparent;
   box-shadow: none;
 }
-.form__group:disabled .select, .form__group:disabled select {
+.form__group:disabled .select,
+.form__group:disabled select {
   -webkit-text-fill-color: black;
   opacity: 1;
   color: black;
@@ -571,7 +612,7 @@ select {
   justify-self: center;
   align-self: center;
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 3fr 0.5fr 0.5fr 0.5fr 0.1fr;
   gap: 1.5rem 0.5rem;
   justify-items: center;
   align-items: center;
@@ -585,6 +626,9 @@ select {
   max-width: 6rem;
   height: 100%;
   padding: 0;
+}
+.product-details-table .size-disabled {
+  visibility: hidden;
 }
 
 #hidden-add {

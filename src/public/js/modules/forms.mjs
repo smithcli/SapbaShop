@@ -22,7 +22,8 @@ const productTable = document.getElementById('product-table');
 const tableRow = document.getElementById('hidden-add');
 const deletedRow = []; // Holds row that contains document data to be removed
 const newRows = []; // Holds rows that are to add new docs
-
+const sizeToggle = document.getElementById('size-toggle');
+const sizeFields = document.getElementsByClassName('product-size');
 /// FORM FUNCTIONS //
 
 // Model specific form functions
@@ -61,6 +62,19 @@ export const addStoreRow = () => {
   newRows.push(...newRow.childNodes); // Store row in array for later use to reset or api call.
   productTable.append(...newRow.childNodes);
 };
+
+// TODO: add size toggle, that also resets when cancel is pressed.
+// export const toggleSizeFields = (toggle) => {
+//   if (toggle.checked) {
+//     for (const el of sizeFields) {
+//       el.classList.remove('size-disabled');
+//     }
+//   } else {
+//     for (const el of sizeFields) {
+//       el.classList.add('size-disabled');
+//     }
+//   }
+// };
 
 // Global form Functions //
 

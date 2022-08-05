@@ -16,6 +16,7 @@ const logoutBtn = document.getElementById('logout');
 // Product elements
 const addRow = document.getElementById('add-row');
 const removeRow = document.querySelectorAll('.btn--delete-icon');
+// const sizeToggle = document.getElementById('size-toggle');
 /// DELEGATION ///
 
 // Side Navigation
@@ -68,3 +69,10 @@ if (removeRow) {
     });
   });
 }
+
+// TODO: add size toggle to clean UI.
+// if (sizeToggle) {
+//  sizeToggle.addEventListener('change', (e) => {
+//    forms.toggleSizeFields(sizeToggle);
+//  });
+// }

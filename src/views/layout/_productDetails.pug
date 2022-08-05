@@ -53,15 +53,18 @@ section.product-details
         label.form__label(for='unit.th') Thai
           input.form__input(type='text', id='unit.th', name='unit.th', value=product[0].unit.th, required)
 
-      // Size
-      fieldset.form__group.hidden.grid(disabled)
-        .from__set-title.hidden Sizes
-          input.form__input.hidden(type='checked')
+      //- TODO: add size toggling
+      //- Size
+      //-fieldset.form__group.hidden.grid(disabled)
+      //-  .form__set-title.hidden Sizes 
+      //-  label.toggle(for='size-toggle')
+      //-    input(type='checkbox', id='size-toggle', checked=product[0].size !== undefined, name='size-toggle')
+      //-    span.slider
 
       // Table - might not be accessability sound
       fieldset.form__group.product-details-table#product-table(disabled)
         label.form__label(for='store') Store
-        label.form__label(for='size') Size
+        label.form__label.product-size(for='size') Size
         label.form__label(for='price') &#3647;
         label.form__label(for='count') Qty
         img.btn--add-icon.hidden.display#add-row(src='/img/icons/icons8-add-new-48.png')
@@ -69,7 +72,7 @@ section.product-details
           select(id='store'+i, name='store', required, data-id=el._id)
             each store in stores
               option(value=store._id, selected=`${store._id}`===`${el.store}`)= `${store.bnum.en}, ${store.street.en}`
-          input.form__input(type='text',id='size'+i, name='size', value=el.size)
+          input.form__input.product-size(type='text',id='size'+i, name='size', value=el.size)
           input.form__input(type='text', inputmode='numeric', id='price'+i, name='price', value=el.price, required)
           input.form__input(type='text', inputmode='numeric', id='count'+i, name='count', value=el.count, required)
           img.btn--delete-icon.hidden.display(id=i, src='/img/icons/icons8-clear-symbol-48.png')
@@ -79,7 +82,7 @@ section.product-details
         select.hidden(id='store', name='store', required)
           each store in stores
             option(value=store._id)= `${store.bnum.en}, ${store.street.en}`
-        input.form__input.hidden(type='text',id='size', name='size')
+        input.form__input.product-size.hidden(type='text',id='size', name='size')
         input.form__input.hidden(type='text', inputmode='numeric', id='price', name='price', required)
         input.form__input.hidden(type='text', inputmode='numeric', id='count', name='count', required)
         img.btn--delete-icon.hidden(src='/img/icons/icons8-clear-symbol-48.png')
