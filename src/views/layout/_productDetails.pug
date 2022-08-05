@@ -1,0 +1,89 @@
+section.product-details
+  .product-details-header
+    a.product-details-header__left(href='/products')
+    .product-details-header__center= product[0].name.en
+    .product-details-header__right.btn--edit
+      img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
+
+  .product-details-content
+    form.form.form-product(data-model='products')
+
+      // Name
+
+      fieldset.form__group(disabled)
+        .form__set-title Product Name
+        label.form__label(for='name.en') English
+          input.form__input(type='text', id='name.en', name='name.en', value=product[0].name.en, required)
+        label.form__label(for='name.th') Thai
+          input.form__input(type='text', id='name.th', name='name.th', value=product[0].name.th, required)
+
+      // Desc
+      fieldset.form__group.product-desc(disabled)
+        .form__set-title Product Description
+        label.form__label(for='description.en') English
+          textarea.form__input(rows='5', id='description.en', name='description.en', required)= product[0].description.en
+        label.form__label(for='description.th') Thai
+          textarea.form__input(rows='5', id='description.th', name='description.th', required)= product[0].description.th
+
+      // Department
+      fieldset.form__group.product-dep(disabled)
+        .form__set-title Product Department
+        .department-radio-group
+          input(type='radio', id='grocery', name='department.en', value='Grocery', required, checked=product[0].department.en=='Grocery')
+          label.form__label(for='grocery') Grocery
+          label.form__label(for='grocery') ร้านค้า
+          input(type='radio', id='clothing', name='department.en', value='Clothing and Accessories', required, checked=product[0].department.en=='Clothing and Accessories')
+          label.form__label(for='clothing') Clothing and Accessories
+          label.form__label(for='clothing') เสื้อผ้าและเครื่องประดับ
+          input(type='radio', id='personal', name='department.en', value='Beauty and Personal Care', required, checked=product[0].department.en=='Beauty and Personal Care')
+          label.form__label(for='personal') Beauty and Personal Care
+          label.form__label(for='personal') เครื่องสำอางค์และของใช้ส่วนตัว
+          input(type='radio', id='health', name='department.en', value='Health and Wellness', required, checked=product[0].department.en=='Health and Wellness')
+          label.form__label(for='health') Health and Wellness
+          label.form__label(for='health') สินค้าเพื่อสุขภาพ
+          input(type='radio', id='household', name='department.en', value='Household', required, checked=product[0].department.en=='Household')
+          label.form__label(for='household') Household
+          label.form__label(for='household') อุปกรณ์และของใช้ในครัวเรือน
+
+      // Unit
+      fieldset.form__group(disabled)
+        .form__set-title Unit
+        label.form__label(for='unit.en') English
+          input.form__input(type='text', id='unit.en', name='unit.en', value=product[0].unit.en, required)
+        label.form__label(for='unit.th') Thai
+          input.form__input(type='text', id='unit.th', name='unit.th', value=product[0].unit.th, required)
+
+      // Size
+      fieldset.form__group.hidden.grid(disabled)
+        .from__set-title.hidden Sizes
+          input.form__input.hidden(type='checked')
+
+      // Table - might not be accessability sound
+      fieldset.form__group.product-details-table#product-table(disabled)
+        label.form__label(for='store') Store
+        label.form__label(for='size') Size
+        label.form__label(for='price') &#3647;
+        label.form__label(for='count') Qty
+        img.btn--add-icon.hidden.display#add-row(src='/img/icons/icons8-add-new-48.png')
+        each el, i in product
+          select(id='store'+i, name='store', required, data-id=el._id)
+            each store in stores
+              option(value=store._id, selected=`${store._id}`===`${el.store}`)= `${store.bnum.en}, ${store.street.en}`
+          input.form__input(type='text',id='size'+i, name='size', value=el.size)
+          input.form__input(type='text', inputmode='numeric', id='price'+i, name='price', value=el.price, required)
+          input.form__input(type='text', inputmode='numeric', id='count'+i, name='count', value=el.count, required)
+          img.btn--delete-icon.hidden.display(id=i, src='/img/icons/icons8-clear-symbol-48.png')
+
+      // Row Component template to add to table for new item,
+      div#hidden-add
+        select.hidden(id='store', name='store', required)
+          each store in stores
+            option(value=store._id)= `${store.bnum.en}, ${store.street.en}`
+        input.form__input.hidden(type='text',id='size', name='size')
+        input.form__input.hidden(type='text', inputmode='numeric', id='price', name='price', required)
+        input.form__input.hidden(type='text', inputmode='numeric', id='count', name='count', required)
+        img.btn--delete-icon.hidden(src='/img/icons/icons8-clear-symbol-48.png')
+
+  .btn-bar.hidden.grid
+    button.btn--delete Delete
+    button.btn--save Save

@@ -29,24 +29,26 @@ exports.getDashboard = catchAsync(async (req, res, next) => {
 exports.getProducts = catchAsync(async (req, res, next) => {
   const query = {
     _id: '$name.en',
-    slug: {
-      $first: '$slug',
-    },
-    nameTh: {
-      $first: '$name.th',
-    },
-    departmentEn: {
-      $first: '$department.en',
-    },
-    departmentTh: {
-      $first: '$department.th',
-    },
+    slug: { $first: '$slug' },
+    nameTh: { $first: '$name.th' },
+    departmentEn: { $first: '$department.en' },
+    departmentTh: { $first: '$department.th' },
   };
   // TODO: Add Thai support for sort order.
   const products = await Product.aggregate().group(query).sort({ slug: 1 });
   res.status(200).render('page/products', {
     title: 'SapbaShop Products',
     products,
+  });
+});
+
+exports.getProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.find({ slug: req.params.slug });
+  const stores = await Store.find().lean();
+  res.status(200).render('page/products', {
+    title: 'SapbaShop Products',
+    product,
+    stores,
   });
 });
 

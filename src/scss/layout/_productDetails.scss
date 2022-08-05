@@ -1,0 +1,73 @@
+// productDetails layout styles
+.product-details {
+  @include sectionLayout;
+
+  &-header {
+    @include sectionHeader;
+  }
+}
+
+.product-details-content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5rem;
+  flex-grow: 1;
+}
+
+.form-product {
+  display: grid;
+  margin-bottom: 2rem;
+  justify-content: center;
+
+  // description fill the grid cell
+  .product-desc {
+    .form__label,
+    textarea {
+      width: 100%;
+    }
+  }
+}
+
+// Product form department radio group, too specific to be in forms.
+.department-radio-group {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.8rem 1.5rem;
+  align-items: center;
+  input {
+    grid-row: span 2;
+  }
+  :nth-child(3n-1) {
+    margin-bottom: -0.5rem;
+  }
+  :nth-child(3n) {
+    margin-top: -0.5rem;
+  }
+}
+
+.product-details-table {
+  justify-self: center;
+  align-self: center;
+  display: grid;
+  //grid-template-columns: repeat(5, max-content);
+  grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+  gap: 1.5rem 0.5rem;
+  justify-items: center;
+  align-items: center;
+  width: fit-content;
+  .hidden {
+    display: block;
+  }
+  input {
+    text-align: center;
+    max-width: 6rem;
+    height: 100%;
+    padding: 0;
+  }
+}
+
+// Hack to allow the addition of rows with JS
+#hidden-add {
+  display: none;
+  visibility: hidden;
+}
