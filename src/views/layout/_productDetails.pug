@@ -75,11 +75,11 @@ section.product-details
               option(value=store._id, selected=`${store._id}`===`${el.store}`)= `${store.bnum.en}, ${store.street.en}`
           //input.form__input.product-size(type='text',id='size'+i, name='size', value=el.size)
           select(id='size'+i, name='size')
-            option(value= undefined, selected= product[0].size===undefined) NA
+            option(value='null', selected= product[0].size===undefined) NA
             each size in sizes
               option(selected= el.size===size)= size
-          input.form__input(type='text', inputmode='numeric', id='price'+i, name='price', value=el.price, required)
-          input.form__input(type='text', inputmode='numeric', id='count'+i, name='count', value=el.count, required)
+          input.form__input(type='text', inputmode='numeric', id='price'+i, name='price', value=el.price, pattern='[0-9]+', required)
+          input.form__input(type='text', inputmode='numeric', id='count'+i, name='count', value=el.count, pattern='[0-9]+', required)
           img.btn--delete-icon.hidden.display(id=i, src='/img/icons/icons8-clear-symbol-48.png')
 
       // Row Component template to add to table for new item,
@@ -88,7 +88,7 @@ section.product-details
           each store in stores
             option(value=store._id)= `${store.bnum.en}, ${store.street.en}`
         select(id='size'+i, name='size')
-          option(value= undefined) NA
+          option(value='null') NA
           each size in sizes
             option= size
         //input.form__input.product-size.hidden(type='text',id='size', name='size')
