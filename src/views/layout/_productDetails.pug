@@ -73,7 +73,6 @@ section.product-details
           select(id='store'+i, name='store', required, data-id=el._id)
             each store in stores
               option(value=store._id, selected=`${store._id}`===`${el.store}`)= `${store.bnum.en}, ${store.street.en}`
-          //input.form__input.product-size(type='text',id='size'+i, name='size', value=el.size)
           select(id='size'+i, name='size')
             option(value='null', selected= product[0].size===undefined) NA
             each size in sizes
@@ -91,11 +90,10 @@ section.product-details
           option(value='null') NA
           each size in sizes
             option= size
-        //input.form__input.product-size.hidden(type='text',id='size', name='size')
         input.form__input.hidden(type='text', inputmode='numeric', id='price', name='price', required)
         input.form__input.hidden(type='text', inputmode='numeric', id='count', name='count', required)
         img.btn--delete-icon.hidden(src='/img/icons/icons8-clear-symbol-48.png')
 
   .btn-bar.hidden.grid
-    button.btn--delete Delete
+    button.btn--delete Delete All
     button.btn--save Save
