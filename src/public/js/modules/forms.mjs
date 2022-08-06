@@ -22,8 +22,8 @@ const productTable = document.getElementById('product-table');
 const tableRow = document.getElementById('hidden-add');
 const deletedRow = []; // Holds row that contains document data to be removed
 const newRows = []; // Holds rows that are to add new docs
-const sizeToggle = document.getElementById('size-toggle');
-const sizeFields = document.getElementsByClassName('product-size');
+// const sizeToggle = document.getElementById('size-toggle');
+// const sizeFields = document.getElementsByClassName('product-size');
 /// FORM FUNCTIONS //
 
 // Model specific form functions
@@ -36,6 +36,28 @@ const prepareStoreForm = () => {
 };
 
 // Product Form Functions
+// Pull out the fields common to all the product documents
+const extractCommonProductData = (productForm) => {
+  const data = new FormData(productForm);
+  data.delete('store');
+  data.delete('size');
+  data.delete('price');
+  data.delete('count');
+  return data;
+};
+
+const extractProductData = (productForm) => {
+  const data = new FormData(productForm);
+  data.delete('name.en');
+  data.delete('name.th');
+  data.delete('description.en');
+  data.delete('description.th');
+  data.delete('department.en');
+  data.delete('unit.en');
+  data.delete('unit.th');
+  return data;
+};
+
 // Hides product table row if contains data, else deletes it.
 export const removeStoreRow = (e) => {
   let el = e.target;
@@ -51,7 +73,7 @@ export const removeStoreRow = (e) => {
   }
 };
 
-// Adds a new row to product-table
+// Adds a new row to product-table in product-details
 export const addStoreRow = () => {
   const newRow = tableRow.cloneNode(true);
   const rowNum = productTable.childNodes.length / 5;
@@ -118,11 +140,9 @@ export const enableForm = (editBtn) => {
   }
 };
 
-// Build object from form
-export const getFormValues = () => {
+// Build object model from FormData object
+const buildObj = (formData) => {
   const obj = {};
-  prepareStoreForm();
-  const formData = new FormData(form);
   for (const [key, value] of formData) {
     if (key.includes('.')) {
       const [key1, key2] = key.split('.');
@@ -133,6 +153,77 @@ export const getFormValues = () => {
     }
   }
   return obj;
+};
+
+// Product form is different as it contains multiple objects / documents in one page.
+export const getProductValues = () => {
+  const { id, model } = form.dataset;
+  const ids = JSON.parse(id);
+  const productValues = []; // will return all objects with reqType and endpoint embedded.
+
+  // 1) parse deletedRows, get index of deleted
+  const toDelete = []; // holds row index of rows to be deleted
+  deletedRow.forEach((el, i) => {
+    if (i % 5 === 0) toDelete.push(el.id);
+  });
+  toDelete.forEach((i) => {
+    productValues.push({
+      reqType: 'DELETE',
+      endpoint: `/${model}/${ids[i]}`,
+    });
+  });
+  // 2) Parse common lines from form to make obj base.
+  const objBase = buildObj(extractCommonProductData(form));
+
+  // 3) filter out the common form data
+  const formData = extractProductData(form);
+
+  // track object count, starts at -1 to keep with index number as its incremented at beginning.
+  let p = -1;
+  let obj; // needed to hold outside the loop
+  const totalRows = formData.getAll('store').length - 1; // discard last row, it is a template.
+  for (const [key, value] of formData) {
+    // count table rows, will make first row 0.
+    if (key === 'store') p += 1;
+    if (p === totalRows) break; // stop at last valid row, last one is the template.
+    if (toDelete.includes(p.toString())) continue; // don't process rows marked to delete.
+
+    // Building objects with body starts here
+    if (key === 'store') obj = {};
+    obj[key] = value;
+
+    // finish object build and push at end of row, patch/post is determined by ids
+    if (key === 'count' && p <= ids.length - 1) {
+      obj = Object.assign(obj, objBase);
+      productValues.push({
+        reqType: 'PATCH',
+        endpoint: `/${model}/${ids[p]}`,
+        obj,
+      });
+    } else if (key === 'count' && p > ids.length - 1) {
+      obj = Object.assign(obj, objBase);
+      productValues.push({
+        reqType: 'POST',
+        endpoint: `/${model}`,
+        obj,
+      });
+    }
+  }
+  return productValues;
+};
+
+// Build object from form, works for store and mostlikely user
+export const getFormValues = () => {
+  const { model } = form.dataset;
+  if (model === 'stores') {
+    prepareStoreForm();
+    const formData = new FormData(form);
+    return buildObj(formData);
+  }
+  if (model === 'products') {
+    getProductValues();
+    return {};
+  }
 };
 
 // Dynamically build fetch req return as object

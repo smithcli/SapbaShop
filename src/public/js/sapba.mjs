@@ -44,10 +44,11 @@ if (editForm) {
 }
 if (saveForm) {
   saveForm.addEventListener('click', (e) => {
-    const formData = forms.getFormValues();
+    const obj = forms.getFormValues();
     const { endpoint, reqType } = forms.buildFetchValues();
-    forms.submitForm(endpoint, reqType, formData);
+    forms.submitForm(endpoint, reqType, obj);
   });
+// submit product updates one at a time and refresh page on error after alert.
 }
 if (deleteForm) {
   deleteForm.addEventListener('click', (e) => {

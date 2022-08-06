@@ -46,9 +46,11 @@ exports.getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.find({ slug: req.params.slug });
   const stores = await Store.find().lean();
   const sizes = await Product.schema.path('size').enumValues;
+  const prodIds = product.map((prod) => prod._id);
   res.status(200).render('page/products', {
     title: 'SapbaShop Products',
     product,
+    prodIds,
     stores,
     sizes,
   });
