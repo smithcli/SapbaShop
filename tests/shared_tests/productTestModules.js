@@ -26,5 +26,4 @@ exports.checkProperties = (product, testProduct) => {
   expect(product.size).toBe(testProduct.size);
   expect(product.count).toBe(testProduct.count);
   expect(product).toHaveProperty('images');
-  expect(product).toHaveProperty('tags');
 };

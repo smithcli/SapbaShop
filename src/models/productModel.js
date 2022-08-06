@@ -91,6 +91,20 @@ const productSchema = new mongoose.Schema({
 
 /// MIDDLEWARE ///
 
+// Match lang department if one is not given;
+productSchema.pre('validate', function (next) {
+  if (this.department.en && !this.department.th) {
+    const values = productSchema.path('department.en').enumValues;
+    const index = values.findIndex((i) => i === this.department.en);
+    this.department.th = productSchema.path('department.th').enumValues[index];
+  } else if (this.department.th && !this.department.en) {
+    const values = productSchema.path('department.th').enumValues;
+    const index = values.findIndex((i) => i === this.department.th);
+    this.department.en = productSchema.path('department.en').enumValues[index];
+  }
+  next();
+});
+
 // Create slug for english name, to keep international
 productSchema.pre('save', function (next) {
   this.slug = slugify(this.name.en, {

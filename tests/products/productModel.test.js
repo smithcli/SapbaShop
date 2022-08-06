@@ -13,6 +13,7 @@ beforeEach(async () => {
   productTest = JSON.parse(JSON.stringify(product)); //deep copy needed
 });
 
+
 describe('Product Model Tests', () => {
   // Create a Product
   it('Should create a product', async () => {
@@ -54,15 +55,23 @@ describe('Product Model Tests', () => {
   });
   // Department - Req
   describe('Testing Department field', () => {
-    it.failing('Should require a department in English', async () => {
+    const enValues = Product.schema.path('department.en').enumValues;
+    const thValues = Product.schema.path('department.th').enumValues;
+    it('Should match thai department if only given english', async () => {
       const { en, ...field } = productTest.department;
       productTest.department = field;
-      await Product.create(productTest);
-    });
-    it.failing('Should require a department in Thai', async () => {
+      const product = await Product.create(productTest);
+      const enIndex = enValues.findIndex((i) => i === product.department.en);
+      const thIndex = thValues.findIndex((i) => i === product.department.th);
+      expect(enIndex).toBe(thIndex);
+    })
+    it('Should match english department if only given thai', async () => {
       const { th, ...field } = productTest.department;
       productTest.department = field;
-      await Product.create(productTest);
+      const product = await Product.create(productTest);
+      const enIndex = enValues.findIndex((i) => i === product.department.en);
+      const thIndex = thValues.findIndex((i) => i === product.department.th);
+      expect(thIndex).toBe(enIndex);
     });
     it.failing('Department should be one of the enums in English', async () => {
       productTest.department.en = 'ร้านค้า';
