@@ -14,9 +14,11 @@ cancel.setAttribute('alt', 'Cancel editing button');
 const edit = document.createElement('img');
 edit.setAttribute('src', '/img/icons/icons8-edit-48.png');
 edit.setAttribute('alt', 'Pencil as an edit button');
+
 // Store elements
 const zip = document.getElementById('zip');
 const phone = document.getElementById('phone');
+
 // Product elements
 const productTable = document.getElementById('product-table');
 const tableRow = document.getElementById('hidden-add');
@@ -24,6 +26,7 @@ const deletedRow = []; // Holds row that contains document data to be removed
 const newRows = []; // Holds rows that are to add new docs
 // const sizeToggle = document.getElementById('size-toggle');
 // const sizeFields = document.getElementsByClassName('product-size');
+
 /// FORM FUNCTIONS //
 
 // Model specific form functions
@@ -140,6 +143,8 @@ export const enableForm = (editBtn) => {
   }
 };
 
+/// Submitting Form Functions ///
+
 // Build object model from FormData object
 const buildObj = (formData) => {
   const obj = {};
@@ -156,7 +161,7 @@ const buildObj = (formData) => {
 };
 
 // Product form is different as it contains multiple objects / documents in one page.
-export const getProductValues = () => {
+const getProductValues = () => {
   const { id, model } = form.dataset;
   const ids = JSON.parse(id);
   const productValues = []; // will return all objects with reqType and endpoint embedded.
@@ -212,23 +217,9 @@ export const getProductValues = () => {
   return productValues;
 };
 
-// Build object from form, works for store and mostlikely user
-export const getFormValues = () => {
-  const { model } = form.dataset;
-  if (model === 'stores') {
-    prepareStoreForm();
-    const formData = new FormData(form);
-    return buildObj(formData);
-  }
-  if (model === 'products') {
-    getProductValues();
-    return {};
-  }
-};
-
 // Dynamically build fetch req return as object
 // Buttons will determine if 'DELETE' req type
-export const buildFetchValues = () => {
+const buildFetchValues = () => {
   // In HTML Form the form must have data attributes
   // model = endpoint, and the id of object to modify if PATCH
   const { id, model } = form.dataset;
@@ -240,18 +231,70 @@ export const buildFetchValues = () => {
   };
 };
 
+const buildSaveRequest = () => {
+  const { model } = form.dataset;
+  if (model === 'stores') {
+    prepareStoreForm();
+    const obj = buildObj(new FormData(form));
+    const { endpoint, reqType } = buildFetchValues();
+    return { reqType, endpoint, obj };
+  }
+  if (model === 'products') {
+    return getProductValues();
+  }
+};
+
+const buildDeleteRequest = () => {
+  const { id, model } = form.dataset;
+  if (model === 'products') {
+    const ids = JSON.parse(id);
+    return ids.map((prodId) => ({
+      endpoint: `/${model}/${prodId}`,
+      reqType: 'DELETE',
+    }));
+  }
+  return {
+    endpoint: `/${model}/${id}`,
+    reqType: 'DELETE',
+  };
+};
+
 // Submit Form data
-export const submitForm = async (endpoint, req, obj) => {
-  try {
-    const res = await apiFetch(endpoint, req, obj);
-    if (res.status === 'success' || res.status === 204) {
-      const action = req === 'DELETE' ? 'Deleted' : 'Saved';
-      showAlert('pass', `${action} successfully!`);
-      window.setTimeout(() => {
-        window.location = document.referrer;
-      }, 1500);
+export const submitRequest = async (button) => {
+  const formRequest = button === 'SAVE'
+    ? buildSaveRequest()
+    : buildDeleteRequest();
+  if (!Array.isArray(formRequest)) {
+    try {
+      const { endpoint, reqType, obj } = formRequest;
+      const res = await apiFetch(endpoint, reqType, obj);
+      if (res.status === 'success' || res.status === 204) {
+        const action = reqType === 'DELETE' ? 'Deleted' : 'Saved';
+        showAlert('pass', `${action} successfully!`);
+        window.setTimeout(() => {
+          window.location = document.referrer;
+        }, 1500);
+      }
+    } catch (err) {
+      showAlert('fail', err);
     }
-  } catch (err) {
-    showAlert('fail', err);
+  } else {
+    try {
+      const apiCalls = [];
+      for (const doc of formRequest) {
+        const { endpoint, reqType, obj } = doc;
+        apiCalls.push(apiFetch(endpoint, reqType, obj));
+      }
+      const res = await Promise.all(apiCalls);
+      if (res[0].status === 'success' || res[0].status === 204) {
+        const action = button === 'DELETE' ? 'Deleted' : 'Saved';
+        showAlert('pass', `${action} successfully!`);
+        window.setTimeout(() => {
+          window.location = document.referrer;
+        }, 1500);
+      }
+    } catch (err) {
+      showAlert('fail', err);
+    }
   }
 };

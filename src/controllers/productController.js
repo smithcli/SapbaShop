@@ -48,21 +48,13 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.updateProduct = catchAsync(async (req, res, next) => {
-  // allows user to remove size enum value if desired
-  if (req.body.size === null || req.body.size === 'null') {
-    delete req.body.size;
-    const removeSize = { $unset: { size: '' } };
-    req.body = Object.assign(req.body, removeSize);
-  }
-  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const product = await Product.findById(req.params.id);
   if (!product) {
     return next(
       new AppError(404, `No product found with id: ${req.params.id}`),
     );
   }
+  product.set(req.body).save();
   res.status(200).json({
     status: 'success',
     data: {

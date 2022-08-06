@@ -89,10 +89,24 @@ const productSchema = new mongoose.Schema({
   slug: String,
 });
 
-/// MIDDLEWARE ///
+/// METHODS ///
+
+productSchema.methods.setSlug = function () {
+  this.slug = slugify(this.name.en, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g,
+  });
+};
+
+// allows user to remove size enum value if desired
+productSchema.methods.allowNullSize = function () {
+  if (this.size === null || this.size === 'null') {
+    this.size = undefined;
+  }
+};
 
 // Match lang department if one is not given;
-productSchema.pre('validate', function (next) {
+productSchema.methods.matchDepartment = function () {
   if (this.department.en && !this.department.th) {
     const values = productSchema.path('department.en').enumValues;
     const index = values.findIndex((i) => i === this.department.en);
@@ -102,15 +116,20 @@ productSchema.pre('validate', function (next) {
     const index = values.findIndex((i) => i === this.department.th);
     this.department.en = productSchema.path('department.en').enumValues[index];
   }
+};
+
+/// MIDDLEWARE ///
+
+// pre validate hooks
+productSchema.pre('validate', function (next) {
+  this.matchDepartment();
+  this.allowNullSize();
   next();
 });
 
 // Create slug for english name, to keep international
 productSchema.pre('save', function (next) {
-  this.slug = slugify(this.name.en, {
-    lower: true,
-    remove: /[*+~.()'"!:@]/g,
-  });
+  if (this.isModified('name.en')) this.setSlug();
   next();
 });
 

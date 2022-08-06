@@ -44,16 +44,12 @@ if (editForm) {
 }
 if (saveForm) {
   saveForm.addEventListener('click', (e) => {
-    const obj = forms.getFormValues();
-    const { endpoint, reqType } = forms.buildFetchValues();
-    forms.submitForm(endpoint, reqType, obj);
+    forms.submitRequest('SAVE');
   });
-// submit product updates one at a time and refresh page on error after alert.
 }
 if (deleteForm) {
   deleteForm.addEventListener('click', (e) => {
-    const { endpoint } = forms.buildFetchValues();
-    forms.submitForm(endpoint, 'DELETE');
+    forms.submitRequest('DELETE');
   });
 }
 
