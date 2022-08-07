@@ -1,0 +1,97 @@
+section.product-details
+  .product-details-header
+    a.product-details-header__left(href='/products')
+      img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
+    .product-details-header__center New Product Form
+    .product-details-header__right
+
+  .product-details-content
+    form.form.form-product(data-model='products')
+
+      // Name
+
+      fieldset.form__group
+        .form__set-title Product Name
+        label.form__label(for='name.en') English
+          input.form__input(type='text', id='name.en', name='name.en', placeholder='Broccoli Crowns' required)
+        label.form__label(for='name.th') Thai
+          input.form__input(type='text', id='name.th', name='name.th', placeholder='บล็อคโคลี่', required)
+
+      // Desc
+      fieldset.form__group.product-desc
+        .form__set-title Product Description
+        label.form__label(for='description.en') English
+          textarea.form__input(rows='5', id='description.en', name='description.en', placeholder='Local grown, edible green vegtable.', required)
+        label.form__label(for='description.th') Thai
+          textarea.form__input(rows='5', id='description.th', name='description.th', placeholder='ปลูกในประเทศไทย', required)
+
+      // Department
+      fieldset.form__group.product-dep
+        .form__set-title Product Department
+        .department-radio-group
+          input(type='radio', id='grocery', name='department.en', value='Grocery', required)
+          label.form__label(for='grocery') Grocery
+          label.form__label(for='grocery') ร้านค้า
+          input(type='radio', id='clothing', name='department.en', value='Clothing and Accessories', required)
+          label.form__label(for='clothing') Clothing and Accessories
+          label.form__label(for='clothing') เสื้อผ้าและเครื่องประดับ
+          input(type='radio', id='personal', name='department.en', value='Beauty and Personal Care', required)
+          label.form__label(for='personal') Beauty and Personal Care
+          label.form__label(for='personal') เครื่องสำอางค์และของใช้ส่วนตัว
+          input(type='radio', id='health', name='department.en', value='Health and Wellness', required)
+          label.form__label(for='health') Health and Wellness
+          label.form__label(for='health') สินค้าเพื่อสุขภาพ
+          input(type='radio', id='household', name='department.en', value='Household', required)
+          label.form__label(for='household') Household
+          label.form__label(for='household') อุปกรณ์และของใช้ในครัวเรือน
+
+      // Unit
+      fieldset.form__group
+        .form__set-title Unit
+        label.form__label(for='unit.en') English
+          input.form__input(type='text', id='unit.en', name='unit.en', placeholder='ea', required)
+        label.form__label(for='unit.th') Thai
+          input.form__input(type='text', id='unit.th', name='unit.th', placeholder='ชิ้น', required)
+
+      //- TODO: add size toggling
+      //- Size
+      //-fieldset.form__group.hidden.grid(disabled)
+      //-  .form__set-title.hidden Sizes 
+      //-  label.toggle(for='size-toggle')
+      //-    input(type='checkbox', id='size-toggle', checked=product[0].size !== undefined, name='size-toggle')
+      //-    span.slider
+
+      // Table - might not be accessability sound
+      fieldset.form__group.product-details-table#product-table
+        label.form__label(for='store') Store
+        label.form__label.product-size(for='size') Size
+        label.form__label(for='price') &#3647;
+        label.form__label(for='count') Qty
+        img.btn--add-icon.display#add-row(src='/img/icons/icons8-add-new-48.png')
+        select(id='store', name='store', required)
+          each store in stores
+            option(value=store._id)= `${store.bnum.en}, ${store.street.en}`
+        select(id='size', name='size')
+          option(value='null') NA
+          each size in sizes
+            option= size
+        input.form__input(type='text', inputmode='numeric', id='price', name='price', placeholder='00' pattern='[0-9]+', required)
+        input.form__input(type='text', inputmode='numeric', id='count', name='count', placeholder='00', pattern='[0-9]+', required)
+        img.btn--delete-icon.display(id=0, src='/img/icons/icons8-clear-symbol-48.png')
+
+      // Row Component template to add to table for new item.
+      div#hidden-add
+        select(id='store-temp', name='store', required)
+          each store in stores
+            option(value=store._id)= `${store.bnum.en}, ${store.street.en}`
+        select(id='size-temp', name='size')
+          option(value='null') NA
+          each size in sizes
+            option= size
+        input.form__input(type='text', inputmode='numeric', id='price-temp', name='price', placeholder='00', required)
+        input.form__input(type='text', inputmode='numeric', id='count-temp', name='count', placeholder='00', required)
+        img.btn--delete-icon(src='/img/icons/icons8-clear-symbol-48.png')
+
+  .btn-bar
+    button.btn--delete Delete All
+    button.btn--save Save

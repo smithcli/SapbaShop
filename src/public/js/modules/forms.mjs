@@ -163,7 +163,7 @@ const buildObj = (formData) => {
 // Product form is different as it contains multiple objects / documents in one page.
 const getProductValues = () => {
   const { id, model } = form.dataset;
-  const ids = JSON.parse(id);
+  const ids = (id) ? JSON.parse(id) : [];
   const productValues = []; // will return all objects with reqType and endpoint embedded.
 
   // 1) parse deletedRows, get index of deleted

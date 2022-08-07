@@ -14,6 +14,7 @@ router.get('/login', viewController.login);
 router.get('/*', authController.requireAuth);
 router.get('/dashboard', viewController.getDashboard);
 router.get('/products', viewController.getProducts);
+router.get('/products/addProduct', viewController.addProduct);
 router.get('/products/:slug', viewController.getProduct);
 router.get('/stores', viewController.getStores);
 router.get('/stores/addStore', viewController.addStore);

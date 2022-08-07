@@ -56,6 +56,16 @@ exports.getProduct = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.addProduct = catchAsync(async (req, res) => {
+  const stores = await Store.find().lean();
+  const sizes = await Product.schema.path('size').enumValues;
+  res.status(200).render('page/products', {
+    title: 'SapbaShop Stores',
+    stores,
+    sizes,
+  });
+});
+
 // Place to Add, Modify, Delete all stores.
 exports.getStores = catchAsync(async (req, res, next) => {
   const stores = await Store.find().lean();
