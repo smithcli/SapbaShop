@@ -1,0 +1,59 @@
+// usersList layout styles
+.users-list {
+  @include sectionLayout;
+
+  &-header {
+    @include sectionHeader;
+  }
+}
+
+.users-list-content {
+  display: grid;
+  background-color: $color-btn-border;
+}
+
+.users-list-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: $color-btn-border;
+  column-gap: 0.1rem;
+  span {
+    background-color: $color-body-bg;
+    padding: 0 1rem;
+  }
+  &__role,
+  &__name,
+  &__email,
+  &__store {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 5rem;
+    align-items: center;
+  }
+  &__header {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    gap: 0;
+    span {
+      padding: 0 1.5rem;
+    }
+  }
+  &__email,
+  &__store {
+    display: none;
+  }
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1.5fr 2fr;
+    &__email {
+      display: flex;
+    }
+  }
+  @media (min-width: 800px) {
+    grid-template-columns: 1fr 1.5fr 2fr 2fr;
+    &__store {
+      display: flex;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+mixin userListItem(user)
+  a.users-list-item.btn--table(href=`/users/${user.slug}`)
+    span.users-list-item__role= `${user.role}`
+    span.users-list-item__name= `${user.name}`
+    span.users-list-item__email= `${user.email}`
+    span.users-list-item__store= `${user.store.bnum.en}, ${user.store.street.en}`

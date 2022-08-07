@@ -90,7 +90,7 @@ exports.addStore = (req, res) => {
 };
 
 exports.getUsers = catchAsync(async (req, res, next) => {
-  const users = await Users.find().lean();
+  const users = await Users.find().lean().populate('store');
   res.status(200).render('page/users', {
     title: 'SapbaShop Users',
     users,
