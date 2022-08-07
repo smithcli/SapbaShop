@@ -4,24 +4,22 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-//router.get(
-//  '/currentReport',
-//  authController.requireAuth,
-//  authController.restrictedTo('admin'),
-//  productController.getCurrentReport
-//);
-
 router
   .route('/')
   .get(productController.getAllProducts)
   .post(
     authController.requireAuth,
     authController.restrictedTo('admin', 'manager'),
-    productController.createProduct
+    productController.createProduct,
   );
 
-// TODO: restrict route
-router.route('/mgt').get(productController.getAllProductsMangement);
+router
+  .route('/mgt')
+  .get(
+    authController.requireAuth,
+    authController.restrictedTo('admin', 'manager', 'employee'),
+    productController.getAllProductsMangement,
+  );
 
 router
   .route('/:id')
@@ -29,13 +27,12 @@ router
   .patch(
     authController.requireAuth,
     authController.restrictedTo('admin', 'manager', 'employee'),
-    productController.updateProduct
+    productController.updateProduct,
   )
   .delete(
     authController.requireAuth,
     authController.restrictedTo('admin', 'manager'),
-    productController.deleteProduct
+    productController.deleteProduct,
   );
-
 
 module.exports = router;

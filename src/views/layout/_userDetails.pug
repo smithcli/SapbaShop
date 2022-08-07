@@ -1,0 +1,41 @@
+section.user-details
+  .user-details-header
+    a.user-details-header__left(href='/users')
+      img(src='/img/icons/icons8-previous-48.png', alt='Previous screen button')
+    .user-details-header__center= selectedUser.name
+    .user-details-header__right
+      if user.role === 'admin'
+        .btn--edit
+          img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
+
+  .user-details-content
+    form.form.form-user(data-model='users', data-id= selectedUser._id)
+
+      fieldset.form__group(disabled)
+        label.form__label.user-img(for='photo')
+          img(src='/img/icons/icons8-test-account-100.png')
+        //input.form__input(type='file', id='photo' name='photo', accept='image/png, image/jpeg')
+
+      fieldset.form__group(disabled)
+        label.form__label(for='store') Store
+        select(id='store', name='store', required)
+          each store in stores
+            option(value=store._id, selected=`${store._id}`===`${selectedUser.store}`)= `${store.bnum.en}, ${store.street.en}`
+
+      fieldset.form__group(disabled)
+        label.form__label(for='role') Role
+        select(id='role', name='role', required)
+          each role in roles
+            option(selected= selectedUser.role === role)= role
+
+      fieldset.form__group(disabled)
+        label.form__label(for='name') Name
+        input.form__input(type='text', id='name' name='name', value= selectedUser.name, required)
+
+      fieldset.form__group(disabled)
+        label.form__label(for='street-en') Email
+        input.form__input(type='email', id='email' name='email', value= selectedUser.email, required)
+
+  .btn-bar.hidden.grid
+    button.btn--delete Delete
+    button.btn--save Save

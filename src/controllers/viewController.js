@@ -1,5 +1,6 @@
 const Product = require('../models/productModel');
 const Store = require('../models/storeModel');
+const User = require('../models/userModel');
 const Users = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 
@@ -42,25 +43,25 @@ exports.getProducts = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.find({ slug: req.params.slug });
+exports.addProduct = catchAsync(async (req, res) => {
   const stores = await Store.find().lean();
-  const sizes = await Product.schema.path('size').enumValues;
-  const prodIds = product.map((prod) => prod._id);
+  const sizes = Product.schema.path('size').enumValues;
   res.status(200).render('page/products', {
-    title: 'SapbaShop Products',
-    product,
-    prodIds,
+    title: 'SapbaShop Stores',
     stores,
     sizes,
   });
 });
 
-exports.addProduct = catchAsync(async (req, res) => {
+exports.getProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.find({ slug: req.params.slug });
   const stores = await Store.find().lean();
-  const sizes = await Product.schema.path('size').enumValues;
+  const sizes = Product.schema.path('size').enumValues;
+  const prodIds = product.map((prod) => prod._id);
   res.status(200).render('page/products', {
-    title: 'SapbaShop Stores',
+    title: 'SapbaShop Products',
+    product,
+    prodIds,
     stores,
     sizes,
   });
@@ -75,6 +76,12 @@ exports.getStores = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.addStore = (req, res) => {
+  res.status(200).render('page/stores', {
+    title: 'SapbaShop Stores',
+  });
+};
+
 exports.getStore = catchAsync(async (req, res, next) => {
   const store = await Store.findOne({ slug: req.params.slug });
   res.status(200).render('page/stores', {
@@ -83,16 +90,32 @@ exports.getStore = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.addStore = (req, res) => {
-  res.status(200).render('page/stores', {
-    title: 'SapbaShop Stores',
-  });
-};
-
 exports.getUsers = catchAsync(async (req, res, next) => {
-  const users = await Users.find().lean().populate('store');
+  const users = await Users.find().lean().populate('store').sort({ role: 1 });
   res.status(200).render('page/users', {
     title: 'SapbaShop Users',
     users,
+  });
+});
+
+exports.addUser = catchAsync(async (req, res) => {
+  const stores = await Store.find().lean();
+  const roles = User.schema.path('role').enumValues;
+  res.status(200).render('page/users', {
+    title: 'SapbaShop Stores',
+    stores,
+    roles,
+  });
+});
+
+exports.getUser = catchAsync(async (req, res, next) => {
+  const selectedUser = await Users.findOne({ slug: req.params.slug });
+  const stores = await Store.find().lean();
+  const roles = User.schema.path('role').enumValues;
+  res.status(200).render('page/users', {
+    title: 'SapbaShop Users',
+    selectedUser,
+    stores,
+    roles,
   });
 });

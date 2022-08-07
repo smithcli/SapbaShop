@@ -5,8 +5,9 @@ section.users-list
       //- TODO: add search for users
       //- img.btn--search-icon(src='/img/icons/icons8-search-48.png' alt='Magnifing glass search button')
     .users-list-header__center All Users
-    a.users-list-header__right(href='/users/addUser')
-      img.btn--add-icon(src='/img/icons/icons8-add-new-48.png' alt='Add new store button')
+    .users-list-header__right
+      if user.role === 'admin'
+        a(href='/users/addUser'): img.btn--add-icon(src='/img/icons/icons8-add-new-48.png' alt='Add new store button')
   .users-list-content
     .users-list-item.users-list-item__header
       span.users-list-item__role Role

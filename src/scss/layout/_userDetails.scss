@@ -1,0 +1,32 @@
+// userDetails layout styles
+.user-details {
+  @include sectionLayout;
+
+  &-header {
+    @include sectionHeader;
+  }
+}
+
+.user-details-content {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  margin-bottom: 5rem;
+
+  // set titles to the left for larger screens
+  .form__group {
+    align-items: center;
+    select {
+      max-width: 23.6rem;
+      text-align: left;
+      padding-left: 1.5rem;
+    }
+    @media (min-width: 600px) {
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem 0;
+      .user-img:only-child {
+        grid-column: span 2;
+      }
+    }
+  }
+}

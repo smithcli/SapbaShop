@@ -20,4 +20,6 @@ router.get('/stores', viewController.getStores);
 router.get('/stores/addStore', viewController.addStore);
 router.get('/stores/:slug', viewController.getStore);
 router.get('/users', viewController.getUsers);
+router.get('/users/addUser', viewController.addUser);
+router.get('/users/:slug', viewController.getUser);
 module.exports = router;

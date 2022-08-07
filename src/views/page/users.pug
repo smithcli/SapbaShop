@@ -4,3 +4,7 @@ block content
   main.main
     if users
       include ../layout/_usersList
+    else if selectedUser
+      include ../layout/_userDetails
+    else
+      include ../layout/_userAddForm
