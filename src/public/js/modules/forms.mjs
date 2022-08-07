@@ -233,15 +233,15 @@ const buildFetchValues = () => {
 
 const buildSaveRequest = () => {
   const { model } = form.dataset;
-  if (model === 'stores') {
-    prepareStoreForm();
-    const obj = buildObj(new FormData(form));
-    const { endpoint, reqType } = buildFetchValues();
-    return { reqType, endpoint, obj };
-  }
   if (model === 'products') {
     return getProductValues();
   }
+  if (model === 'stores') {
+    prepareStoreForm();
+  }
+  const obj = buildObj(new FormData(form));
+  const { endpoint, reqType } = buildFetchValues();
+  return { reqType, endpoint, obj };
 };
 
 const buildDeleteRequest = () => {

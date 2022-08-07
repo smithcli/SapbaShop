@@ -65,6 +65,7 @@
 
 // Selectable titles (have a slug)
 .btn--title {
+  @extend .btn;
   @include button-icon;
   border: none;
   background-color: $color-btn--title;

@@ -28,6 +28,13 @@
   margin-bottom: 1rem;
   font-weight: 550;
   text-align: center;
+  text-transform: capitalize;
+  &__left {
+    justify-self: start;
+  }
+  &__right {
+    justify-self: end;
+  }
 }
 
 @mixin button-icon {
