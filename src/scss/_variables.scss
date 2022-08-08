@@ -49,6 +49,10 @@ $color-chart-bg: $color-primary;
 $color-chart-border: $color-primary;
 $color-canvas-bg: $color-light;
 
+// Lists
+$color-list-item: $color-body-bg;
+$color-list-border: $color-primary-dark;
+
 // Forms
 $color-form-input-bg: $color-light;
 $color-form-input-bg--disabled: #eee;
@@ -59,6 +63,14 @@ $color-form__group-bg: $color-primary;
 $color-toggle-sliderblock: $color-light;
 $color-toggle-unchecked: $color-gray;
 $color-toggle-checked: $color-icon-orange;
+
+// Users
+$color-active: $color-dark;
+$color-active-bg: $color-alert-pass;
+$color-active-border: $color-primary-dark;
+$color-deactivated-bg: $color-gray;
+$color-deactivated: $color-dark;
+$color-deactivated-border: $color-gray;
 
 // Buttons
 $color-btn: #fff;

@@ -19,6 +19,9 @@ edit.setAttribute('alt', 'Pencil as an edit button');
 const zip = document.getElementById('zip');
 const phone = document.getElementById('phone');
 
+// User elements
+const active = document.getElementById('active');
+
 // Product elements
 const productTable = document.getElementById('product-table');
 const tableRow = document.getElementById('hidden-add');
@@ -36,6 +39,12 @@ const newRows = []; // Holds rows that are to add new docs
 const prepareStoreForm = () => {
   zip.value = parseInt(zip.value, 10);
   phone.value = parseInt(phone.value.split('-').join(''), 10);
+};
+
+// User Form Functions
+// Check for active selection, checkbox unchecked is not added to formData
+const prepareUserObj = (obj) => {
+  if (active && !active.checked) obj.active = false;
 };
 
 // Product Form Functions
@@ -233,13 +242,10 @@ const buildFetchValues = () => {
 
 const buildSaveRequest = () => {
   const { model } = form.dataset;
-  if (model === 'products') {
-    return getProductValues();
-  }
-  if (model === 'stores') {
-    prepareStoreForm();
-  }
+  if (model === 'products') return getProductValues();
+  if (model === 'stores') prepareStoreForm(); // befor object build
   const obj = buildObj(new FormData(form));
+  if (model === 'users') prepareUserObj(obj); // after object build
   const { endpoint, reqType } = buildFetchValues();
   return { reqType, endpoint, obj };
 };

@@ -13,7 +13,38 @@
   justify-content: center;
   margin-bottom: 5rem;
 
-  // set titles to the left for larger screens
+  // Active / Deactiaved Identifier
+  .active {
+    background-color: $color-active-bg;
+    color: $color-active;
+    padding: 0.5rem;
+    border-radius: $border-radius;
+    border: 0.1rem solid $color-active-border;
+  }
+  .deactivated {
+    background-color: $color-deactivated-bg;
+    color: $color-deactivated;
+    padding: 1rem;
+    border-radius: $border-radius;
+    border: 0.1rem solid $color-deactivated-border;
+  }
+
+  // Account status toggle
+  .toggle {
+    input {
+      &:checked + .slider {
+        background-color: $color-active-bg;
+      }
+    }
+  }
+  .slider {
+    border: 0.2rem solid $color-active-border;
+    &:before {
+      inset: 2px 2px 0 2px;
+    }
+  }
+
+  // Set titles to the left for larger screens
   .form__group {
     align-items: center;
     select {
@@ -28,5 +59,15 @@
         grid-column: span 2;
       }
     }
+  }
+}
+
+.user-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  img {
+    width: fit-content;
   }
 }

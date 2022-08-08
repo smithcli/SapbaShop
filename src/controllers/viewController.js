@@ -9,18 +9,20 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.getDashboard = catchAsync(async (req, res, next) => {
+  const title = `${req.user.role} Dashboard`;
   // 1) Dashboard is determined by user role
   if (req.user.role === 'admin') {
     const stores = await Store.find().lean();
     res.status(200).render('page/adminDashboard', {
-      title: 'Admin Dashboard',
+      title,
       stores,
     });
   }
-  if (req.user.role === 'manager') {
+  // TODO: make employee separate dashboard.
+  if (req.user.role === 'manager' || req.user.role === 'employee') {
     const stores = await Store.find({ _id: req.user.store }).lean();
     res.status(200).render('page/managerDashboard', {
-      title: 'Manager Dashboard',
+      title,
       stores,
     });
   }
@@ -91,7 +93,12 @@ exports.getStore = catchAsync(async (req, res, next) => {
 });
 
 exports.getUsers = catchAsync(async (req, res, next) => {
-  const users = await Users.find().lean().populate('store').sort({ role: 1 });
+  const users = await Users.find()
+    .lean()
+    .populate('store')
+    .select('+active')
+    .comment('sapba-mgt')
+    .sort({ active: -1, role: 1 });
   res.status(200).render('page/users', {
     title: 'SapbaShop Users',
     users,
@@ -109,7 +116,9 @@ exports.addUser = catchAsync(async (req, res) => {
 });
 
 exports.getUser = catchAsync(async (req, res, next) => {
-  const selectedUser = await Users.findOne({ slug: req.params.slug });
+  const selectedUser = await Users.findOne({ slug: req.params.slug })
+    .select('+active')
+    .comment('sapba-mgt');
   const stores = await Store.find().lean();
   const roles = User.schema.path('role').enumValues;
   res.status(200).render('page/users', {

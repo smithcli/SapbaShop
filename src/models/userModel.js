@@ -64,7 +64,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     select: false,
   },
-  slug: String,
+  slug: {
+    type: String,
+    unique: true,
+  },
 });
 
 ///  METHODS ///
@@ -107,7 +110,8 @@ userSchema.methods.changePassword = function (pass, passConf) {
 
 // Create slug - thai characters may not work
 userSchema.pre('save', function (next) {
-  this.slug = slugify(`${this.email} ${this.role}`, {
+  const randNum = Math.floor(Math.random() * 99999); // 5 random digits
+  this.slug = slugify(`${this.name} ${randNum}`, {
     lower: true,
     remove: /[*+~.()'"!:@]/g,
   });
@@ -138,9 +142,12 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Do not allow users with active = false to be queried
+// Do not allow users with active = false to be queried, unless using adminFind
 userSchema.pre(/^find/, function (next) {
-  this.find({ active: { $ne: false } });
+  // comment is the only way I found to bypass the middleware when needed.
+  if (this.getOptions().comment !== 'sapba-mgt') {
+    this.find({ active: { $ne: false } });
+  }
   next();
 });
 

@@ -26,6 +26,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
   });
 });
 
+// Restricted to admin
 exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
   if (newUser) {
@@ -40,6 +41,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
   }
 });
 
+// Restricted to admin
 exports.updateUser = catchAsync(async (req, res, next) => {
   // Admin should not change passwords directly. Users can use forgot password function.
   if (
@@ -52,7 +54,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
-  });
+  }).comment('sapba-mgt');
   if (!user) {
     return next(new AppError(404, 'Could not find that User.'));
   }
@@ -64,8 +66,9 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   });
 });
 
+// Restricted to admin
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  const user = await User.findByIdAndDelete(req.params.id).comment('sapba-mgt');
   if (!user) {
     return next(new AppError(404, 'Could not find that User.'));
   }

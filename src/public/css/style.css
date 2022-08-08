@@ -22,6 +22,9 @@ body .hidden {
   visibility: hidden;
   display: none;
 }
+body .hidden--user {
+  visibility: hidden;
+}
 
 .main {
   min-height: 90vh;
@@ -64,6 +67,7 @@ body .hidden {
   align-items: center;
   font-size: 2rem;
   overflow-wrap: normal;
+  text-transform: capitalize;
 }
 
 .footer {
@@ -814,13 +818,17 @@ select {
 
 .users-list-content {
   display: grid;
-  background-color: #97c3a5;
+  background-color: #599b67;
+}
+.users-list-content .deactivated span {
+  background-color: #bbb;
+  color: #000;
 }
 
 .users-list-item {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background-color: #97c3a5;
+  background-color: #599b67;
   column-gap: 0.1rem;
 }
 .users-list-item span {
@@ -896,6 +904,29 @@ select {
   justify-content: center;
   margin-bottom: 5rem;
 }
+.user-details-content .active {
+  background-color: #55c57a;
+  color: #000;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  border: 0.1rem solid #599b67;
+}
+.user-details-content .deactivated {
+  background-color: #bbb;
+  color: #000;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  border: 0.1rem solid #bbb;
+}
+.user-details-content .toggle input:checked + .slider {
+  background-color: #55c57a;
+}
+.user-details-content .slider {
+  border: 0.2rem solid #599b67;
+}
+.user-details-content .slider:before {
+  inset: 2px 2px 0 2px;
+}
 .user-details-content .form__group {
   align-items: center;
 }
@@ -912,6 +943,16 @@ select {
   .user-details-content .form__group .user-img:only-child {
     grid-column: span 2;
   }
+}
+
+.user-img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.user-img img {
+  width: fit-content;
 }
 
 /*# sourceMappingURL=style.css.map */

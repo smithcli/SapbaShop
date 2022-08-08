@@ -10,7 +10,7 @@ router
   .post(
     authController.requireAuth,
     authController.restrictedTo('admin'),
-    storeController.createStore
+    storeController.createStore,
   );
 
 router
@@ -19,12 +19,12 @@ router
   .patch(
     authController.requireAuth,
     authController.restrictedTo('admin', 'manager'),
-    storeController.updateStore
+    storeController.updateStore,
   )
   .delete(
     authController.requireAuth,
     authController.restrictedTo('admin'),
-    storeController.deleteStore
+    storeController.deleteStore,
   );
 
 module.exports = router;

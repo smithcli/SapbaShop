@@ -9,16 +9,23 @@
 
 .users-list-content {
   display: grid;
-  background-color: $color-btn-border;
+  background-color: $color-list-border;
+
+  .deactivated {
+    span {
+      background-color: $color-deactivated-bg;
+      color: $color-deactivated;
+    }
+  }
 }
 
 .users-list-item {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background-color: $color-btn-border;
+  background-color: $color-list-border;
   column-gap: 0.1rem;
   span {
-    background-color: $color-body-bg;
+    background-color: $color-list-item;
     padding: 0 1rem;
   }
   &__role,

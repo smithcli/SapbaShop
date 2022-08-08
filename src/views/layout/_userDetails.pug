@@ -14,6 +14,8 @@ section.user-details
       fieldset.form__group(disabled)
         label.form__label.user-img(for='photo')
           img(src='/img/icons/icons8-test-account-100.png')
+          - const status = (selectedUser.active) ? 'Active' : 'Deactivated';
+            .user-details__status(class= (selectedUser.active) ? 'active' : 'deactivated')= status
         //input.form__input(type='file', id='photo' name='photo', accept='image/png, image/jpeg')
 
       fieldset.form__group(disabled)
@@ -35,6 +37,12 @@ section.user-details
       fieldset.form__group(disabled)
         label.form__label(for='street-en') Email
         input.form__input(type='email', id='email' name='email', value= selectedUser.email, required)
+
+      fieldset.form__group.hidden.grid(disabled)
+        .form__set-title Status 
+        label.toggle(for='active')
+          input(type='checkbox', id='active', checked=selectedUser.active, name='active', value='true')
+          span.slider
 
   .btn-bar.hidden.grid
     button.btn--delete Delete

@@ -11,7 +11,12 @@ router.get('/', (req, res) => {
 router.get('/login', viewController.login);
 
 // Require Authentication beyond this point
-router.get('/*', authController.requireAuth);
+router.get(
+  '/*',
+  authController.requireAuth,
+  authController.restrictedTo('admin', 'manager', 'employee'),
+);
+
 router.get('/dashboard', viewController.getDashboard);
 router.get('/products', viewController.getProducts);
 router.get('/products/addProduct', viewController.addProduct);

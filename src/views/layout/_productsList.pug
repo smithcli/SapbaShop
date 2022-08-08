@@ -4,8 +4,9 @@ section.products-list
     .products-list-header__left
       img.btn--search-icon(src='/img/icons/icons8-search-48.png' alt='Magnifing glass search button')
     .products-list-header__center All Products
-    a.products-list-header__right(href='/products/addProduct')
-      img.btn--add-icon(src='/img/icons/icons8-add-new-48.png' alt='Add new product button')
+    .products-list-header__right
+    if user.role !== 'employee'
+      a(href='/products/addProduct'): img.btn--add-icon(src='/img/icons/icons8-add-new-48.png' alt='Add new product button')
   .products-list-content 
     each product in products
       +productsListItem(product)

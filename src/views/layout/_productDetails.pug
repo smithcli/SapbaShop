@@ -68,7 +68,7 @@ section.product-details
         label.form__label.product-size(for='size') Size
         label.form__label(for='price') &#3647;
         label.form__label(for='count') Qty
-        img.btn--add-icon.hidden.display#add-row(src='/img/icons/icons8-add-new-48.png')
+        img.btn--add-icon.display#add-row(src='/img/icons/icons8-add-new-48.png', class=user.role !== 'employee' ? 'hidden' : 'hidden--user')
         each el, i in product
           select(id='store'+i, name='store', required, data-id=el._id)
             each store in stores
@@ -79,7 +79,7 @@ section.product-details
               option(selected= el.size===size)= size
           input.form__input(type='text', inputmode='numeric', id='price'+i, name='price', value=el.price, pattern='[0-9]+', required)
           input.form__input(type='text', inputmode='numeric', id='count'+i, name='count', value=el.count, pattern='[0-9]+', required)
-          img.btn--delete-icon.hidden.display(id=i, src='/img/icons/icons8-clear-symbol-48.png')
+          img.btn--delete-icon.display(id=i, src='/img/icons/icons8-clear-symbol-48.png', class=user.role !== 'employee' ? 'hidden' : 'hidden--user')
 
       // Row Component template to add to table for new item.
       div#hidden-add
@@ -95,5 +95,6 @@ section.product-details
         img.btn--delete-icon.hidden(src='/img/icons/icons8-clear-symbol-48.png')
 
   .btn-bar.hidden.grid
-    button.btn--delete Delete All
+    if user.role !== 'employee'
+      button.btn--delete Delete All
     button.btn--save Save
