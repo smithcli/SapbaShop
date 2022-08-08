@@ -9,6 +9,15 @@
   margin-top: 10%;
   border-radius: $border-radius;
   width: fit-content;
+  .form__group {
+    box-shadow: none;
+    &:not(:last-child) {
+      margin: 0;
+    }
+  }
+  .btn-bar {
+    margin-top: 2rem;
+  }
   @include box-shadow;
   @media (min-width: 550px) {
     width: 50rem;
