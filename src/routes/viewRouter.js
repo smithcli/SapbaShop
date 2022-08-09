@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
   res.redirect('/login');
 });
 router.get('/login', viewController.login);
+router.get('/forgotPassword', viewController.forgotPassword);
 
 // Require Authentication beyond this point
 router.get(

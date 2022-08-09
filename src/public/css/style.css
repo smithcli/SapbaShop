@@ -152,7 +152,7 @@ body .hidden--user {
   background-color: #88bb92;
 }
 
-.login-form {
+.login-form, .forgotPassword-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -166,22 +166,31 @@ body .hidden--user {
   -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.25);
   box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.25);
 }
-.login-form .form__group {
+.login-form .form__group, .forgotPassword-form .form__group {
   box-shadow: none;
 }
-.login-form .form__group:not(:last-child) {
+.login-form .form__group:not(:last-child), .forgotPassword-form .form__group:not(:last-child) {
   margin: 0;
 }
-.login-form .btn-bar {
+.login-form .btn-bar, .forgotPassword-form .btn-bar {
   margin-top: 2rem;
 }
 @media (min-width: 550px) {
-  .login-form {
+  .login-form, .forgotPassword-form {
     width: 50rem;
   }
 }
 .login-form__forgotPassword {
   font-size: 1.5rem;
+}
+
+.forgotPassword-form {
+  gap: 1rem;
+}
+.forgotPassword-form a {
+  padding: 1.5rem 2rem;
+  align-self: flex-start;
+  margin: -2rem 0 -4rem -2rem;
 }
 
 fieldset {
@@ -335,7 +344,7 @@ select {
   font-weight: 700;
   font-size: 1.8rem;
   text-align: center;
-  padding: 3rem 10rem;
+  padding: 3rem;
   border-radius: 1.5rem;
   -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.25);
   box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.25);

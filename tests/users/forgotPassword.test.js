@@ -7,7 +7,7 @@ process.env.TEST_SUITE = 'test-forgotPassword';
 
 const verifyTokenCreated = async (id) => {
   const user = await User.findById(id).select(
-    '+passwordResetToken +passwordResetExpires'
+    '+passwordResetToken +passwordResetExpires',
   );
   const { passwordResetToken, passwordResetExpires, ...leftover } = user;
   expect(passwordResetToken).toMatch(/^[a-f0-9]{64}$/gi); //sha256 hash
@@ -19,13 +19,15 @@ const verifyTokenCreated = async (id) => {
 
 describe(`POST /users/forgotPassword (test-forgotPassword)`, () => {
   const route = `${utm.api}/users/forgotPassword`;
+  const validResponse =
+    'If the account is a valid account, you will recieve a reset token in your email.';
 
   it('Should send email', async () => {
     const res = await request(app)
       .post(route)
       .send({ email: utm.userCustomer.email })
       .expect(200);
-    expect(res.body.message).toBe('Token sent to your email!');
+    expect(res.body.message).toBe(validResponse);
     await verifyTokenCreated(utm.userCustomer._id);
   });
 
@@ -37,11 +39,11 @@ describe(`POST /users/forgotPassword (test-forgotPassword)`, () => {
     await verifyTokenCreated(utm.userCustomer._id);
   });
 
-  it('Should not send if invalid email is sent', async () => {
+  it('Production will not show if invalid email is sent', async () => {
     const res = await request(app)
       .post(route)
       .send({ email: 'notvalid@email.com' })
-      .expect(404);
-    expect(res.body.message).toBe('Could not find this account.');
+      .expect(200);
+    expect(res.body.message).toBe(validResponse);
   });
 });

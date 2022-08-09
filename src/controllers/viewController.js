@@ -8,6 +8,10 @@ exports.login = catchAsync(async (req, res, next) => {
   res.status(200).render('page/login');
 });
 
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  res.status(200).render('page/forgotPassword');
+});
+
 exports.getDashboard = catchAsync(async (req, res, next) => {
   const title = `${req.user.role} Dashboard`;
   // 1) Dashboard is determined by user role
