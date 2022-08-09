@@ -2,6 +2,11 @@
 /* eslint-disable no-process-exit */
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const https = require('https');
+const fs = require('fs');
+
+// Default environment is production
+if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
 // Handles Synchronous that have not been caught
 if (process.env.NODE_ENV === 'production') {
@@ -51,9 +56,28 @@ mongoose
 const app = require('./app');
 
 const port = process.env.PORT || 8000;
-const server = app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
-});
+let server;
+
+if (process.env.NODE_ENV === 'production') {
+  if (process.env.SAPBA_HTTPS_KEY && process.env.SAPBA_HTTPS_CERT) {
+    const key = fs.readFileSync(process.env.SAPBA_HTTPS_KEY);
+    const cert = fs.readFileSync(process.env.SAPBA_HTTPS_CERT);
+    server = https.createServer({ key, cert }, app).listen(port);
+    console.log(`App running with https on port ${port}...`);
+  } else {
+    server = app.listen(port, () => {
+      console.log(`App running http only on port ${port}...`);
+    });
+  }
+} else {
+  server = app.listen(port, () => {
+    console.log(`App running on port ${port}...`);
+  });
+  console.warn(
+    `\n\u26a0 SERVER IS IN DEVELOPMENT MODE, SECURITY DEGRADED!
+  If this was not intended please run the app with 'npm start'.\n`,
+  );
+}
 
 // Handles all Async / Promises that have not been caught
 if (process.env.NODE_ENV === 'production') {

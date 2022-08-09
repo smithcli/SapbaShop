@@ -3,22 +3,18 @@
   "version": "1.0.0",
   "description": "Inventory management web app",
   "main": "src/server.js",
-  "targets": {
-    "main": false
-  },
   "engines": {
     "node": ">=8.10.0"
   },
   "scripts": {
-    "start": "NODE_ENV=production node src/server.js",
+    "start": "parcel build && node src/server.js",
     "dev": "NODE_ENV=development nodemon src/server.js",
-    "dev-pro": "NODE_ENV=production nodemon src/server.js",
-    "dev-ui": "npm run scss & npm run parcel & npm run dev ",
+    "dev-pro": "NODE_ENV=production parcel build && nodemon src/server.js",
+    "dev-ui": "npm run scss & npm run parcel-watch & npm run dev ",
     "scss": "sass --watch src/scss/main.scss src/public/css/style.css",
+    "parcel-watch": "parcel watch --no-hmr",
     "test": "NODE_ENV=production jest",
-    "test-watch": "NODE_ENV=production jest --watch",
-    "parcel": "parcel watch src/public/js/sapba-login.mjs src/public/js/sapba.mjs --dist-dir src/public/js/bundled --no-hmr",
-    "parcel-build": "parcel build src/public/js/sapba-login.mjs src/public/js/sapba.mjs --dist-dir src/public/js/bundled"
+    "test-watch": "NODE_ENV=production jest --watch"
   },
   "repository": {
     "type": "git",
@@ -54,8 +50,11 @@
     "mongodb-memory-server": "^8.7.2",
     "nodemailer-mock": "^1.5.12",
     "nodemon": "^2.0.19",
-    "parcel": "^2.6.2",
+    "os-browserify": "^0.3.0",
+    "parcel": "^2.7.0",
+    "path-browserify": "^1.0.1",
     "prettier": "^2.7.1",
+    "process": "^0.11.10",
     "sass": "^1.54.0",
     "supertest": "^6.2.4"
   },
@@ -66,5 +65,20 @@
     "setupFilesAfterEnv": [
       "<rootDir>/tests/dbHandler.js"
     ]
+  },
+  "targets": {
+    "main": false,
+    "fontend-login": {
+      "source": "src/public/js/sapba-login.mjs",
+      "distDir": "src/public/js/bundled",
+      "context": "browser",
+      "outputFormat": "esmodule"
+    },
+    "frontend": {
+      "source": "src/public/js/sapba.mjs",
+      "distDir": "src/public/js/bundled",
+      "context": "browser",
+      "outputFormat": "esmodule"
+    }
   }
 }

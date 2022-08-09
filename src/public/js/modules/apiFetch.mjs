@@ -1,11 +1,17 @@
+import 'dotenv/config';
+
 const apiFetch = async (endpoint, reqType, dataObj) => {
-  // TODO: Remove hardcoded URL, figure out how to get parcel to work with dotenv
-  const res = await fetch(`http://localhost:8000/api/v1${endpoint}`, {
+  // Get api url from configuration file
+  const { NODE_ENV, SAPBA_API_URL } = process.env;
+  const url = SAPBA_API_URL || 'http://localhost:8000/api/v1';
+  const res = await fetch(`${url}${endpoint}`, {
     method: reqType,
     headers: {
       'Content-type': 'application/json',
     },
     body: JSON.stringify(dataObj),
+    // crendentials: 'include' for CORS
+    credentials: NODE_ENV === 'production' ? 'same-origin' : 'include',
   }).then(async (response) => {
     // Determine if the response has a body
     const isJson = response.headers
