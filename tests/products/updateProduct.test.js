@@ -82,7 +82,43 @@ describe(`PATCH /products/:id (test-updateProduct)`, () => {
       .expect(400);
     expect(getRes.body).toHaveProperty(
       'message',
-      "Invalid input data. You cannot modify field '_id'."
+      "Invalid input data. You cannot modify field '_id'.",
     );
+  });
+
+  describe('Validation Middleware should run', () => {
+    const enValues = Product.schema.path('department.en').enumValues;
+    const thValues = Product.schema.path('department.th').enumValues;
+
+    it('Should match thai department if only given english', async () => {
+      const { en, ...field } = productTest.department;
+      productTest.department = field;
+      const getRes = await request(app)
+        .patch(route)
+        .set('cookie', await utm.jwtAdmin())
+        .send(productTest)
+        .expect(200);
+      const { product } = getRes.body.data;
+      const enIndex = enValues.findIndex((i) => i === product.department.en);
+      const thIndex = thValues.findIndex((i) => i === product.department.th);
+      expect(enIndex).toBe(thIndex);
+    });
+
+    it('Should match english department if only given thai', async () => {
+      const { th, ...field } = productTest.department;
+      productTest.department = field;
+      const getRes = await request(app)
+        .patch(route)
+        .set('cookie', await utm.jwtAdmin())
+        .send(productTest)
+        .expect(200);
+      const { product } = getRes.body.data;
+      const enIndex = enValues.findIndex((i) => i === product.department.en);
+      const thIndex = thValues.findIndex((i) => i === product.department.th);
+      expect(thIndex).toBe(enIndex);
+    });
+
+    it.todo('test for slug')
+    it.todo('test for null size')
   });
 });

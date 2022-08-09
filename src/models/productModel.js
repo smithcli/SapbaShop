@@ -91,11 +91,14 @@ const productSchema = new mongoose.Schema({
 
 /// METHODS ///
 
+// Create slug for english name, to keep international
 productSchema.methods.setSlug = function () {
-  this.slug = slugify(this.name.en, {
-    lower: true,
-    remove: /[*+~.()'"!:@]/g,
-  });
+  if (this.isModified('name.en')) {
+    this.slug = slugify(this.name.en, {
+      lower: true,
+      remove: /[*+~.()'"!:@]/g,
+    });
+  }
 };
 
 // allows user to remove size enum value if desired
@@ -120,20 +123,16 @@ productSchema.methods.matchDepartment = function () {
 
 /// MIDDLEWARE ///
 
-// pre validate hooks
+// Modify model fields as neccessary
 productSchema.pre('validate', function (next) {
+  this.setSlug();
   this.matchDepartment();
   this.allowNullSize();
   next();
 });
 
-// Create slug for english name, to keep international
-productSchema.pre('save', function (next) {
-  if (this.isModified('name.en')) this.setSlug();
-  next();
-});
-
-productSchema.pre('save', async function (next) {
+// Verify store id is a valid store
+productSchema.pre('validate', async function (next) {
   if (!this.isModified('store') || !this.store) return next();
   if (!(await Store.findById(this.store))) {
     return next(new AppError(404, `${this.store} is not a valid store.`));

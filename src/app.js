@@ -11,6 +11,7 @@ const viewRouter = require('./routes/viewRouter');
 
 const app = express();
 
+// ORDER MATTERS!
 /// 1) Global Middlewares ///
 
 if (process.env.NODE_ENV === 'development') {
@@ -32,16 +33,16 @@ app.use(express.json());
 
 /// 2) Routes ///
 
+// RESTapi
+app.use('/api/v1/stores', storeRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/products', productRouter);
+
 // Static pages and supporting elements
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Server Side rendered pages
 app.use('/', viewRouter);
-
-// RESTapi
-app.use('/api/v1/stores', storeRouter);
-app.use('/api/v1/users', userRouter);
-app.use('/api/v1/products', productRouter);
 
 /// 3) Error Handling Middlewares ///
 

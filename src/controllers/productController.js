@@ -47,6 +47,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   });
 });
 
+// WARN: the milliseconds between get and update of the product could cause sync issues.
 exports.updateProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
@@ -54,11 +55,15 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
       new AppError(404, `No product found with id: ${req.params.id}`),
     );
   }
-  product.set(req.body).save();
+  product.set(req.body).validate();
+  const updatedProd = await Product.findByIdAndUpdate(req.params.id, product, {
+    runValidators: true,
+    new: true,
+  });
   res.status(200).json({
     status: 'success',
     data: {
-      product,
+      product: updatedProd,
     },
   });
 });

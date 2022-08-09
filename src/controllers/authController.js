@@ -142,7 +142,14 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user by email in request
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    return next(new AppError(404, 'Could not find this account.'));
+    if (process.env.NODE_ENV === 'development') {
+      return next(new AppError(404, 'Could not find this account.'));
+    }
+    res.status(200).json({ // false success to stop spam
+      status: 'success',
+      message: 'If the account is a valid account, you will recieve a reset token in your email.',
+    });
+    return next();
   }
   // 2) Generate Reset Token
   const resetToken = user.createResetToken();
@@ -161,7 +168,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     });
     res.status(200).json({
       status: 'success',
-      message: 'Token sent to your email!',
+      message: 'If the account is a valid account, you will recieve a reset token in your email.',
     });
   } catch (err) {
     user.passwordResetToken = undefined;
