@@ -1,15 +1,15 @@
 section.user-details
   .user-details-header
     a.user-details-header__left(href='/users')
-      img(src='/img/icons/icons8-previous-48.png', alt='Previous screen button')
+      button.btn--back: img(src='/img/icons/icons8-previous-48.png', alt='Previous screen button')
     .user-details-header__center= selectedUser.name
     .user-details-header__right
       if user.role === 'admin'
-        .btn--edit
+        button.btn--edit(form='user-details')
           img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
 
   .user-details-content
-    form.form.form-user(data-model='users', data-id= selectedUser._id)
+    form.form.form-user(data-model='users', data-id= selectedUser._id, id='user-details')
 
       fieldset.form__group(disabled)
         label.form__label.user-img(for='photo')
@@ -20,7 +20,7 @@ section.user-details
 
       fieldset.form__group(disabled)
         label.form__label(for='store') Store
-        select(id='store', name='store', required)
+        select(id='store', name='store')
           each store in stores
             option(value=store._id, selected=`${store._id}`===`${selectedUser.store}`)= `${store.bnum.en}, ${store.street.en}`
 
@@ -35,7 +35,7 @@ section.user-details
         input.form__input(type='text', id='name' name='name', value= selectedUser.name, required)
 
       fieldset.form__group(disabled)
-        label.form__label(for='street-en') Email
+        label.form__label(for='email') Email
         input.form__input(type='email', id='email' name='email', value= selectedUser.email, required)
 
       fieldset.form__group.hidden.grid(disabled)
@@ -45,5 +45,5 @@ section.user-details
           span.slider
 
   .btn-bar.hidden.grid
-    button.btn--delete Delete
-    button.btn--save Save
+    button.btn--delete(form='user-details') Delete
+    button.btn--save(form='user-details') Save

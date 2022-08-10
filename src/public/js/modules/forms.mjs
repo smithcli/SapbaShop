@@ -6,7 +6,6 @@ import { showAlert } from './alerts';
 /// DOM ELEMENTS ///
 // Global elements
 const fields = document.getElementsByClassName('form__group');
-const form = document.getElementsByClassName('form')[0];
 const hiddenFeatures = document.getElementsByClassName('hidden');
 const cancel = document.createElement('img');
 cancel.setAttribute('src', '/img/icons/icons8-close-window-48.png');
@@ -114,7 +113,7 @@ export const addStoreRow = () => {
 
 // Cancels editing a form
 export const disableForm = (editBtn) => {
-  form.reset();
+  editBtn.form.reset();
   for (const el of fields) {
     el.setAttribute('disabled', null);
   }
@@ -170,9 +169,9 @@ const buildObj = (formData) => {
 };
 
 // Product form is different as it contains multiple objects / documents in one page.
-const getProductValues = () => {
+const getProductValues = (form) => {
   const { id, model } = form.dataset;
-  const ids = (id) ? JSON.parse(id) : [];
+  const ids = id ? JSON.parse(id) : [];
   const productValues = []; // will return all objects with reqType and endpoint embedded.
 
   // 1) parse deletedRows, get index of deleted
@@ -228,11 +227,10 @@ const getProductValues = () => {
 
 // Dynamically build fetch req return as object
 // Buttons will determine if 'DELETE' req type
-const buildFetchValues = () => {
+const buildFetchValues = (model, id) => {
   // In HTML Form the form must have data attributes
   // model = endpoint, and the id of object to modify if PATCH
-  const { id, model } = form.dataset;
-  const reqType = form.dataset.id ? 'PATCH' : 'POST';
+  const reqType = id ? 'PATCH' : 'POST';
   const endpoint = id ? `/${model}/${id}` : `/${model}`;
   return {
     endpoint,
@@ -240,17 +238,17 @@ const buildFetchValues = () => {
   };
 };
 
-const buildSaveRequest = () => {
-  const { model } = form.dataset;
-  if (model === 'products') return getProductValues();
-  if (model === 'stores') prepareStoreForm(); // befor object build
+const buildSaveRequest = (form) => {
+  const { model, id } = form.dataset;
+  if (model === 'products') return getProductValues(form);
+  if (model === 'stores') prepareStoreForm(form); // befor object build
   const obj = buildObj(new FormData(form));
   if (model === 'users') prepareUserObj(obj); // after object build
-  const { endpoint, reqType } = buildFetchValues();
+  const { endpoint, reqType } = buildFetchValues(model, id);
   return { reqType, endpoint, obj };
 };
 
-const buildDeleteRequest = () => {
+const buildDeleteRequest = (form) => {
   const { id, model } = form.dataset;
   if (model === 'products') {
     const ids = JSON.parse(id);
@@ -266,10 +264,10 @@ const buildDeleteRequest = () => {
 };
 
 // Submit Form data
-export const submitRequest = async (button) => {
-  const formRequest = button === 'SAVE'
-    ? buildSaveRequest()
-    : buildDeleteRequest();
+export const submitRequest = async (btn) => {
+  const formRequest = btn.classList.contains('btn--save')
+    ? buildSaveRequest(btn.form)
+    : buildDeleteRequest(btn.form);
   if (!Array.isArray(formRequest)) {
     try {
       const { endpoint, reqType, obj } = formRequest;
@@ -277,9 +275,19 @@ export const submitRequest = async (button) => {
       if (res.status === 'success' || res.status === 204) {
         const action = reqType === 'DELETE' ? 'Deleted' : 'Saved';
         showAlert('pass', `${action} successfully!`);
-        window.setTimeout(() => {
-          window.location = document.referrer;
-        }, 1500);
+        if (reqType === 'DELETE' && endpoint === '/users/me') {
+          window.setTimeout(() => {
+            window.location.assign('/login');
+          }, 1000);
+        } else if (reqType === 'DELETE' || reqType === 'POST') {
+          window.setTimeout(() => {
+            window.location = document.referrer;
+          }, 1000);
+        } else {
+          window.setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
       }
     } catch (err) {
       showAlert('fail', err);
@@ -293,7 +301,9 @@ export const submitRequest = async (button) => {
       }
       const res = await Promise.all(apiCalls);
       if (res[0].status === 'success' || res[0].status === 204) {
-        const action = button === 'DELETE' ? 'Deleted' : 'Saved';
+        const action = btn.classList.contains('btn--delete')
+          ? 'Deleted'
+          : 'Saved';
         showAlert('pass', `${action} successfully!`);
         window.setTimeout(() => {
           window.location = document.referrer;

@@ -9,10 +9,12 @@
   "scripts": {
     "start": "parcel build && node src/server.js",
     "dev": "NODE_ENV=development nodemon src/server.js",
-    "dev-pro": "NODE_ENV=production parcel build && nodemon src/server.js",
+    "dev-pro": "NODE_ENV=production nodemon src/server.js",
     "dev-ui": "npm run scss & npm run parcel-watch & npm run dev ",
     "scss": "sass --watch src/scss/main.scss src/public/css/style.css",
+    "scss-build": "sass src/scss/main.scss src/public/css/style.css",
     "parcel-watch": "parcel watch --no-hmr",
+    "build-pro": "npm run scss-build && parcel build",
     "test": "NODE_ENV=production jest",
     "test-watch": "NODE_ENV=production jest --watch"
   },

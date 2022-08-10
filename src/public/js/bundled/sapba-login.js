@@ -1009,7 +1009,7 @@ const showAlert = (type, msg, location)=>{
     hideAlert();
     const alert = `<div class="alert alert-${type}">${msg}</div>`;
     document.querySelector(location).insertAdjacentHTML("afterbegin", alert);
-    window.setTimeout(hideAlert, 5000);
+    window.setTimeout(hideAlert, 3000);
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"agWT2"}]},["dMmpW"], "dMmpW", "parcelRequiree437")

@@ -1,0 +1,73 @@
+.side-nav {
+  height: 100%;
+  width: 0%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background-color: $color-side-nav-bg;
+  overflow-x: hidden;
+  transition: all 0.5s;
+
+  .logo {
+    margin: 7rem 0.5rem;
+  }
+}
+
+.side-nav__item,
+.side-nav__item:link,
+.side-nav__item:visited {
+  -webkit-appearance: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  color: $color-btn-text;
+  font-weight: 550;
+  display: block;
+  padding: 2rem;
+  margin: 1.5rem 1rem;
+  cursor: pointer;
+  background-color: $color-side-nav__item-bg;
+
+  &:hover,
+  &:focus {
+    outline: 0.2rem solid $color-highlight;
+  }
+}
+
+#closeMenu {
+  background-color: transparent;
+  margin: 0.5rem;
+  position: absolute;
+  border: none;
+  top: 0;
+  right: 0.1em;
+}
+
+.nav-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+  margin-bottom: 2rem;
+  background-color: $color-nav-bar-bg;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  &__item {
+    display: flex;
+    white-space: nowrap;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    cursor: pointer;
+    background-color: $color-nav-bar__item-bg;
+    font-weight: 700;
+    &:hover,
+    &:focus {
+      transform: scale(1.03);
+      @include focus-shadow;
+    }
+    &--selected {
+      background-color: $color-nav-bar-bg;
+    }
+  }
+}

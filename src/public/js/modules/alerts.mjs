@@ -10,5 +10,5 @@ export const showAlert = (type, msg, location = undefined) => {
   hideAlert();
   const alert = `<div class="alert alert-${type}">${msg}</div>`;
   document.querySelector(location).insertAdjacentHTML('afterbegin', alert);
-  window.setTimeout(hideAlert, 5000);
+  window.setTimeout(hideAlert, 3000);
 };

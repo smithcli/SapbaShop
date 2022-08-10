@@ -9,8 +9,8 @@
 
 .user-details-content {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  justify-content: center;
   margin-bottom: 5rem;
 
   // Active / Deactiaved Identifier
@@ -58,8 +58,17 @@
       .user-img:only-child {
         grid-column: span 2;
       }
+      .form__set-title {
+        grid-row: span 2;
+      }
     }
   }
+}
+
+.form-user {
+  display: grid;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .user-img {
@@ -69,5 +78,17 @@
   width: 100%;
   img {
     width: fit-content;
+  }
+}
+
+// myAccount specific
+.myAccount {
+  #myInfo #updatePassword {
+    margin-top: 2rem;
+    padding-top: 4rem;
+  }
+  #deleteAccount {
+    margin-top: 2rem;
+    padding-top: 4rem;
   }
 }

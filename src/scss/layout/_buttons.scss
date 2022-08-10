@@ -1,4 +1,13 @@
 // All buttons
+button {
+  text-decoration: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+}
+
 .btn,
 .btn:link,
 .btn:visited {
@@ -99,6 +108,7 @@
 .btn--add-icon,
 .btn--delete-icon,
 .btn--edit,
-.btn--close {
+.btn--close,
+.btn--back {
   @include button-icon;
 }

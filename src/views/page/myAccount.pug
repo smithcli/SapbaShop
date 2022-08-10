@@ -1,0 +1,67 @@
+extends ../base
+
+block content
+  main.main
+    section.user-details
+      .user-details-header
+        a.user-details-header__left(href='/users')
+          img(src='/img/icons/icons8-previous-48.png', alt='Previous screen button')
+        .user-details-header__center My Account
+        .user-details-header__right
+    
+      .user-details-content.myAccount
+        .nav-bar
+          button.nav-bar__item.nav-bar__item--selected Info
+          button.nav-bar__item Password
+          button.nav-bar__item Settings
+
+        // Info
+        //- data-id = param, user info is in req
+        form.form.form-user.nav-bar-tab(data-model='users', data-id='me', id='info')
+    
+          fieldset.form__group
+            label.form__label.user-img(for='photo')
+              img(src='/img/icons/icons8-test-account-100.png')
+            //- TODO: input.form__input(type='file', id='photo' name='photo', accept='image/png, image/jpeg')
+    
+          fieldset.form__group
+            label.form__label(for='store') Store
+            select(id='store', name='store')
+              each store in stores
+                option(value=store._id, selected=`${store._id}`===`${user.store}`)= `${store.bnum.en}, ${store.street.en}`
+    
+          fieldset.form__group
+            label.form__label(for='name') Name
+            input.form__input(type='text', id='name' name='name', value=user.name, required)
+    
+          fieldset.form__group
+            label.form__label(for='email') Email
+            input.form__input(type='email', id='email' name='email', value=user.email, required)
+    
+          .btn-bar
+            button.btn--save(form='info') Update
+
+        // UpdatePassword
+        //- data-id = param, user info is in req
+        form.form.form-user.nav-bar-tab.hidden(data-model='users', data-id='updateMyPassword', id='updateMyPassword')
+
+          fieldset.form__group
+            label.form__label(for='passwordCurrent') Current Password
+            input.form__input(type='password', id='passwordCurrent' name='passwordCurrent', placeholder='••••••••', required, minlength='8')
+
+          fieldset.form__group
+            .form__set-title Update Password
+            label.form__label(for='password') New Password
+              input.form__input(type='password', id='password', name='password', placeholder='••••••••', required, minlength='8')
+
+            label.form__label(for='passwordConfirm') Password Confirmation
+              input.form__input(type='password', id='passwordConfirm', name='passwordConfirm' placeholder='••••••••', required, minlength='8')
+
+          .btn-bar
+            button.btn--save(form='updateMyPassword') Update
+
+        // Settings
+        form.form.form-user.nav-bar-tab.hidden(data-model='users', data-id='me', id ='settings')
+          .form__group.form__set-title Delete Account
+            .btn-bar
+              button.btn--delete(form='settings') Delete

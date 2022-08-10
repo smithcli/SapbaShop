@@ -122,6 +122,34 @@ body .hidden--user {
   right: 0.1em;
 }
 
+.nav-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+  margin-bottom: 2rem;
+  background-color: #88bb92;
+  gap: 0.2rem;
+  padding: 0.2rem;
+}
+.nav-bar__item {
+  display: flex;
+  white-space: nowrap;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  cursor: pointer;
+  background-color: #fff;
+  font-weight: 700;
+}
+.nav-bar__item:hover, .nav-bar__item:focus {
+  transform: scale(1.03);
+  -webkit-box-shadow: 0 -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
+  box-shadow: 0rem -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
+}
+.nav-bar__item--selected {
+  background-color: #88bb92;
+}
+
 .dropdown {
   display: flex;
   flex-direction: column-reverse;
@@ -374,6 +402,15 @@ select {
   color: #a63232;
 }
 
+button {
+  text-decoration: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+}
+
 .btn, .btn--cancel, .btn--save, .btn--delete, .btn--title, .btn--table,
 .btn:link,
 .btn:visited {
@@ -474,7 +511,8 @@ select {
 .btn--add-icon,
 .btn--delete-icon,
 .btn--edit,
-.btn--close {
+.btn--close,
+.btn--back {
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -484,13 +522,16 @@ select {
 .btn--edit:hover,
 .btn--edit:focus,
 .btn--close:hover,
-.btn--close:focus {
+.btn--close:focus,
+.btn--back:hover,
+.btn--back:focus {
   transform: scale(1.2);
 }
 .btn--add-icon:active,
 .btn--delete-icon:active,
 .btn--edit:active,
-.btn--close:active {
+.btn--close:active,
+.btn--back:active {
   transform: translateY(3px);
 }
 
@@ -918,8 +959,8 @@ select {
 
 .user-details-content {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  justify-content: center;
   margin-bottom: 5rem;
 }
 .user-details-content .active {
@@ -961,6 +1002,15 @@ select {
   .user-details-content .form__group .user-img:only-child {
     grid-column: span 2;
   }
+  .user-details-content .form__group .form__set-title {
+    grid-row: span 2;
+  }
+}
+
+.form-user {
+  display: grid;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .user-img {
@@ -971,6 +1021,15 @@ select {
 }
 .user-img img {
   width: fit-content;
+}
+
+.myAccount #myInfo #updatePassword {
+  margin-top: 2rem;
+  padding-top: 4rem;
+}
+.myAccount #deleteAccount {
+  margin-top: 2rem;
+  padding-top: 4rem;
 }
 
 /*# sourceMappingURL=style.css.map */

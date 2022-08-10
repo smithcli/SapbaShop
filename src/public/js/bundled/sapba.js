@@ -143,7 +143,7 @@
     }
   }
 })({"dyRVe":[function(require,module,exports) {
-var _sideNav = require("./modules/sideNav");
+var _nav = require("./modules/nav");
 var _auth = require("./modules/auth");
 var _charts = require("./modules/charts");
 var _forms = require("./modules/forms");
@@ -152,11 +152,13 @@ var _forms = require("./modules/forms");
 const menuBtn = document.getElementById("menu");
 const closeMenu = document.getElementById("closeMenu");
 const sideNav = document.getElementById("side-nav");
-const currentReports = document.getElementsByClassName("chart-current-report");
+const navBar = document.querySelector(".nav-bar");
 const editForm = document.querySelector(".btn--edit");
-const saveForm = document.querySelector(".btn--save");
-const deleteForm = document.querySelector(".btn--delete");
+const saveForm = document.querySelectorAll(".btn--save");
+const deleteForm = document.querySelectorAll(".btn--delete");
 const logoutBtn = document.getElementById("logout");
+// Dashboard
+const currentReports = document.getElementsByClassName("chart-current-report");
 // Product elements
 const addRow = document.getElementById("add-row");
 const removeRow = document.querySelectorAll(".btn--delete-icon");
@@ -164,10 +166,16 @@ const removeRow = document.querySelectorAll(".btn--delete-icon");
 /// DELEGATION ///
 // Side Navigation
 if (menuBtn && sideNav) menuBtn.addEventListener("click", (e)=>{
-    (0, _sideNav.openNav)(sideNav);
+    (0, _nav.openNav)(sideNav);
 });
 if (closeMenu && sideNav) closeMenu.addEventListener("click", (e)=>{
-    (0, _sideNav.closeNav)(sideNav);
+    (0, _nav.closeNav)(sideNav);
+});
+// Bar Navigation
+if (navBar) navBar.childNodes.forEach((tab, index)=>{
+    tab.addEventListener("click", (e)=>{
+        (0, _nav.openTab)(tab, index);
+    });
 });
 // Account Actions
 if (logoutBtn) logoutBtn.addEventListener("click", (e)=>(0, _auth.logout)());
@@ -175,12 +183,21 @@ if (logoutBtn) logoutBtn.addEventListener("click", (e)=>(0, _auth.logout)());
 // TODO: Develop client side storage or better version for this expensive call / operation
 if (currentReports.length !== 0) (0, _charts.populateCharts)(currentReports);
 // Global Form Actions
-if (editForm) editForm.addEventListener("click", (e)=>_forms.enableForm(editForm));
-if (saveForm) saveForm.addEventListener("click", (e)=>{
-    _forms.submitRequest("SAVE");
+if (editForm) editForm.addEventListener("click", (e)=>{
+    e.preventDefault();
+    _forms.enableForm(editForm);
 });
-if (deleteForm) deleteForm.addEventListener("click", (e)=>{
-    _forms.submitRequest("DELETE");
+if (saveForm) saveForm.forEach((btn)=>{
+    btn.addEventListener("click", (e)=>{
+        e.preventDefault();
+        _forms.submitRequest(btn);
+    });
+});
+if (deleteForm) deleteForm.forEach((btn)=>{
+    btn.addEventListener("click", (e)=>{
+        e.preventDefault();
+        _forms.submitRequest(btn);
+    });
 });
 // Product Form Actions
 if (addRow) addRow.addEventListener("click", (e)=>{
@@ -198,49 +215,7 @@ if (removeRow) removeRow.forEach((row)=>{
  //  });
  // }
 
-},{"./modules/sideNav":"86KW3","./modules/auth":"i5VXA","./modules/charts":"9VAj8","./modules/forms":"c2A13"}],"86KW3":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "openNav", ()=>openNav);
-parcelHelpers.export(exports, "closeNav", ()=>closeNav);
-const openNav = (nav)=>{
-    nav.style.width = "250px";
-};
-const closeNav = (nav)=>{
-    nav.style.width = "0";
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"agWT2"}],"agWT2":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"i5VXA":[function(require,module,exports) {
+},{"./modules/auth":"i5VXA","./modules/charts":"9VAj8","./modules/forms":"c2A13","./modules/nav":"lXYLZ"}],"i5VXA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "login", ()=>login);
@@ -1046,6 +1021,36 @@ module.exports = function optionMatcher(args) {
     }, {});
 };
 
+},{}],"agWT2":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
 },{}],"aVYC3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -1061,7 +1066,7 @@ const showAlert = (type, msg, location)=>{
     hideAlert();
     const alert = `<div class="alert alert-${type}">${msg}</div>`;
     document.querySelector(location).insertAdjacentHTML("afterbegin", alert);
-    window.setTimeout(hideAlert, 5000);
+    window.setTimeout(hideAlert, 3000);
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"agWT2"}],"9VAj8":[function(require,module,exports) {
@@ -1193,7 +1198,6 @@ var _alerts = require("./alerts");
 /// DOM ELEMENTS ///
 // Global elements
 const fields = document.getElementsByClassName("form__group");
-const form = document.getElementsByClassName("form")[0];
 const hiddenFeatures = document.getElementsByClassName("hidden");
 const cancel = document.createElement("img");
 cancel.setAttribute("src", "/img/icons/icons8-close-window-48.png");
@@ -1269,7 +1273,7 @@ const addStoreRow = ()=>{
     productTable.append(...newRow.childNodes);
 };
 const disableForm = (editBtn)=>{
-    form.reset();
+    editBtn.form.reset();
     for (const el of fields)el.setAttribute("disabled", null);
     for (const el1 of hiddenFeatures){
         el1.style.visibility = "hidden";
@@ -1310,7 +1314,7 @@ const buildObj = (formData)=>{
     return obj;
 };
 // Product form is different as it contains multiple objects / documents in one page.
-const getProductValues = ()=>{
+const getProductValues = (form)=>{
     const { id , model  } = form.dataset;
     const ids = id ? JSON.parse(id) : [];
     const productValues = []; // will return all objects with reqType and endpoint embedded.
@@ -1362,31 +1366,30 @@ const getProductValues = ()=>{
 };
 // Dynamically build fetch req return as object
 // Buttons will determine if 'DELETE' req type
-const buildFetchValues = ()=>{
+const buildFetchValues = (model, id)=>{
     // In HTML Form the form must have data attributes
     // model = endpoint, and the id of object to modify if PATCH
-    const { id , model  } = form.dataset;
-    const reqType = form.dataset.id ? "PATCH" : "POST";
+    const reqType = id ? "PATCH" : "POST";
     const endpoint = id ? `/${model}/${id}` : `/${model}`;
     return {
         endpoint,
         reqType
     };
 };
-const buildSaveRequest = ()=>{
-    const { model  } = form.dataset;
-    if (model === "products") return getProductValues();
-    if (model === "stores") prepareStoreForm(); // befor object build
+const buildSaveRequest = (form)=>{
+    const { model , id  } = form.dataset;
+    if (model === "products") return getProductValues(form);
+    if (model === "stores") prepareStoreForm(form); // befor object build
     const obj = buildObj(new FormData(form));
     if (model === "users") prepareUserObj(obj); // after object build
-    const { endpoint , reqType  } = buildFetchValues();
+    const { endpoint , reqType  } = buildFetchValues(model, id);
     return {
         reqType,
         endpoint,
         obj
     };
 };
-const buildDeleteRequest = ()=>{
+const buildDeleteRequest = (form)=>{
     const { id , model  } = form.dataset;
     if (model === "products") {
         const ids = JSON.parse(id);
@@ -1400,17 +1403,23 @@ const buildDeleteRequest = ()=>{
         reqType: "DELETE"
     };
 };
-const submitRequest = async (button)=>{
-    const formRequest = button === "SAVE" ? buildSaveRequest() : buildDeleteRequest();
+const submitRequest = async (btn)=>{
+    const formRequest = btn.classList.contains("btn--save") ? buildSaveRequest(btn.form) : buildDeleteRequest(btn.form);
     if (!Array.isArray(formRequest)) try {
         const { endpoint , reqType , obj  } = formRequest;
         const res = await (0, _apiFetchDefault.default)(endpoint, reqType, obj);
         if (res.status === "success" || res.status === 204) {
             const action = reqType === "DELETE" ? "Deleted" : "Saved";
             (0, _alerts.showAlert)("pass", `${action} successfully!`);
-            window.setTimeout(()=>{
+            if (reqType === "DELETE" && endpoint === "/users/me") window.setTimeout(()=>{
+                window.location.assign("/login");
+            }, 1000);
+            else if (reqType === "DELETE" || reqType === "POST") window.setTimeout(()=>{
                 window.location = document.referrer;
-            }, 1500);
+            }, 1000);
+            else window.setTimeout(()=>{
+                window.location.reload();
+            }, 1000);
         }
     } catch (err) {
         (0, _alerts.showAlert)("fail", err);
@@ -1423,7 +1432,7 @@ const submitRequest = async (button)=>{
         }
         const res1 = await Promise.all(apiCalls);
         if (res1[0].status === "success" || res1[0].status === 204) {
-            const action1 = button === "DELETE" ? "Deleted" : "Saved";
+            const action1 = btn.classList.contains("btn--delete") ? "Deleted" : "Saved";
             (0, _alerts.showAlert)("pass", `${action1} successfully!`);
             window.setTimeout(()=>{
                 window.location = document.referrer;
@@ -1434,6 +1443,30 @@ const submitRequest = async (button)=>{
     }
 };
 
-},{"./apiFetch":"j5YSQ","./alerts":"aVYC3","@parcel/transformer-js/src/esmodule-helpers.js":"agWT2"}]},["dyRVe"], "dyRVe", "parcelRequiree437")
+},{"./apiFetch":"j5YSQ","./alerts":"aVYC3","@parcel/transformer-js/src/esmodule-helpers.js":"agWT2"}],"lXYLZ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "openNav", ()=>openNav);
+parcelHelpers.export(exports, "closeNav", ()=>closeNav);
+parcelHelpers.export(exports, "openTab", ()=>openTab);
+const openNav = (nav)=>{
+    nav.style.width = "250px";
+};
+const closeNav = (nav)=>{
+    nav.style.width = "0";
+};
+const openTab = (tab, tabIndex)=>{
+    const navBarTabs = document.getElementsByClassName("nav-bar-tab");
+    const prevSelected = document.querySelector(".nav-bar__item--selected");
+    prevSelected.classList.remove("nav-bar__item--selected");
+    tab.classList.add("nav-bar__item--selected");
+    for(let i = 0; i < navBarTabs.length; i++){
+        const el = navBarTabs[i];
+        if (i !== tabIndex && !el.classList.contains("hidden")) el.classList.add("hidden");
+        else if (i === tabIndex) el.classList.remove("hidden");
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"agWT2"}]},["dyRVe"], "dyRVe", "parcelRequiree437")
 
 //# sourceMappingURL=sapba.js.map

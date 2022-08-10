@@ -1,4 +1,4 @@
-import { openNav, closeNav } from './modules/sideNav';
+import { openNav, closeNav, openTab } from './modules/nav';
 import { logout } from './modules/auth';
 import { populateCharts } from './modules/charts';
 import * as forms from './modules/forms';
@@ -8,11 +8,13 @@ import * as forms from './modules/forms';
 const menuBtn = document.getElementById('menu');
 const closeMenu = document.getElementById('closeMenu');
 const sideNav = document.getElementById('side-nav');
-const currentReports = document.getElementsByClassName('chart-current-report');
+const navBar = document.querySelector('.nav-bar');
 const editForm = document.querySelector('.btn--edit');
-const saveForm = document.querySelector('.btn--save');
-const deleteForm = document.querySelector('.btn--delete');
+const saveForm = document.querySelectorAll('.btn--save');
+const deleteForm = document.querySelectorAll('.btn--delete');
 const logoutBtn = document.getElementById('logout');
+// Dashboard
+const currentReports = document.getElementsByClassName('chart-current-report');
 // Product elements
 const addRow = document.getElementById('add-row');
 const removeRow = document.querySelectorAll('.btn--delete-icon');
@@ -31,6 +33,15 @@ if (closeMenu && sideNav) {
   });
 }
 
+// Bar Navigation
+if (navBar) {
+  navBar.childNodes.forEach((tab, index) => {
+    tab.addEventListener('click', (e) => {
+      openTab(tab, index);
+    });
+  });
+}
+
 // Account Actions
 if (logoutBtn) logoutBtn.addEventListener('click', (e) => logout());
 
@@ -40,16 +51,25 @@ if (currentReports.length !== 0) populateCharts(currentReports);
 
 // Global Form Actions
 if (editForm) {
-  editForm.addEventListener('click', (e) => forms.enableForm(editForm));
+  editForm.addEventListener('click', (e) => {
+    e.preventDefault();
+    forms.enableForm(editForm);
+  });
 }
 if (saveForm) {
-  saveForm.addEventListener('click', (e) => {
-    forms.submitRequest('SAVE');
+  saveForm.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      forms.submitRequest(btn);
+    });
   });
 }
 if (deleteForm) {
-  deleteForm.addEventListener('click', (e) => {
-    forms.submitRequest('DELETE');
+  deleteForm.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      forms.submitRequest(btn);
+    });
   });
 }
 

@@ -28,4 +28,5 @@ router.get('/stores/:slug', viewController.getStore);
 router.get('/users', viewController.getUsers);
 router.get('/users/addUser', viewController.addUser);
 router.get('/users/:slug', viewController.getUser);
+router.get('/me', viewController.getMe);
 module.exports = router;

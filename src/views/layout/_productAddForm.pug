@@ -1,12 +1,12 @@
 section.product-details
   .product-details-header
     a.product-details-header__left(href='/products')
-      img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
+      button.btn--close: img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
     .product-details-header__center New Product Form
     .product-details-header__right
 
   .product-details-content
-    form.form.form-product(data-model='products')
+    form.form.form-product(data-model='products', id='product-add')
 
       // Name
 
@@ -93,5 +93,4 @@ section.product-details
         img.btn--delete-icon(src='/img/icons/icons8-clear-symbol-48.png')
 
   .btn-bar
-    button.btn--delete Delete All
-    button.btn--save Save
+    button.btn--save(form='product-add') Save

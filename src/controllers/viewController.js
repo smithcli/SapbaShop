@@ -132,3 +132,11 @@ exports.getUser = catchAsync(async (req, res, next) => {
     roles,
   });
 });
+
+exports.getMe = catchAsync(async (req, res, next) => {
+  const stores = await Store.find().lean();
+  res.status(200).render('page/myAccount', {
+    title: 'SapbaShop',
+    stores,
+  });
+});

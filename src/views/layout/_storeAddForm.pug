@@ -1,12 +1,12 @@
 section.store-details
   .store-details-header
     a.store-details-header__left.btn--close(href='/stores')
-      img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
+      button.btn--close: img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
     .store-details-header__center New Store Form
     .store-details-header__right
 
   .store-details-content
-    form.form.form-store(data-model='stores')
+    form.form.form-store(data-model='stores', id='store-add')
 
       fieldset.form__group
         .form__set-title Building Number / Village
@@ -61,5 +61,4 @@ section.store-details
           )
 
   .btn-bar
-    button.hidden
-    button.btn--save Save
+    button.btn--save(form='store-add') Save

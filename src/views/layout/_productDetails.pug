@@ -1,13 +1,14 @@
 section.product-details
   .product-details-header
     a.product-details-header__left(href='/products')
-      img(src='/img/icons/icons8-previous-48.png', alt='Previous screen button')
+      button.btn--back: img(src='/img/icons/icons8-previous-48.png', alt='Previous screen button')
     .product-details-header__center= product[0].name.en.toUpperCase()
-    .product-details-header__right.btn--edit
-      img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
+    .product-details-header__right
+      button.btn--edit(form='product-details')
+        img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
 
   .product-details-content
-    form.form.form-product(data-model='products' data-id= prodIds)
+    form.form.form-product(data-model='products' data-id= prodIds, id='product-details')
 
       // Name
 
@@ -96,5 +97,5 @@ section.product-details
 
   .btn-bar.hidden.grid
     if user.role !== 'employee'
-      button.btn--delete Delete All
-    button.btn--save Save
+      button.btn--delete(form='product-details') Delete All
+    button.btn--save(form='product-details') Save

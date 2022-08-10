@@ -1,12 +1,12 @@
 section.user-details
   .user-details-header
     a.user-details-header__left(href='/users')
-      img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
+      button.btn--close: img(src='/img/icons/icons8-close-window-48.png', alt='Close form button')
     .user-details-header__center New User Form
     .user-details-header__right
 
   .user-details-content
-    form.form.form-user(data-model='users')
+    form.form.form-user(data-model='users' id='users-add')
 
       fieldset.form__group
         label.form__label.user-img(for='photo')
@@ -42,5 +42,4 @@ section.user-details
         input.form__input(type='password', id='passwordConfirm' name='passwordConfirm', placeholder='••••••••', required, minlength='8')
 
   .btn-bar
-    button.btn--delete Delete
-    button.btn--save Save
+    button.btn--save(form='users-add') Save
