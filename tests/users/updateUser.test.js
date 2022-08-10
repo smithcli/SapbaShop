@@ -49,7 +49,7 @@ describe(`PATCH /users/:id (test-createUser)`, () => {
       .expect(400);
     expect(getRes.body).toHaveProperty(
       'message',
-      `${utm.userCustomer.email} already exists. Please use another value.`
+      `${utm.userCustomer.email} already exists. Please try again.`
     );
   });
 

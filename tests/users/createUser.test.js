@@ -51,7 +51,7 @@ describe(`POST /users (test-createUser)`, () => {
       .expect(400);
     expect(getRes.body).toHaveProperty(
       'message',
-      `${utm.userEmployee.email} already exists. Please use another value.`
+      `${utm.userEmployee.email} already exists. Please try again.`
     );
   });
 });

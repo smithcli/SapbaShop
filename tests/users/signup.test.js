@@ -36,7 +36,7 @@ describe(`POST /users/signup (test-signup)`, () => {
       .expect(400);
     expect(response.body).toHaveProperty(
       'message',
-      `${utm.userCustomer.email} already exists. Please use another value.`
+      `${utm.userCustomer.email} already exists. Please try again.`
     );
   });
 });

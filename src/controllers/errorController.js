@@ -21,7 +21,7 @@ const validatorErrorHandler = (err) => {
 const duplicateFieldsHandler = (err) => {
   // User.email is currently the only unique value
   const value = err.keyValue.email;
-  const message = `${value} already exists. Please use another value.`;
+  const message = `${value} already exists. Please try again.`;
   return new AppError(400, message);
 };
 
