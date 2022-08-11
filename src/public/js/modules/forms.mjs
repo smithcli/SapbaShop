@@ -31,13 +31,6 @@ const newRows = []; // Holds rows that are to add new docs
 
 // Model specific form functions
 
-// Store Form Functions
-// Store Form preparation to submit
-const prepareStoreForm = () => {
-  zip.value = parseInt(zip.value, 10);
-  phone.value = parseInt(phone.value.split('-').join(''), 10);
-};
-
 // User Form Functions
 // Check for active selection, checkbox unchecked is not added to formData
 const prepareUserObj = (obj) => {
@@ -226,7 +219,6 @@ const buildFetchValues = (model, route) => {
 const buildSaveRequest = (form) => {
   const { model, route } = form.dataset;
   if (model === 'products') return getProductValues(form);
-  if (model === 'stores') prepareStoreForm(form); // befor object build
   const obj = buildObj(new FormData(form));
   if (model === 'users') prepareUserObj(obj); // after object build
   const { endpoint, reqType } = buildFetchValues(model, route);

@@ -37,17 +37,19 @@ exports.createStore = catchAsync(async (req, res, next) => {
 });
 
 exports.updateStore = catchAsync(async (req, res, next) => {
-  const store = await Store.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const store = await Store.findById(req.params.id);
   if (!store) {
     return next(new AppError(404, `No store found with id: ${req.params.id}`));
   }
+  store.set(req.body).validate();
+  const updatedStore = await Store.findByIdAndUpdate(req.params.id, store, {
+    runValidators: true,
+    new: true,
+  });
   res.status(200).json({
     status: 'success',
     data: {
-      store,
+      store: updatedStore,
     },
   });
 });

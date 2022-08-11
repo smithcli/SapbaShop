@@ -27,8 +27,8 @@ const storeModel = {
     en: 'Thailand',
     th: 'ไทย',
   },
-  zip: 50188,
-  phone: 53896987,
+  zip: '50188',
+  phone: '053896987',
   coords: [],
 };
 

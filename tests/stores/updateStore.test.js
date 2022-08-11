@@ -28,8 +28,8 @@ const storeModel = {
     en: 'Thailand',
     th: 'ไทย',
   },
-  zip: 10110,
-  phone: 22891549,
+  zip: '10110',
+  phone: '022891549',
   coords: [],
 };
 

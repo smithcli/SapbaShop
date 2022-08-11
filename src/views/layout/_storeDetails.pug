@@ -53,20 +53,28 @@ section.store-details
 
       fieldset.form__group(disabled)
         .form__set-title Phone Number
-        - const phone = store.phone.toString();
-        if phone.startsWith('2')
-          - let lastfour = phone.slice(-4);
-          - let middle = phone.slice(-7, -4);
-          - let start = phone.slice(0, -7);
-        else
-          - let lastfour = phone.slice(-3);
-          - let middle = phone.slice(-6, -3);
-          - let start = phone.slice(0, -6);
+        if store.phone.startsWith('02')
+          - let lastfour = store.phone.slice(-3);
+          - let middle = store.phone.slice(-6, -3);
+          - let start = store.phone.slice(0, -6);
           label.form__label(for='phone')
             input.form__input#phone(
               type='tel',
               name='phone',
-              value=`0${start}-${middle}-${lastfour}`,
+              value=`${start}-${middle}-${lastfour}`,
+              pattern='0[0-9]{1,2}-?[0-9]{3}-?[0-9]{3,4}',
+              title='Please use local format 012-345-678',
+              required
+            )
+        else
+          - let lastfour = store.phone.slice(-3);
+          - let middle = store.phone.slice(-6, -3);
+          - let start = store.phone.slice(0, -6);
+          label.form__label(for='phone')
+            input.form__input#phone(
+              type='tel',
+              name='phone',
+              value=`${start}-${middle}-${lastfour}`,
               pattern='0[0-9]{1,2}-?[0-9]{3}-?[0-9]{3,4}',
               title='Please use local format 012-345-678',
               required

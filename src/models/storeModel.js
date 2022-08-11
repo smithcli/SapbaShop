@@ -1,6 +1,7 @@
 /* eslint-disable func-names */
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const validator = require('validator');
 
 const storeSchema = new mongoose.Schema({
   bnum: {
@@ -73,30 +74,48 @@ const storeSchema = new mongoose.Schema({
     },
   },
   zip: {
-    type: Number,
+    type: String,
     required: [true, 'A store must have a zip code'],
-    min: [5, 'zip codes are at least five numbers'],
+    validate: {
+      validator: (zipCode) => validator.isPostalCode(zipCode, 'any'),
+      message: 'Please enter a valid zip code',
+    },
   },
   phone: {
-    type: Number,
+    type: String,
     required: [true, 'A store must have a phone number'],
+    match: [
+      /((0)(\d{1,2}-?\d{3}-?\d{3,4}))/g,
+      'Please enter a valid phone number',
+    ],
   },
   coords: [Number],
   slug: String,
 });
+/// METHODS ///
 
-/// MIDDLEWARE ///
+// Remove dashes to keep uniform
+storeSchema.methods.trimPhone = function () {
+  this.phone = this.phone.split('-').join('');
+};
 
 // Create slug for english name, to keep international
-storeSchema.pre('save', function (next) {
-  this.slug = slugify(`${this.bnum.en}, ${this.street.en}`, {
+storeSchema.methods.setSlug = function () {
+  this.slug = slugify(`${this.bnum.en} ${this.street.en}`, {
     lower: true,
     remove: /[*+~.()'"!:@]/g,
   });
+};
+
+/// MIDDLEWARE ///
+
+storeSchema.pre('validate', function (next) {
+  if (this.isModified('bnum.en') || this.isModified('street.en')) {
+    this.setSlug();
+  }
+  this.trimPhone();
   next();
 });
-// TODO: Validators for phone and zip, (min is not working) update only?
-// TODO: post update for slug if fields change. All Models!!!.
 
 const Store = mongoose.model('Store', storeSchema);
 
