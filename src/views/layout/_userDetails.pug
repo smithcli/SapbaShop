@@ -9,7 +9,7 @@ section.user-details
           img(src='/img/icons/icons8-edit-48.png' alt='Pencil as an edit button')
 
   .user-details-content
-    form.form.form-user(data-model='users', data-id= selectedUser._id, id='user-details')
+    form.form.form-user(data-model='users', data-route=selectedUser._id, id='user-details')
 
       fieldset.form__group(disabled)
         label.form__label.user-img(for='photo')

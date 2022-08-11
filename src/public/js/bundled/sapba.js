@@ -208,12 +208,6 @@ if (removeRow) removeRow.forEach((row)=>{
         _forms.removeStoreRow(e);
     });
 });
- // TODO: add size toggle to clean UI.
- // if (sizeToggle) {
- //  sizeToggle.addEventListener('change', (e) => {
- //    forms.toggleSizeFields(sizeToggle);
- //  });
- // }
 
 },{"./modules/auth":"i5VXA","./modules/charts":"9VAj8","./modules/forms":"c2A13","./modules/nav":"lXYLZ"}],"i5VXA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1215,8 +1209,6 @@ const productTable = document.getElementById("product-table");
 const tableRow = document.getElementById("hidden-add");
 const deletedRow = []; // Holds row that contains document data to be removed
 const newRows = []; // Holds rows that are to add new docs
-// const sizeToggle = document.getElementById('size-toggle');
-// const sizeFields = document.getElementsByClassName('product-size');
 /// FORM FUNCTIONS //
 // Model specific form functions
 // Store Form Functions
@@ -1315,8 +1307,8 @@ const buildObj = (formData)=>{
 };
 // Product form is different as it contains multiple objects / documents in one page.
 const getProductValues = (form)=>{
-    const { id , model  } = form.dataset;
-    const ids = id ? JSON.parse(id) : [];
+    const { model , route  } = form.dataset;
+    const ids = route ? JSON.parse(route) : [];
     const productValues = []; // will return all objects with reqType and endpoint embedded.
     // 1) parse deletedRows, get index of deleted
     const toDelete = []; // holds row index of rows to be deleted
@@ -1366,23 +1358,23 @@ const getProductValues = (form)=>{
 };
 // Dynamically build fetch req return as object
 // Buttons will determine if 'DELETE' req type
-const buildFetchValues = (model, id)=>{
+const buildFetchValues = (model, route)=>{
     // In HTML Form the form must have data attributes
     // model = endpoint, and the id of object to modify if PATCH
-    const reqType = id ? "PATCH" : "POST";
-    const endpoint = id ? `/${model}/${id}` : `/${model}`;
+    const reqType = route ? "PATCH" : "POST";
+    const endpoint = route ? `/${model}/${route}` : `/${model}`;
     return {
         endpoint,
         reqType
     };
 };
 const buildSaveRequest = (form)=>{
-    const { model , id  } = form.dataset;
+    const { model , route  } = form.dataset;
     if (model === "products") return getProductValues(form);
     if (model === "stores") prepareStoreForm(form); // befor object build
     const obj = buildObj(new FormData(form));
     if (model === "users") prepareUserObj(obj); // after object build
-    const { endpoint , reqType  } = buildFetchValues(model, id);
+    const { endpoint , reqType  } = buildFetchValues(model, route);
     return {
         reqType,
         endpoint,
@@ -1390,16 +1382,16 @@ const buildSaveRequest = (form)=>{
     };
 };
 const buildDeleteRequest = (form)=>{
-    const { id , model  } = form.dataset;
+    const { model , route  } = form.dataset;
     if (model === "products") {
-        const ids = JSON.parse(id);
+        const ids = JSON.parse(route);
         return ids.map((prodId)=>({
                 endpoint: `/${model}/${prodId}`,
                 reqType: "DELETE"
             }));
     }
     return {
-        endpoint: `/${model}/${id}`,
+        endpoint: `/${model}/${route}`,
         reqType: "DELETE"
     };
 };

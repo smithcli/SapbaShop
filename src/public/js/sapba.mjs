@@ -86,10 +86,3 @@ if (removeRow) {
     });
   });
 }
-
-// TODO: add size toggle to clean UI.
-// if (sizeToggle) {
-//  sizeToggle.addEventListener('change', (e) => {
-//    forms.toggleSizeFields(sizeToggle);
-//  });
-// }

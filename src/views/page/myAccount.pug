@@ -17,7 +17,7 @@ block content
 
         // Info
         //- data-id = param, user info is in req
-        form.form.form-user.nav-bar-tab(data-model='users', data-id='me', id='info')
+        form.form.form-user.nav-bar-tab(data-model='users', data-route='me', id='info')
     
           fieldset.form__group
             label.form__label.user-img(for='photo')
@@ -43,7 +43,7 @@ block content
 
         // UpdatePassword
         //- data-id = param, user info is in req
-        form.form.form-user.nav-bar-tab.hidden(data-model='users', data-id='updateMyPassword', id='updateMyPassword')
+        form.form.form-user.nav-bar-tab.hidden(data-model='users', data-route='updateMyPassword', id='updateMyPassword')
 
           fieldset.form__group
             label.form__label(for='passwordCurrent') Current Password
@@ -61,7 +61,7 @@ block content
             button.btn--save(form='updateMyPassword') Update
 
         // Settings
-        form.form.form-user.nav-bar-tab.hidden(data-model='users', data-id='me', id ='settings')
+        form.form.form-user.nav-bar-tab.hidden(data-model='users', data-route='me', id ='settings')
           .form__group.form__set-title Delete Account
             .btn-bar
               button.btn--delete(form='settings') Delete
