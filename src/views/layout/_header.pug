@@ -1,11 +1,12 @@
 header.header
   .nav.nav--dashboard
-    a.nav__menu.btn--title#menu
-      img.nav__menu-icon(src='/img/icons/icons8-menu-48.png' alt='Menu button')
+    a.nav__menu#menu
+      button.btn--title: img(src='/img/icons/icons8-menu-48.png' alt='Menu button')
     .nav__title= title
     -const userName = (user) ? user.name : '#User';
-    .nav__account.btn--title.dropdown= userName
-      img.nav__account-img(src='/img/icons/icons8-test-account-100.png' alt='User profile picture')
+    .nav__account.dropdown
+      button.btn--title.account-profile= userName
+        img(src='/img/icons/icons8-test-account-100.png' alt='User profile picture')
       .dropdown-content
         a(href='/me') Edit Account
         a#logout Logout

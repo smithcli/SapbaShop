@@ -9,6 +9,7 @@ const menuBtn = document.getElementById('menu');
 const closeMenu = document.getElementById('closeMenu');
 const sideNav = document.getElementById('side-nav');
 const navBar = document.querySelector('.nav-bar');
+const backBtn = document.querySelector('.btn--back');
 const editForm = document.querySelector('.btn--edit');
 const saveForm = document.querySelectorAll('.btn--save');
 const deleteForm = document.querySelectorAll('.btn--delete');
@@ -39,6 +40,12 @@ if (navBar) {
     tab.addEventListener('click', (e) => {
       openTab(tab, index);
     });
+  });
+}
+
+if (backBtn) {
+  backBtn.addEventListener('click', (e) => {
+    window.location = document.referrer;
   });
 }
 

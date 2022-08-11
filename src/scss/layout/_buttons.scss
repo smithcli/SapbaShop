@@ -40,7 +40,7 @@ button {
 
 .btn--table {
   @extend .btn;
-  border: .1rem solid $color-btn-border;
+  border: 0.1rem solid $color-btn-border;
   background-color: transparent;
   border-radius: 0;
   text-align: left;
@@ -48,7 +48,6 @@ button {
   text-transform: capitalize;
   padding: 0;
 }
-
 
 // Bar at the bottom of forms
 .btn-bar {
@@ -74,13 +73,19 @@ button {
 
 // Selectable titles (have a slug)
 .btn--title {
-  @extend .btn;
-  @include button-icon;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 550;
+  color: inherit;
+  text-align: center;
   border: none;
+  cursor: pointer;
+  border-radius: $border-radius;
   background-color: $color-btn--title;
   min-width: fit-content;
-  padding: 0.2rem 3rem;
-
+  text-transform: capitalize;
+  transition: all 0.3s;
   &:hover,
   &:focus {
     transform: none;
@@ -88,6 +93,7 @@ button {
     outline: 0.2rem solid $color-highlight;
   }
 }
+
 // Deletes documents
 .btn--delete {
   @extend .btn;

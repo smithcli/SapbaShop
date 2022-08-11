@@ -42,32 +42,40 @@ body .hidden--user {
 }
 
 .nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
   align-items: center;
   padding: 0 1rem;
   background: #88bb92;
 }
-.nav__menu-icon {
+.nav__menu {
+  justify-self: start;
+}
+.nav__menu button {
+  padding: 1rem 2rem;
+}
+.nav__menu img {
   width: 30px;
   height: 30px;
 }
-.nav .dropdown {
-  text-transform: capitalize;
+.nav__account {
+  justify-self: end;
 }
-.nav__account-img {
+.nav__account img {
   width: 50px;
   height: 50px;
 }
 .nav__title {
-  display: flex;
-  flex: 1 0 auto;
-  justify-content: center;
-  align-items: center;
   font-size: 2rem;
   overflow-wrap: normal;
   text-transform: capitalize;
+}
+
+.account-profile {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 0 2rem;
 }
 
 .footer {
@@ -150,12 +158,6 @@ body .hidden--user {
   background-color: #88bb92;
 }
 
-.dropdown {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  align-items: center;
-}
 .dropdown:hover .dropdown-content, .dropdown:focus .dropdown-content, .dropdown:active .dropdown-content {
   display: block;
 }
@@ -163,10 +165,15 @@ body .hidden--user {
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 70px;
+  text-align: center;
+  font-weight: 550;
+  cursor: pointer;
+  top: 65px;
+  right: -1%;
   z-index: 1;
   background-color: #fff;
   width: 15rem;
+  text-transform: capitalize;
   -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.25);
   box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.25);
 }
@@ -437,7 +444,7 @@ button {
   background: transparent;
 }
 
-.btn, .btn--cancel, .btn--save, .btn--delete, .btn--title, .btn--table,
+.btn, .btn--cancel, .btn--save, .btn--delete, .btn--table,
 .btn:link,
 .btn:visited {
   -webkit-appearance: none;
@@ -454,7 +461,7 @@ button {
   border-radius: 1.5rem;
   border: solid #97c3a5;
 }
-.btn:hover, .btn--cancel:hover, .btn--save:hover, .btn--delete:hover, .btn--title:hover, .btn--table:hover, .btn:focus, .btn--cancel:focus, .btn--save:focus, .btn--delete:focus, .btn--title:focus, .btn--table:focus,
+.btn:hover, .btn--cancel:hover, .btn--save:hover, .btn--delete:hover, .btn--table:hover, .btn:focus, .btn--cancel:focus, .btn--save:focus, .btn--delete:focus, .btn--table:focus,
 .btn:link:hover,
 .btn:link:focus,
 .btn:visited:hover,
@@ -464,7 +471,7 @@ button {
   box-shadow: 0rem -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
   outline: none;
 }
-.btn:active, .btn--cancel:active, .btn--save:active, .btn--delete:active, .btn--title:active, .btn--table:active,
+.btn:active, .btn--cancel:active, .btn--save:active, .btn--delete:active, .btn--table:active,
 .btn:link:active,
 .btn:visited:active {
   transform: translateY(3px);
@@ -485,10 +492,10 @@ button {
   grid-template-columns: 1fr 2fr 1fr;
   justify-items: center;
 }
-.btn-bar .btn, .btn-bar .btn--cancel, .btn-bar .btn--save, .btn-bar .btn--delete, .btn-bar .btn--title, .btn-bar .btn--table {
+.btn-bar .btn, .btn-bar .btn--cancel, .btn-bar .btn--save, .btn-bar .btn--delete, .btn-bar .btn--table {
   width: 11rem;
 }
-.btn-bar .btn:only-of-type, .btn-bar .btn--cancel:only-of-type, .btn-bar .btn--save:only-of-type, .btn-bar .btn--delete:only-of-type, .btn-bar .btn--title:only-of-type, .btn-bar .btn--table:only-of-type {
+.btn-bar .btn:only-of-type, .btn-bar .btn--cancel:only-of-type, .btn-bar .btn--save:only-of-type, .btn-bar .btn--delete:only-of-type, .btn-bar .btn--table:only-of-type {
   grid-column: 2;
   justify-self: center;
 }
@@ -501,18 +508,19 @@ button {
 }
 
 .btn--title {
-  cursor: pointer;
-  transition: all 0.3s;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 550;
+  color: inherit;
+  text-align: center;
   border: none;
+  cursor: pointer;
+  border-radius: 1.5rem;
   background-color: #88bb92;
   min-width: fit-content;
-  padding: 0.2rem 3rem;
-}
-.btn--title:hover, .btn--title:focus {
-  transform: scale(1.2);
-}
-.btn--title:active {
-  transform: translateY(3px);
+  text-transform: capitalize;
+  transition: all 0.3s;
 }
 .btn--title:hover, .btn--title:focus {
   transform: none;
@@ -540,6 +548,7 @@ button {
 .btn--edit,
 .btn--close,
 .btn--back {
+  display: block;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -1061,15 +1070,6 @@ button {
 }
 .user-img img {
   width: fit-content;
-}
-
-.myAccount #myInfo #updatePassword {
-  margin-top: 2rem;
-  padding-top: 4rem;
-}
-.myAccount #deleteAccount {
-  margin-top: 2rem;
-  padding-top: 4rem;
 }
 
 /*# sourceMappingURL=style.css.map */

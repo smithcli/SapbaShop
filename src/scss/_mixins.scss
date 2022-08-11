@@ -67,6 +67,7 @@
 }
 
 @mixin button-icon {
+  display: block;
   cursor: pointer;
   transition: all 0.3s;
   &:hover,

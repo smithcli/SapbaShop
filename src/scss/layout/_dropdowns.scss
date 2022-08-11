@@ -1,9 +1,4 @@
 .dropdown {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  align-items: center;
-
   &:hover,
   &:focus,
   &:active {
@@ -16,10 +11,15 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 70px;
+  text-align: center;
+  font-weight: 550;
+  cursor: pointer;
+  top: 65px;
+  right: -1%;
   z-index: 1;
   background-color: $color-dropdown-content-bg;
   width: 15rem;
+  text-transform: capitalize;
   @include box-shadow;
 
   a {

@@ -1,33 +1,40 @@
 // Base Header layout style
 .nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
   align-items: center;
   padding: 0 1rem;
   background: $color-header-bg;
 
-  &__menu-icon {
-    width: 30px;
-    height: 30px;
+  &__menu {
+    justify-self: start;
+    button {
+      padding: 1rem 2rem;
+    }
+    img {
+      width: 30px;
+      height: 30px;
+    }
   }
 
-  .dropdown {
-    text-transform: capitalize;
-  }
-
-  &__account-img {
-    width: 50px;
-    height: 50px;
+  &__account {
+    justify-self: end;
+    img {
+      width: 50px;
+      height: 50px;
+    }
   }
 
   &__title {
-    display: flex;
-    flex: 1 0 auto;
-    justify-content: center;
-    align-items: center;
     font-size: 2rem;
     overflow-wrap: normal;
     text-transform: capitalize;
   }
+}
+
+.account-profile {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 0 2rem;
 }
