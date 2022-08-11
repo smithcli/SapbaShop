@@ -3,7 +3,7 @@
   @include sectionLayout;
 
   &-header {
-    @include sectionHeader;
+    @include sectionHeaderWithSearch;
   }
 }
 

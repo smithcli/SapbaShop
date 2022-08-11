@@ -348,7 +348,7 @@ select {
 }
 .form__input:hover, .form__input:focus {
   outline: none;
-  transform: scale(1.05);
+  transform: scale(1.03);
   border-bottom: 3px solid #55c57a;
   -webkit-box-shadow: 0 -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
   box-shadow: 0rem -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
@@ -358,6 +358,32 @@ select {
 }
 .form__input::-webkit-input-placeholder {
   color: #bbb;
+}
+
+.search {
+  display: flex;
+}
+
+.search-box {
+  display: block;
+  flex-grow: 1;
+  -webkit-appearance: none;
+  font-size: 1.5rem;
+  padding: 1.25rem 1.75rem;
+  background-color: #fff;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border-radius: 1.5rem;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0.2rem solid #bbb;
+}
+.search-box:hover, .search-box:focus {
+  outline: none;
+  -webkit-box-shadow: 0 -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
+  box-shadow: 0rem -0.5rem 1rem 0.2rem rgba(255, 119, 48, 0.3);
 }
 
 .alert {
@@ -510,6 +536,7 @@ button {
 
 .btn--add-icon,
 .btn--delete-icon,
+.btn--search,
 .btn--edit,
 .btn--close,
 .btn--back {
@@ -519,6 +546,8 @@ button {
 .btn--add-icon:hover, .btn--add-icon:focus,
 .btn--delete-icon:hover,
 .btn--delete-icon:focus,
+.btn--search:hover,
+.btn--search:focus,
 .btn--edit:hover,
 .btn--edit:focus,
 .btn--close:hover,
@@ -529,6 +558,7 @@ button {
 }
 .btn--add-icon:active,
 .btn--delete-icon:active,
+.btn--search:active,
 .btn--edit:active,
 .btn--close:active,
 .btn--back:active {
@@ -596,8 +626,7 @@ button {
 }
 .products-list-header {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  justify-items: center;
+  grid-template-columns: 5rem 1fr;
   align-items: center;
   margin-bottom: 1rem;
   font-weight: 550;
@@ -607,8 +636,22 @@ button {
 .products-list-header__left {
   justify-self: start;
 }
+.products-list-header__center {
+  grid-area: 1/1/1/-1;
+}
 .products-list-header__right {
-  justify-self: end;
+  justify-self: stretch;
+}
+@media (min-width: 900px) {
+  .products-list-header {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .products-list-header__center {
+    grid-area: inherit;
+  }
+  .products-list-header__right {
+    justify-self: end;
+  }
 }
 
 .products-list-content {
@@ -752,9 +795,6 @@ button {
 }
 .stores-list-header__right {
   justify-self: end;
-}
-.stores-list-header__left {
-  visibility: hidden;
 }
 
 .stores-list-content {

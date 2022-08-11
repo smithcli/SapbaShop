@@ -1,0 +1,25 @@
+.search {
+  display: flex;
+}
+
+.search-box {
+  display: block;
+  flex-grow: 1;
+  -webkit-appearance: none; // needed for safari
+  font-size: 1.5rem;
+  padding: 1.25rem 1.75rem;
+  background-color: $color-search-input-bg;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border-radius: $border-radius;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: .2rem solid $color-search-border;
+  &:hover,
+  &:focus {
+    outline: none;
+    @include focus-shadow;
+  }
+}

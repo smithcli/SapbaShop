@@ -37,6 +37,35 @@
   }
 }
 
+@mixin sectionHeaderWithSearch {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 550;
+  text-align: center;
+  text-transform: capitalize;
+  &__left {
+    justify-self: start;
+  }
+  &__center {
+    grid-area: 1/1/1/-1;
+  }
+  &__right {
+    justify-self: stretch;
+  }
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+
+    &__center {
+      grid-area: inherit;
+    }
+    &__right {
+      justify-self: end;
+    }
+  }
+}
+
 @mixin button-icon {
   cursor: pointer;
   transition: all 0.3s;

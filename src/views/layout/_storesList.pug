@@ -2,11 +2,12 @@ include ../mixin/store-mixins
 section.stores-list
   .stores-list-header
     .stores-list-header__left
-      img.btn--search-icon(src='/img/icons/icons8-search-48.png' alt='Magnifing glass search button')
-    .stores-list-header__center All Stores
-    .stores-list-header__right
       if user.role === 'admin'
         a(href='/stores/addStore'): img.btn--add-icon(src='/img/icons/icons8-add-new-48.png' alt='Add new store button')
+    .stores-list-header__center All Stores
+    .stores-list-header__right
+      //- TODO: add search to stores.
+      //- button.btn--search: img.btn--search-icon(src='/img/icons/icons8-search-48.png' alt='Magnifing glass search button')
   .stores-list-content 
     each store in stores
       +storeListItem(store)

@@ -179,7 +179,7 @@ select {
   &:hover,
   &:focus {
     outline: none;
-    transform: scale(1.05);
+    transform: scale(1.03);
     border-bottom: 3px solid $color-form-input-valid;
     @include focus-shadow;
 
