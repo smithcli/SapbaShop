@@ -11,6 +11,11 @@
   display: grid;
   gap: 0.5rem;
 
+  .center {
+    text-align: center;
+    grid-column: 1/-1;
+  }
+
   @media (min-width: 500px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -21,7 +26,7 @@
 
 .products-list-item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   &__image {
     margin: 0 1em;

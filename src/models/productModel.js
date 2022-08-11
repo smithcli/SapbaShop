@@ -86,6 +86,10 @@ const productSchema = new mongoose.Schema({
   },
   count: Number,
   images: [String],
+  tags: {
+    type: [String],
+    text: true,
+  },
   slug: String,
 });
 
@@ -121,6 +125,37 @@ productSchema.methods.matchDepartment = function () {
   }
 };
 
+// Helper to set tags with partialWords for search
+const makePartialWords = (targetString) => {
+  const partialWords = [];
+  const chars = targetString.split('');
+  for (let i = 0; i < chars.length; i++) {
+    partialWords.push(targetString.substring(0, i + 1));
+  }
+  return partialWords;
+};
+
+// Set tags for product
+productSchema.methods.setTags = function () {
+  if (this.isModified('name')) {
+    this.tags.push(this.name.en, this.name.th);
+    const nameEnWords = this.name.en.split(' ');
+    const nameThWords = this.name.th.split(' ');
+    // Add Partial Words
+    nameEnWords.forEach((word) => {
+      this.tags = this.tags.concat(makePartialWords(word));
+    });
+    nameThWords.forEach((word) => {
+      this.tags = this.tags.concat(makePartialWords(word));
+    });
+  }
+  if (this.isModified('department')) {
+    this.tags.push(this.department.en, this.department.th);
+    this.tags = this.tags.concat(this.department.en.split(' ')); // Words
+    this.tags = this.tags.concat(this.department.th.split(' '));
+  }
+};
+
 /// MIDDLEWARE ///
 
 // Modify model fields as neccessary
@@ -128,6 +163,7 @@ productSchema.pre('validate', function (next) {
   this.setSlug();
   this.matchDepartment();
   this.allowNullSize();
+  this.setTags();
   next();
 });
 

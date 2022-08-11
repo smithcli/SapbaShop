@@ -12,7 +12,8 @@ router.get('/login', viewController.login);
 router.get('/forgotPassword', viewController.forgotPassword);
 
 // Require Authentication beyond this point
-router.use(
+router.get(
+  '/*',
   authController.requireAuth,
   authController.restrictedTo('admin', 'manager', 'employee'),
 );

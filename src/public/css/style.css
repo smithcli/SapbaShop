@@ -667,6 +667,10 @@ button {
   display: grid;
   gap: 0.5rem;
 }
+.products-list-content .center {
+  text-align: center;
+  grid-column: 1/-1;
+}
 @media (min-width: 500px) {
   .products-list-content {
     grid-template-columns: repeat(2, 1fr);
@@ -680,7 +684,7 @@ button {
 
 .products-list-item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .products-list-item__image {
   margin: 0 1em;

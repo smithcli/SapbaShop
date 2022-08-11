@@ -34,7 +34,8 @@ exports.getDashboard = catchAsync(async (req, res, next) => {
 
 // Place to Add, Modify, Delete all products.
 exports.getProducts = catchAsync(async (req, res, next) => {
-  const query = {
+  let products = [];
+  const group = {
     _id: '$name.en',
     slug: { $first: '$slug' },
     nameTh: { $first: '$name.th' },
@@ -42,7 +43,17 @@ exports.getProducts = catchAsync(async (req, res, next) => {
     departmentTh: { $first: '$department.th' },
   };
   // TODO: Add Thai support for sort order.
-  const products = await Product.aggregate().group(query).sort({ slug: 1 });
+  if (Object.keys(req.query).length === 0 || req.query.name === '') {
+    products = await Product.aggregate().group(group).sort({ slug: 1 });
+  } else if (req.query.name) {
+    // Mongo text search does not support Thai lang.
+    products = await Product.aggregate()
+      .match({ $text: { $search: req.query.name, $language: 'none' } })
+      .group(group)
+      .sort({ slug: 1 });
+  }
+  // Check if returning empty
+  if (products.length === 0) products = 'No Products Found';
   res.status(200).render('page/products', {
     title: 'SapbaShop Products',
     products,
