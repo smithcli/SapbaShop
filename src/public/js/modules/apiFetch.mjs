@@ -2,8 +2,8 @@ import 'dotenv/config';
 
 const apiFetch = async (endpoint, reqType, dataObj) => {
   // Get api url from configuration file
-  const { NODE_ENV, SAPBA_API_URL } = process.env;
-  const url = SAPBA_API_URL || 'http://localhost:8000/api/v1';
+  const { NODE_ENV } = process.env;
+  const url = process.env.SAPBA_API_URL || 'http://localhost:8000/api/v1';
   const res = await fetch(`${url}${endpoint}`, {
     method: reqType,
     headers: {
