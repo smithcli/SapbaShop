@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const https = require('https');
 const fs = require('fs');
+const init = require('./utils/init');
 
 // Default environment is production
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
@@ -54,6 +55,9 @@ mongoose
 
 // Process App with global middleware and start server
 const app = require('./app');
+
+// If Database is Empty, intialization is ran.
+init.addAdminUser();
 
 const port = process.env.PORT || 8000;
 let server;
