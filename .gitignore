@@ -1,8 +1,8 @@
 # App Specific
-scripts/
 src/**/*.map
 .parcel-cache
 src/public/js/bundled/*
+certs/*
 
 # Below provided by Github
 # Logs
