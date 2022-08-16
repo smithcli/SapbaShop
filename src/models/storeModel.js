@@ -96,7 +96,9 @@ const storeSchema = new mongoose.Schema({
 
 // Remove dashes to keep uniform
 storeSchema.methods.trimPhone = function () {
-  this.phone = this.phone.split('-').join('');
+  if (this.phone) {
+    this.phone = this.phone.split('-').join('');
+  }
 };
 
 // Create slug for english name, to keep international
