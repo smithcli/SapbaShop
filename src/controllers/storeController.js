@@ -1,3 +1,4 @@
+const Product = require('../models/productModel');
 const Store = require('../models/storeModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -59,6 +60,8 @@ exports.deleteStore = catchAsync(async (req, res, next) => {
   if (!store) {
     return next(new AppError(404, `No store found with id: ${req.params.id}`));
   }
+  // Delete all Products in the store.
+  await Product.deleteMany({ store: { $eq: req.params.id } });
   res.status(204).json({
     status: 'success',
     data: null,
