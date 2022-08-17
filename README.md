@@ -37,4 +37,18 @@ Go to the server url, by default it will be http://localhost:8000 and login usin
 - email: admin@sapbashop.com
 - password: pass1234
 
-Add your Store to be able to add products.
+Then add your Store to be able to add products.
+___
+## My development set up
+
+1. Follow installation instructions
+2. Run the following scripts
+    ```sh
+    ./scripts/dev-podman-setup.sh
+    ./script/genSelfSignCert.sh
+    ```
+3. Import test data
+    ```javascript
+    node script/import-dev-data.js --import
+    ```
+4. Use npm run dev or whichever required.
