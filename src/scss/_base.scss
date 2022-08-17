@@ -33,6 +33,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .center {
+    align-self: center;
+    margin-top: 5%;
+  }
 }
 
 // Text until img supplied

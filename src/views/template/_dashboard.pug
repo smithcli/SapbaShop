@@ -7,8 +7,11 @@ block append head
 block content
   main.main
     block main
-      .dashboard
-        block dashboard
-          .reports
-            each store in stores
-              +chartCurrentReport(store)
+      if stores.length === 0 || !stores
+        h2.center Add a Store to get started!
+      else
+        .dashboard
+          block dashboard
+            .reports
+              each store in stores
+                +chartCurrentReport(store)

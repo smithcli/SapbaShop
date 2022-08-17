@@ -11,6 +11,7 @@
     "dev": "NODE_ENV=development nodemon src/server.js",
     "dev-pro": "NODE_ENV=production nodemon src/server.js",
     "dev-ui": "npm run scss & npm run parcel-watch & npm run dev ",
+    "dev-ui-pro": "npm run scss & npm run parcel-watch & npm run dev-pro ",
     "scss": "sass --watch src/scss/main.scss src/public/css/style.css",
     "scss-build": "sass src/scss/main.scss src/public/css/style.css",
     "parcel-watch": "parcel watch --no-hmr",

@@ -101,8 +101,8 @@ describe(`PATCH /users/me (test-updateMe)`, () => {
       const getRes = await request(app)
         .patch(route)
         .set('cookie', await utm.jwtCustomer())
-        .send(userTest);
-      //.expect(200);
+        .send(userTest)
+        .expect(200);
       expect(getRes.body.data.user.role).toBe(utm.userCustomer.role);
     });
   });

@@ -6,6 +6,9 @@ const https = require('https');
 const fs = require('fs');
 const init = require('./utils/init');
 
+// Load environment variables from .env file at root dir
+dotenv.config();
+
 // Default environment is production
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
@@ -21,8 +24,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Load environment variables from .env file at root dir
-dotenv.config();
 const db = process.env.MONGO_DATABASE_URL;
 const dbUser = process.env.MONGO_DATABASE_USERNAME;
 const dbPass = process.env.MONGO_DATABASE_PASSWORD;
