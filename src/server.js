@@ -68,14 +68,14 @@ if (process.env.NODE_ENV === 'production') {
     const key = fs.readFileSync(process.env.SAPBA_HTTPS_KEY);
     const cert = fs.readFileSync(process.env.SAPBA_HTTPS_CERT);
     server = https.createServer({ key, cert }, app).listen(port);
-    console.log(`App running on port ${port}...`);
+    console.log(`App running HTTPS on port ${port}...`);
   } else {
     // For localhost only
     // TODO: Implement options for reverse proxy in http only
     server = app.listen(port, () => {
       console.log(`\n\u26a0 App is not yet built to run behind reverse proxy and will
   not work if used beyond localhost without HTTPS\n`);
-      console.log(`App running HTTP ONLY on port ${port}...`);
+      console.log(`App running HTTP on port ${port}...`);
     });
   }
 } else {

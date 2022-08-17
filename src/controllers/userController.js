@@ -28,6 +28,15 @@ exports.getUser = catchAsync(async (req, res, next) => {
 
 // Restricted to admin
 exports.createUser = catchAsync(async (req, res, next) => {
+  // Didn't work in pre-validate middleware
+  // If store is null allow it to pass validation.
+  if (
+    req.body.store === null
+    || req.body.store === 'null'
+    || req.body.store === ''
+  ) {
+    req.body.store = undefined;
+  }
   const newUser = await User.create(req.body);
   if (newUser) {
     // eslint-disable-next-line no-unused-vars
