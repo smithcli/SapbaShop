@@ -20,7 +20,7 @@ beforeEach(async () => {
   userUpdate = Object.assign({}, userOne);
 });
 
-describe(`PATCH /users/:id (test-createUser)`, () => {
+describe(`PATCH /users/:id (test-updateUser)`, () => {
   const id = utm.userEmployee._id;
   const route = `${utm.api}/users/${id}`;
   const req = 'patch';
@@ -49,7 +49,7 @@ describe(`PATCH /users/:id (test-createUser)`, () => {
       .expect(400);
     expect(getRes.body).toHaveProperty(
       'message',
-      `${utm.userCustomer.email} already exists. Please try again.`
+      `${utm.userCustomer.email} already exists. Please try again.`,
     );
   });
 
@@ -62,7 +62,7 @@ describe(`PATCH /users/:id (test-createUser)`, () => {
       .expect(400);
     expect(getRes.body).toHaveProperty(
       'message',
-      'This route is not for password updates.'
+      'This route is not for password updates.',
     );
   });
 
@@ -75,7 +75,7 @@ describe(`PATCH /users/:id (test-createUser)`, () => {
       .expect(400);
     expect(getRes.body).toHaveProperty(
       'message',
-      "Invalid input data. You cannot modify field '_id'."
+      "Invalid input data. You cannot modify field '_id'.",
     );
   });
 });

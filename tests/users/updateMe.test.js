@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const utm = require('../shared_tests/userTestModules');
+const stm = require('../shared_tests/storeTestModules');
 const auth = require('../shared_tests/authTests');
 const User = require('../../src/models/userModel');
 
@@ -8,7 +9,7 @@ process.env.TEST_SUITE = 'test-updateMe';
 
 const userData = {
   // Allowed fields
-  store: '62cdcecd7182b83ccb505152',
+  store: stm.storeOne._id,
   name: 'test user',
   email: 'test@email.com',
   photo: '/photo.jpg',
@@ -91,7 +92,7 @@ describe(`PATCH /users/me (test-updateMe)`, () => {
         .send(userTest)
         .expect(400);
       expect(getRes.body.message).toBe(
-        'This route is not for password updates.'
+        'This route is not for password updates.',
       );
     });
 

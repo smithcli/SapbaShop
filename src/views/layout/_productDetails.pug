@@ -55,14 +55,6 @@ section.product-details
         label.form__label(for='unit.th') Thai
           input.form__input(type='text', id='unit.th', name='unit.th', value=product[0].unit.th, required)
 
-      //- TODO: add size toggling
-      //- Size
-      //-fieldset.form__group.hidden.grid(disabled)
-      //-  .form__set-title.hidden Sizes 
-      //-  label.toggle(for='size-toggle')
-      //-    input(type='checkbox', id='size-toggle', checked=product[0].size !== undefined, name='size-toggle')
-      //-    span.slider
-
       // Table - might not be accessability sound
       fieldset.form__group.product-details-table#product-table(disabled)
         label.form__label(for='store') Store

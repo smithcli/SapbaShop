@@ -1,7 +1,8 @@
 mixin userListItem(user)
   - const status = (user.active) ? '' : '(X)';
+  - const store = (user.store) ? `${user.store.bnum.en}, ${user.store.street.en}` : ''
   a.users-list-item.btn--table(href=`/users/${user.slug}`, class= (user.active) ? '' : 'deactivated')
     span.users-list-item__role= `${user.role}  ${status}` 
     span.users-list-item__name= `${user.name}`
     span.users-list-item__email= `${user.email}`
-    span.users-list-item__store= `${user.store.bnum.en}, ${user.store.street.en}`
+    span.users-list-item__store= `${store}`

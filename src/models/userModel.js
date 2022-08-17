@@ -106,15 +106,21 @@ userSchema.methods.changePassword = function (pass, passConf) {
   this.passwordResetExpires = undefined;
 };
 
-///  MIDDLEWARE ///
-
 // Create slug - thai characters may not work
-userSchema.pre('save', function (next) {
+userSchema.methods.setSlug = function () {
   const randNum = Math.floor(Math.random() * 99999); // 5 random digits
   this.slug = slugify(`${this.name} ${randNum}`, {
     lower: true,
     remove: /[*+~.()'"!:@]/g,
   });
+};
+
+///  MIDDLEWARE ///
+
+userSchema.pre('save', function (next) {
+  if (this.isModified('name')) {
+    this.setSlug();
+  }
   next();
 });
 
@@ -147,6 +153,29 @@ userSchema.pre(/^find/, function (next) {
   // comment is the only way I found to bypass the middleware when needed.
   if (this.getOptions().comment !== 'sapba-mgt') {
     this.find({ active: { $ne: false } });
+  }
+  next();
+});
+
+// Users do not have to be assigned to a store;
+userSchema.pre('findOneAndUpdate', async function (next) {
+  // Check for store in update body
+  const userUpdate = this.getUpdate();
+  if (!userUpdate.store) return next();
+  // Verify it is a user that is being queried
+  const user = await this.model.findOne(this.getQuery());
+  if (!(user instanceof this.model)) return next();
+  // Allow store to be null, if it is unset the property
+  if (
+    userUpdate.store === null
+    || userUpdate.store === 'null'
+    || userUpdate.store === ''
+  ) {
+    userUpdate.store = undefined;
+    this.setUpdate(Object.assign(userUpdate, { $unset: { store: '' } }));
+    // If not null, verify it is a valid store
+  } else if (!(await Store.findById(userUpdate.store))) {
+    return next(new AppError(404, `${userUpdate.store} is not a valid store.`));
   }
   next();
 });

@@ -21,6 +21,7 @@ section.user-details
       fieldset.form__group(disabled)
         label.form__label(for='store') Store
         select(id='store', name='store')
+          option(value='null', selected= !user.store) Choose a Store
           each store in stores
             option(value=store._id, selected=`${store._id}`===`${selectedUser.store}`)= `${store.bnum.en}, ${store.street.en}`
 
