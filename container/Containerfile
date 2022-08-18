@@ -1,0 +1,11 @@
+FROM docker.io/library/node:16
+MAINTAINER git@smithc.dev
+RUN git clone https://github.com/smithcli/SapbaShop.git
+WORKDIR /SapbaShop
+RUN npm install
+EXPOSE 8000
+ENV MONGO_DATABASE_URL=mongodb://localhost:27017/sapbashop
+ENV JWT_SECRET=your-256-bit-secret
+ENV JWT_EXPIRES_IN=90d
+ENV JWT_COOKIE_EXPIRES_IN=90
+ENTRYPOINT npm start
