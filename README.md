@@ -10,36 +10,42 @@ Inventory management web app designed for a Thai - International small business.
 - Reports of product inventory levels
 - Uses NoSQL to adapt to a growing business needs
 
-___
-## Installation
-### 1) From Source
+# Requirements
+
+To run the application you will need the following:
+- MongoDB v5
+- Nodejs v16 (LTS)
+
+# Installation
+
+## 1) From Source
 1. Download Source Code and dependencies
     ```sh
     git clone https://github.com/smithcli/SapbaShop.git
     cd Sapbashop
     npm install
     ```
-2. Make configuration file and edit .env
+2. Make configuration from sample.env file and edit .env
     ```sh
     cp sample.env .env
     ```
-3. Run the app, (currently uses parcel to build frontend js)
+3. Run the app, (currently uses parcel cli to build frontend js)
     ```sh
     npm start
     ```
 
-### 2) Container Image (Coming soon)
-___
+## 2) Container Image (Coming soon)
 
-## Getting Started
+
+# Getting Started
 
 Go to the server url, by default it will be http://localhost:8000 and login using the default Administrator account
 - email: admin@sapbashop.com
 - password: pass1234
 
 Then add your Store to be able to add products.
-___
-## My development set up
+
+# My development set up
 
 1. Follow installation instructions
 2. Run the following scripts
