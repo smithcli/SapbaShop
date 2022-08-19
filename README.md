@@ -1,5 +1,8 @@
 # SapbaShop
-Inventory management web app designed for a Thai - International small business.
+
+An Inventory management web app designed for a Thai - International small business.
+
+
 
 ## Features
 - RESTful API
@@ -18,7 +21,7 @@ To run the application you will need the following:
 
 # Installation
 
-## 1) From Source
+## From Source
 1. Download Source Code and dependencies
     ```sh
     git clone https://github.com/smithcli/SapbaShop.git
@@ -34,9 +37,6 @@ To run the application you will need the following:
     npm start
     ```
 
-## 2) Container Image (Coming soon)
-
-
 # Getting Started
 
 Go to the server url, by default it will be http://localhost:8000 and login using the default Administrator account
@@ -45,7 +45,7 @@ Go to the server url, by default it will be http://localhost:8000 and login usin
 
 Then add your Store to be able to add products.
 
-# My development set up
+# Development set up
 
 1. Follow installation instructions
 2. Run the following scripts
@@ -58,3 +58,6 @@ Then add your Store to be able to add products.
     node script/import-dev-data.js --import
     ```
 4. Use npm run dev or whichever required.
+
+### Developer Notes:
+This was my Capstone project for WGU. All requirements and supporting documents can be found in the doc directory.
