@@ -1,11 +1,13 @@
 # SapbaShop
 
-An Inventory management web app designed for a Thai - International small business.
+An inventory management web app designed for a Thai - International small
+business.
 
-
+![Screenshot of SapbaShop dashboard for desktop and mobile](../media/screenshots/dashboard.png)
 
 ## Features
-- RESTful API
+
+- REST API
 - Server Side Rendered Management User Interface
 - Password Authentication
 - Role based permissions management
@@ -16,12 +18,14 @@ An Inventory management web app designed for a Thai - International small busine
 # Requirements
 
 To run the application you will need the following:
+
 - MongoDB v5
 - Nodejs v16 (LTS)
 
 # Installation
 
 ## From Source
+
 1. Download Source Code and dependencies
     ```sh
     git clone https://github.com/smithcli/SapbaShop.git
@@ -39,7 +43,9 @@ To run the application you will need the following:
 
 # Getting Started
 
-Go to the server url, by default it will be http://localhost:8000 and login using the default Administrator account
+Go to the server url, by default it will be http://localhost:8000 and login
+using the default Administrator account
+
 - email: admin@sapbashop.com
 - password: pass1234
 
@@ -60,4 +66,6 @@ Then add your Store to be able to add products.
 4. Use npm run dev or whichever required.
 
 ### Developer Notes:
-This was my Capstone project for WGU. All requirements and supporting documents can be found in the doc directory.
+
+This was my Capstone project for WGU. All requirements and supporting documents
+can be found in the doc directory.
