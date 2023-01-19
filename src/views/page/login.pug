@@ -3,7 +3,10 @@ extends ../base
 block body
   main.main
     .login-form
-      h1.logo SapbaShop
+      h1.logo
+        | SapbaShop
+        br
+        | &#10090; Demo &#10091;
       form.form.form-login
         .form__group
           label.form__label(for='email') Email address
@@ -13,7 +16,13 @@ block body
             input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
         .btn-bar
           button.btn Login
-      a.login-form__forgotPassword(href='/forgotPassword') Forgot Password?
+      //a.login-form__forgotPassword(href='/forgotPassword') Forgot Password?
+
+    .demo
+      h2 Login as:
+      button.btn(id='admin-login') admin
+      button.btn(id='manager-login') manager
+      button.btn(id='employee-login') employee
 
   footer
     script(type='module', src='/js/bundled/sapba-login.js')
