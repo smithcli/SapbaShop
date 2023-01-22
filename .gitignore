@@ -2,6 +2,7 @@
 src/**/*.map
 .parcel-cache
 src/public/js/bundled/*
+src/public/js/css/*
 certs/*
 
 # Below provided by Github
